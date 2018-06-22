@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.binzhou.zhy.mapper.OrderDetailMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 order_detail_id,	order_id,	product_no,	product_name,	product_price,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	number,	subtotal,	is_product_exists,	remark
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.OrderDetail" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_order_detail
+		 WHERE order_detail_id = #{orderDetailId}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM zhy_order_detail
+		 WHERE order_detail_id = #{orderDetailId}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.OrderDetail">
+		 INSERT INTO zhy_order_detail
+ 		(order_detail_id,order_id,product_no,product_name,product_price,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,number,subtotal,is_product_exists,remark) 
+		 VALUES 
+ 		(#{orderDetailId},#{orderId},#{productNo},#{productName},#{productPrice},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{number},#{subtotal},#{isProductExists},#{remark}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.OrderDetail">
+		 INSERT INTO zhy_order_detail
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="orderDetailId != null">
+				 order_detail_id,
+			</if>
+			<if test="orderId != null">
+				 order_id,
+			</if>
+			<if test="productNo != null">
+				 product_no,
+			</if>
+			<if test="productName != null">
+				 product_name,
+			</if>
+			<if test="productPrice != null">
+				 product_price,
+			</if>
+			<if test="productMarque != null">
+				 product_marque,
+			</if>
+			<if test="productStoreBarcode != null">
+				 product_store_barcode,
+			</if>
+			<if test="productModeDesc != null">
+				 product_mode_desc,
+			</if>
+			<if test="productModeParams != null">
+				 product_mode_params,
+			</if>
+			<if test="discountRate != null">
+				 discount_rate,
+			</if>
+			<if test="discountAmount != null">
+				 discount_amount,
+			</if>
+			<if test="number != null">
+				 number,
+			</if>
+			<if test="subtotal != null">
+				 subtotal,
+			</if>
+			<if test="isProductExists != null">
+				 is_product_exists,
+			</if>
+			<if test="remark != null">
+				 remark,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="orderDetailId!=null">
+				 #{orderDetailId},
+			</if>
+			<if test="orderId!=null">
+				 #{orderId},
+			</if>
+			<if test="productNo!=null">
+				 #{productNo},
+			</if>
+			<if test="productName!=null">
+				 #{productName},
+			</if>
+			<if test="productPrice!=null">
+				 #{productPrice},
+			</if>
+			<if test="productMarque!=null">
+				 #{productMarque},
+			</if>
+			<if test="productStoreBarcode!=null">
+				 #{productStoreBarcode},
+			</if>
+			<if test="productModeDesc!=null">
+				 #{productModeDesc},
+			</if>
+			<if test="productModeParams!=null">
+				 #{productModeParams},
+			</if>
+			<if test="discountRate!=null">
+				 #{discountRate},
+			</if>
+			<if test="discountAmount!=null">
+				 #{discountAmount},
+			</if>
+			<if test="number!=null">
+				 #{number},
+			</if>
+			<if test="subtotal!=null">
+				 #{subtotal},
+			</if>
+			<if test="isProductExists!=null">
+				 #{isProductExists},
+			</if>
+			<if test="remark!=null">
+				 #{remark},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.OrderDetail">
+		 UPDATE zhy_order_detail
+ 		 <set> 
+			<if test="orderId != null">
+				 order_id = #{orderId},
+			</if>
+			<if test="productNo != null">
+				 product_no = #{productNo},
+			</if>
+			<if test="productName != null">
+				 product_name = #{productName},
+			</if>
+			<if test="productPrice != null">
+				 product_price = #{productPrice},
+			</if>
+			<if test="productMarque != null">
+				 product_marque = #{productMarque},
+			</if>
+			<if test="productStoreBarcode != null">
+				 product_store_barcode = #{productStoreBarcode},
+			</if>
+			<if test="productModeDesc != null">
+				 product_mode_desc = #{productModeDesc},
+			</if>
+			<if test="productModeParams != null">
+				 product_mode_params = #{productModeParams},
+			</if>
+			<if test="discountRate != null">
+				 discount_rate = #{discountRate},
+			</if>
+			<if test="discountAmount != null">
+				 discount_amount = #{discountAmount},
+			</if>
+			<if test="number != null">
+				 number = #{number},
+			</if>
+			<if test="subtotal != null">
+				 subtotal = #{subtotal},
+			</if>
+			<if test="isProductExists != null">
+				 is_product_exists = #{isProductExists},
+			</if>
+			<if test="remark != null">
+				 remark = #{remark},
+			</if>
+
+ 		 </set>
+		 WHERE order_detail_id = #{orderDetailId}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.OrderDetail">
+		 UPDATE zhy_order_detail
+		 SET 
+			 order_id = #{orderId},
+			 product_no = #{productNo},
+			 product_name = #{productName},
+			 product_price = #{productPrice},
+			 product_marque = #{productMarque},
+			 product_store_barcode = #{productStoreBarcode},
+			 product_mode_desc = #{productModeDesc},
+			 product_mode_params = #{productModeParams},
+			 discount_rate = #{discountRate},
+			 discount_amount = #{discountAmount},
+			 number = #{number},
+			 subtotal = #{subtotal},
+			 is_product_exists = #{isProductExists},
+			 remark = #{remark}
+		 WHERE order_detail_id = #{orderDetailId}
+	</update>
+
+</mapper>
