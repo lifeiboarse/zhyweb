@@ -2,6 +2,7 @@ package com.binzhou.zhy.mapper;
 
 import com.binzhou.zhy.entity.Category;
 import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 /**
  * 
@@ -17,14 +18,21 @@ public interface CategoryMapper{
 	 * 查询（根据主键ID查询）
 	 * 
 	 **/
-	Category selectByPrimaryKey(@Param("cateId") Long cateId);
+	public Category  selectByPrimaryKey(@Param("id") Long id);
+
+	/**
+	 * 
+	 * 查询（根据条件查询）
+	 * 
+	 **/
+	public List<Category>  selectListByOption(Category record);
 
 	/**
 	 * 
 	 * 删除（根据主键ID删除）
 	 * 
 	 **/
-	int deleteByPrimaryKey(@Param("cateId") Long cateId);
+	int deleteByPrimaryKey(@Param("id") Long id);
 
 	/**
 	 * 

@@ -1,34 +1,44 @@
 package com.binzhou.zhy.model.dto.basic;
 
-import java.math.BigDecimal;
-
 public class GoodsDTO {
     /**商品ID**/
-    private int goodsId;
+    private Long id;
 
     /**店铺ID**/
-    private int storeId;
+    private Long shopId;
 
-    /**商品类型**/
-    private String type;
+    /**商品所属分类ID**/
+    private Long cateId;
 
     /**商品名**/
-    private String goodsName;
+    private String name;
+
+    /**商品价格**/
+    private java.math.BigDecimal price;
+
+    /****/
+    private Integer count;
+
+    /**单位**/
+    private String unit;
+
+    /**默认商品图片地址**/
+    private String image;
 
     /**商品描述**/
     private String description;
 
-    /**商品所属分类ID**/
-    private int cateId;
+    /**商品品牌名**/
+    private String brand;
+
+    /**商品类型**/
+    private String type;
 
     /**商品分类名**/
     private String cateName;
 
-    /**商品品牌名**/
-    private String brand;
-
     /**属性的数量数目**/
-    private int specQty;
+    private Integer specNumber;
 
     /**第一属性名（比如颜色）**/
     private String speName1;
@@ -37,25 +47,22 @@ public class GoodsDTO {
     private String speName2;
 
     /**是否显示（默认为1显示）**/
-    private int ifShow;
+    private Integer ifShow;
 
     /**是否处于关闭状态（默认为0不关闭）**/
-    private int closed;
+    private Integer closed;
 
     /**状态关闭原因**/
     private String closeReason;
 
     /**默认属性ID**/
-    private int defaultSpec;
-
-    /**默认商品图片地址**/
-    private String defaultImage;
+    private Integer defaultSpec;
 
     /**是否推荐**/
-    private int recommended;
+    private Integer recommended;
 
     /**该商品第一级分类ID**/
-    private int cateId1;
+    private Integer cateId1;
 
     /**该商品第二级分类ID**/
     private String cateId2;
@@ -66,47 +73,88 @@ public class GoodsDTO {
     /**该商品第四级分类ID**/
     private String cateId4;
 
-    /**商品价格**/
-    private BigDecimal price;
-
     /**检索标签**/
     private String tag;
 
-    /**单位**/
-    private String unit;
+    /****/
+    private java.util.Date gmtCreate;
+
+    /****/
+    private java.util.Date gmtModified;
+
+    /****/
+    private String modifier;
+
+    /****/
+    private String version;
+
+    /****/
+    private String creator;
 
 
 
-    public void setGoodsId(int goodsId){
-        this.goodsId = goodsId;
+    public void setId(Long id){
+        this.id = id;
     }
 
-    public int getGoodsId(){
-        return this.goodsId;
+    public Long getId(){
+        return this.id;
     }
 
-    public void setStoreId(int storeId){
-        this.storeId = storeId;
+    public void setShopId(Long shopId){
+        this.shopId = shopId;
     }
 
-    public int getStoreId(){
-        return this.storeId;
+    public Long getShopId(){
+        return this.shopId;
     }
 
-    public void setType(String type){
-        this.type = type;
+    public void setCateId(Long cateId){
+        this.cateId = cateId;
     }
 
-    public String getType(){
-        return this.type;
+    public Long getCateId(){
+        return this.cateId;
     }
 
-    public void setGoodsName(String goodsName){
-        this.goodsName = goodsName;
+    public void setName(String name){
+        this.name = name;
     }
 
-    public String getGoodsName(){
-        return this.goodsName;
+    public String getName(){
+        return this.name;
+    }
+
+    public void setPrice(java.math.BigDecimal price){
+        this.price = price;
+    }
+
+    public java.math.BigDecimal getPrice(){
+        return this.price;
+    }
+
+    public void setCount(Integer count){
+        this.count = count;
+    }
+
+    public Integer getCount(){
+        return this.count;
+    }
+
+    public void setUnit(String unit){
+        this.unit = unit;
+    }
+
+    public String getUnit(){
+        return this.unit;
+    }
+
+    public void setImage(String image){
+        this.image = image;
+    }
+
+    public String getImage(){
+        return this.image;
     }
 
     public void setDescription(String description){
@@ -117,12 +165,20 @@ public class GoodsDTO {
         return this.description;
     }
 
-    public void setCateId(int cateId){
-        this.cateId = cateId;
+    public void setBrand(String brand){
+        this.brand = brand;
     }
 
-    public int getCateId(){
-        return this.cateId;
+    public String getBrand(){
+        return this.brand;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+    public String getType(){
+        return this.type;
     }
 
     public void setCateName(String cateName){
@@ -133,20 +189,12 @@ public class GoodsDTO {
         return this.cateName;
     }
 
-    public void setBrand(String brand){
-        this.brand = brand;
+    public void setSpecNumber(Integer specNumber){
+        this.specNumber = specNumber;
     }
 
-    public String getBrand(){
-        return this.brand;
-    }
-
-    public void setSpecQty(int specQty){
-        this.specQty = specQty;
-    }
-
-    public int getSpecQty(){
-        return this.specQty;
+    public Integer getSpecNumber(){
+        return this.specNumber;
     }
 
     public void setSpeName1(String speName1){
@@ -165,19 +213,19 @@ public class GoodsDTO {
         return this.speName2;
     }
 
-    public void setIfShow(int ifShow){
+    public void setIfShow(Integer ifShow){
         this.ifShow = ifShow;
     }
 
-    public int getIfShow(){
+    public Integer getIfShow(){
         return this.ifShow;
     }
 
-    public void setClosed(int closed){
+    public void setClosed(Integer closed){
         this.closed = closed;
     }
 
-    public int getClosed(){
+    public Integer getClosed(){
         return this.closed;
     }
 
@@ -189,35 +237,27 @@ public class GoodsDTO {
         return this.closeReason;
     }
 
-    public void setDefaultSpec(int defaultSpec){
+    public void setDefaultSpec(Integer defaultSpec){
         this.defaultSpec = defaultSpec;
     }
 
-    public int getDefaultSpec(){
+    public Integer getDefaultSpec(){
         return this.defaultSpec;
     }
 
-    public void setDefaultImage(String defaultImage){
-        this.defaultImage = defaultImage;
-    }
-
-    public String getDefaultImage(){
-        return this.defaultImage;
-    }
-
-    public void setRecommended(int recommended){
+    public void setRecommended(Integer recommended){
         this.recommended = recommended;
     }
 
-    public int getRecommended(){
+    public Integer getRecommended(){
         return this.recommended;
     }
 
-    public void setCateId1(int cateId1){
+    public void setCateId1(Integer cateId1){
         this.cateId1 = cateId1;
     }
 
-    public int getCateId1(){
+    public Integer getCateId1(){
         return this.cateId1;
     }
 
@@ -245,14 +285,6 @@ public class GoodsDTO {
         return this.cateId4;
     }
 
-    public void setPrice(java.math.BigDecimal price){
-        this.price = price;
-    }
-
-    public java.math.BigDecimal getPrice(){
-        return this.price;
-    }
-
     public void setTag(String tag){
         this.tag = tag;
     }
@@ -261,11 +293,44 @@ public class GoodsDTO {
         return this.tag;
     }
 
-    public void setUnit(String unit){
-        this.unit = unit;
+    public void setGmtCreate(java.util.Date gmtCreate){
+        this.gmtCreate = gmtCreate;
     }
 
-    public String getUnit(){
-        return this.unit;
+    public java.util.Date getGmtCreate(){
+        return this.gmtCreate;
     }
+
+    public void setGmtModified(java.util.Date gmtModified){
+        this.gmtModified = gmtModified;
+    }
+
+    public java.util.Date getGmtModified(){
+        return this.gmtModified;
+    }
+
+    public void setModifier(String modifier){
+        this.modifier = modifier;
+    }
+
+    public String getModifier(){
+        return this.modifier;
+    }
+
+    public void setVersion(String version){
+        this.version = version;
+    }
+
+    public String getVersion(){
+        return this.version;
+    }
+
+    public void setCreator(String creator){
+        this.creator = creator;
+    }
+
+    public String getCreator(){
+        return this.creator;
+    }
+
 }

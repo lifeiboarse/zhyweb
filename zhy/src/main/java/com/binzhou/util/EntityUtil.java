@@ -29,6 +29,8 @@ public class EntityUtil {
 
     private final String type_timestamp = "timestamp";
 
+    private final String type_datetime = "datetime";
+
     private final String type_int = "int";
 
     private final String type_bigint = "bigint";
@@ -42,7 +44,7 @@ public class EntityUtil {
     private final String type_blob = "blob";
 
 
-    private final String moduleName = "zhydb"; // 对应模块名称（根据自己模块做相应调整!!!务必修改^_^）
+    private final String moduleName = "zhy"; // 对应模块名称（根据自己模块做相应调整!!!务必修改^_^）
 
     private final String bean_path = "d:/code/entity_bean";
 
@@ -50,18 +52,20 @@ public class EntityUtil {
 
     private final String xml_path = "d:/code/entity_mapper/xml";
 
-    private final String bean_package = "com.binzhou.zhy." + moduleName + ".entity";
+    private final String bean_package = "com.binzhou." + moduleName + ".entity";
 
-    private final String mapper_package = "com.binzhou.zhy." + moduleName + ".mapper";
+    private final String mapper_package = "com.binzhou." + moduleName + ".mapper";
 
 
     private final String driverName = "com.mysql.jdbc.Driver";
+
+    private final String dbName = "zhydb";
 
     private final String user = "root";
 
     private final String password = "root";
 
-    private final String url = "jdbc:mysql://127.0.0.1:3306/" + moduleName + "?characterEncoding=utf8";
+    private final String url = "jdbc:mysql://127.0.0.1:3306/" + dbName + "?characterEncoding=utf8";
 
     private String tableName = null;
 
@@ -125,7 +129,11 @@ public class EntityUtil {
             return "String";
         } else if (type.indexOf(type_timestamp) > -1) {
             return "java.util.Date";
+        } else if (type.indexOf(type_datetime) > -1) {
+            return "java.util.Date";
         } else if (type.indexOf(type_bit) > -1) {
+            return "Boolean";
+        }else if (type.indexOf(type_bit) > -1) {
             return "Boolean";
         } else if (type.indexOf(type_decimal) > -1) {
             return "java.math.BigDecimal";
@@ -302,6 +310,8 @@ public class EntityUtil {
         bw.write("import " + bean_package + "." + beanName + ";");
         bw.newLine();
         bw.write("import org.apache.ibatis.annotations.Param;");
+        bw.newLine();
+        bw.write("import java.util.List;");
         bw = buildClassComment(bw, mapperName + "数据库操作接口类");
         bw.newLine();
         bw.newLine();
@@ -312,27 +322,31 @@ public class EntityUtil {
         // ----------定义Mapper中的方法Begin----------
         bw = buildMethodComment(bw, "查询（根据主键ID查询）");
         bw.newLine();
-        bw.write("\t" + beanName + "  selectByPrimaryKey ( @Param(\"id\") Long id );");
+        bw.write("\tpublic " + beanName + "  selectByPrimaryKey(@Param(\"id\") Long id);");
+        bw.newLine();
+        bw = buildMethodComment(bw, "查询（根据条件查询）");
+        bw.newLine();
+        bw.write("\tpublic List<" + beanName + ">  selectListByOption(" + beanName + " record);");
         bw.newLine();
         bw = buildMethodComment(bw, "删除（根据主键ID删除）");
         bw.newLine();
-        bw.write("\t" + "int deleteByPrimaryKey ( @Param(\"id\") Long id );");
+        bw.write("\t" + "int deleteByPrimaryKey(@Param(\"id\") Long id);");
         bw.newLine();
         bw = buildMethodComment(bw, "添加");
         bw.newLine();
-        bw.write("\t" + "int insert( " + beanName + " record );");
+        bw.write("\t" + "int insert(" + beanName + " record);");
         bw.newLine();
         bw = buildMethodComment(bw, "添加 （匹配有值的字段）");
         bw.newLine();
-        bw.write("\t" + "int insertSelective( " + beanName + " record );");
+        bw.write("\t" + "int insertSelective(" + beanName + " record);");
         bw.newLine();
         bw = buildMethodComment(bw, "修改 （匹配有值的字段）");
         bw.newLine();
-        bw.write("\t" + "int updateByPrimaryKeySelective( " + beanName + " record );");
+        bw.write("\t" + "int updateByPrimaryKeySelective(" + beanName + " record);");
         bw.newLine();
         bw = buildMethodComment(bw, "修改（根据主键ID修改）");
         bw.newLine();
-        bw.write("\t" + "int updateByPrimaryKey ( " + beanName + " record );");
+        bw.write("\t" + "int updateByPrimaryKey(" + beanName + " record);");
         bw.newLine();
 
         // ----------定义Mapper中的方法End----------
@@ -369,16 +383,16 @@ public class EntityUtil {
         bw.newLine();
         bw.newLine();
 
-        /*bw.write("\t<!--实体映射-->");
+        bw.write("\t<!--实体映射-->");
         bw.newLine();
-        bw.write("\t<resultMap id=\"" + this.processResultMapId(beanName) + "ResultMap\" type=\"" + beanName + "\">");
+        bw.write("\t<resultMap id=\"" + this.processResultMapId(beanName) + "ResultMap\" type=\"" + bean_package + "." + beanName + "\">");
         bw.newLine();
         bw.write("\t\t<!--" + comments.get(0) + "-->");
         bw.newLine();
         bw.write("\t\t<id property=\"" + this.processField(columns.get(0)) + "\" column=\"" + columns.get(0) + "\" />");
         bw.newLine();
         int size = columns.size();
-        for ( int i = 1 ; i < size ; i++ ) {
+        for (int i = 1; i < size; i++) {
             bw.write("\t\t<!--" + comments.get(i) + "-->");
             bw.newLine();
             bw.write("\t\t<result property=\""
@@ -389,7 +403,7 @@ public class EntityUtil {
 
         bw.newLine();
         bw.newLine();
-        bw.newLine();*/
+        bw.newLine();
 
         // 下面开始写SqlMapper中的方法
         // this.outputSqlMapperMethod(bw, columns, types);
@@ -427,7 +441,7 @@ public class EntityUtil {
         bw.write("\t<!-- 查询（根据主键ID查询） -->");
         bw.newLine();
         bw.write("\t<select id=\"selectByPrimaryKey\" resultType=\""
-                + processResultMapId(beanName) + "\" parameterType=\"java.lang." + processType(types.get(0)) + "\">");
+                + bean_package + "." + beanName + "\" parameterType=\"java.lang." + processType(types.get(0)) + "\">");
         bw.newLine();
         bw.write("\t\t SELECT");
         bw.newLine();
@@ -442,6 +456,24 @@ public class EntityUtil {
         bw.newLine();
         // 查询完
 
+        // 查询（根据条件查询）
+        bw.write("\t<!-- 查询（根据条件查询） -->");
+        bw.newLine();
+        bw.write("\t<select id=\"selectListByOption\" resultMap=\""
+                + processResultMapId(beanName) + "ResultMap\" parameterType=\"" + bean_package + "." + beanName + "\">");
+        bw.newLine();
+        bw.write("\t\t SELECT");
+        bw.newLine();
+        bw.write("\t\t <include refid=\"Base_Column_List\" />");
+        bw.newLine();
+        bw.write("\t\t FROM " + tableName);
+        bw.newLine();
+        bw.write("\t\t WHERE " + columns.get(0) + " = #{" + processField(columns.get(0)) + "}");
+        bw.newLine();
+        bw.write("\t</select>");
+        bw.newLine();
+        bw.newLine();
+        // 查询完
 
         // 删除（根据主键ID删除）
         bw.write("\t<!--删除：根据主键ID删除-->");
@@ -461,7 +493,7 @@ public class EntityUtil {
         // 添加insert方法
         bw.write("\t<!-- 添加 -->");
         bw.newLine();
-        bw.write("\t<insert id=\"insert\" parameterType=\"" + processResultMapId(beanName) + "\">");
+        bw.write("\t<insert id=\"insert\" parameterType=\"" + bean_package + "." + beanName + "\">");
         bw.newLine();
         bw.write("\t\t INSERT INTO " + tableName);
         bw.newLine();
@@ -494,7 +526,7 @@ public class EntityUtil {
         //---------------  insert方法（匹配有值的字段）
         bw.write("\t<!-- 添加 （匹配有值的字段）-->");
         bw.newLine();
-        bw.write("\t<insert id=\"insertSelective\" parameterType=\"" + processResultMapId(beanName) + "\">");
+        bw.write("\t<insert id=\"insertSelective\" parameterType=\"" + bean_package + "." + beanName + "\">");
         bw.newLine();
         bw.write("\t\t INSERT INTO " + tableName);
         bw.newLine();
@@ -541,7 +573,7 @@ public class EntityUtil {
         // 修改update方法
         bw.write("\t<!-- 修 改-->");
         bw.newLine();
-        bw.write("\t<update id=\"updateByPrimaryKeySelective\" parameterType=\"" + processResultMapId(beanName) + "\">");
+        bw.write("\t<update id=\"updateByPrimaryKeySelective\" parameterType=\"" + bean_package + "." + beanName + "\">");
         bw.newLine();
         bw.write("\t\t UPDATE " + tableName);
         bw.newLine();
@@ -572,7 +604,7 @@ public class EntityUtil {
         // ----- 修改（匹配有值的字段）
         bw.write("\t<!-- 修 改-->");
         bw.newLine();
-        bw.write("\t<update id=\"updateByPrimaryKey\" parameterType=\"" + processResultMapId(beanName) + "\">");
+        bw.write("\t<update id=\"updateByPrimaryKey\" parameterType=\"" + bean_package + "." + beanName + "\">");
         bw.newLine();
         bw.write("\t\t UPDATE " + tableName);
         bw.newLine();

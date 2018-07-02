@@ -1,16 +1,16 @@
 package com.binzhou.zhy.mapper;
 
-import com.binzhou.zhy.entity.Goods;
+import com.binzhou.zhy.entity.DeliveryAddress;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
  * 
- * GoodsMapper数据库操作接口类
+ * DeliveryAddressMapper数据库操作接口类
  * 
  **/
 
-public interface GoodsMapper{
+public interface DeliveryAddressMapper{
 
 
 	/**
@@ -18,14 +18,14 @@ public interface GoodsMapper{
 	 * 查询（根据主键ID查询）
 	 * 
 	 **/
-	public Goods  selectByPrimaryKey(@Param("id") Long id);
+	public DeliveryAddress  selectByPrimaryKey(@Param("id") Long id);
 
 	/**
 	 * 
 	 * 查询（根据条件查询）
 	 * 
 	 **/
-	public List<Goods>  selectListByOption(Goods record);
+	public List<DeliveryAddress>  selectListByOption(DeliveryAddress record);
 
 	/**
 	 * 
@@ -39,27 +39,27 @@ public interface GoodsMapper{
 	 * 添加
 	 * 
 	 **/
-	int insert(Goods record);
+	int insert(DeliveryAddress record);
 
 	/**
 	 * 
 	 * 添加 （匹配有值的字段）
 	 * 
 	 **/
-	int insertSelective(Goods record);
+	int insertSelective(DeliveryAddress record);
 
 	/**
 	 * 
 	 * 修改 （匹配有值的字段）
 	 * 
 	 **/
-	int updateByPrimaryKeySelective(Goods record);
+	int updateByPrimaryKeySelective(DeliveryAddress record);
 
 	/**
 	 * 
 	 * 修改（根据主键ID修改）
 	 * 
 	 **/
-	int updateByPrimaryKey(Goods record);
+	int updateByPrimaryKey(DeliveryAddress record);
 
 }

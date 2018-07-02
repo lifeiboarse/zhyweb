@@ -1,202 +1,336 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.binzhou.zhy.mapper.ShoppingCartMapper">
 
-	<resultMap id="baseResultMap" type="com.binzhou.zhy.entity.ShoppingCart">
-		<result property="id" column="id"/>
-		<result property="userId" column="user_id"/>
-		<result property="shopId" column="shop_id"/>
-		<result property="productId" column="product_id"/>
-		<result property="isProductExists" column="is_product_exists"/>
-		<result property="number" column="number"/>
-		<result property="createdTime" column="created_time"/>
-		<result property="specId" column="spec_id"/>
-		<result property="specification" column="specification"/>
-		<result property="price" column="price"/>
-		<result property="quantity" column="quantity"/>
-		<result property="goodsImage" column="goods_image"/>
-	</resultMap>
+    <!--实体映射-->
+    <resultMap id="shoppingCartResultMap" type="com.binzhou.zhy.entity.ShoppingCart">
+        <!--自动编号 (id)-->
+        <id property="id" column="id"/>
+        <!--用户编号 (user_id)-->
+        <result property="userId" column="user_id"/>
+        <!--店铺ID(标识哪个商铺的订单)-->
+        <result property="shopId" column="shop_id"/>
+        <!--商品编号 (product_id)-->
+        <result property="goodsId" column="goods_id"/>
+        <!--是否有效 (is_product_exists)-->
+        <result property="isProductExists" column="is_product_exists"/>
+        <!--购买数量 (number)-->
+        <result property="count" column="count"/>
+        <!--创建时间 (created_time)-->
+        <result property="createdTime" column="created_time"/>
+        <!--规格ID-->
+        <result property="specId" column="spec_id"/>
+        <!--详细说明-->
+        <result property="specification" column="specification"/>
+        <!--价格-->
+        <result property="price" column="price"/>
+        <!--商品是否选中(选中success,反选circle)-->
+        <result property="type" column="type"/>
+        <!--数量-->
+        <result property="quantity" column="quantity"/>
+        <!--商品图片地址-->
+        <result property="goodsImage" column="goods_image"/>
+        <!---->
+        <result property="gmtCreate" column="gmt_create"/>
+        <!---->
+        <result property="gmtModified" column="gmt_modified"/>
+        <!---->
+        <result property="modifier" column="modifier"/>
+        <!---->
+        <result property="creator" column="creator"/>
+        <!---->
+        <result property="version" column="version"/>
+    </resultMap>
 
-	<parameterMap id="baseParamMap" type="com.binzhou.zhy.entity.ShoppingCart">
-		<parameter property="userId" resultMap="baseResultMap"/>
-	</parameterMap>
 
-	<!-- 通用查询结果列-->
-	<sql id="Base_Column_List">
-		 id,	user_id,	shop_id,	product_id,	is_product_exists,	number,	created_time,	spec_id,	specification,	price,	quantity,	goods_image
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+		 id,	user_id,	shop_id,	goods_id,	is_product_exists,	count,	created_time,	spec_id,	specification,	price,	type,	quantity,	goods_image,	gmt_create,	gmt_modified,	modifier,	creator,	version
 	</sql>
 
-	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.ShoppingCart" parameterType="java.lang.Integer">
-		 SELECT
-		 <include refid="Base_Column_List" />
-		 FROM zhy_shopping_cart
-		 WHERE id = #{id}
-	</select>
+    <!-- 查询（根据主键ID查询） -->
+    <select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.ShoppingCart" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM zhy_shopping_cart
+        WHERE id = #{id}
+    </select>
 
+    <!-- 查询（根据条件查询） -->
+    <select id="selectListByOption" resultMap="shoppingCartResultMap"
+            parameterType="com.binzhou.zhy.entity.ShoppingCart">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM zhy_shopping_cart
+        WHERE user_id = #{userId}
+    </select>
 
-	<select id="selectCartListByParam" resultMap="baseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM zhy_shopping_cart
-		WHERE 1=1
-	</select>
-
-	<!--删除：根据主键ID删除-->
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--删除：根据主键ID删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		 DELETE FROM zhy_shopping_cart
 		 WHERE id = #{id}
 	</delete>
 
-	<!-- 添加 -->
-	<insert id="insert" parameterType="com.binzhou.zhy.entity.ShoppingCart">
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.binzhou.zhy.entity.ShoppingCart">
 		 INSERT INTO zhy_shopping_cart
- 		(id,user_id,shop_id,product_id,is_product_exists,number,created_time,spec_id,specification,price,quantity,goods_image) 
+ 		(id,user_id,shop_id,goods_id,is_product_exists,count,created_time,spec_id,specification,price,type,quantity,goods_image,gmt_create,gmt_modified,modifier,creator,version) 
 		 VALUES 
- 		(#{id},#{userId},#{shopId},#{productId},#{isProductExists},#{number},#{createdTime},#{specId},#{specification},#{price},#{quantity},#{goodsImage}) 
+ 		(#{id},#{userId},#{shopId},#{goodsId},#{isProductExists},#{count},#{createdTime},#{specId},#{specification},#{price},#{type},#{quantity},#{goodsImage},#{gmtCreate},#{gmtModified},#{modifier},#{creator},#{version}) 
 	</insert>
 
-	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.ShoppingCart">
-		 INSERT INTO zhy_shopping_cart
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="id != null">
-				 id,
-			</if>
-			<if test="userId != null">
-				 user_id,
-			</if>
-			<if test="shopId != null">
-				 shop_id,
-			</if>
-			<if test="productId != null">
-				 product_id,
-			</if>
-			<if test="isProductExists != null">
-				 is_product_exists,
-			</if>
-			<if test="number != null">
-				 number,
-			</if>
-			<if test="createdTime != null">
-				 created_time,
-			</if>
-			<if test="specId != null">
-				 spec_id,
-			</if>
-			<if test="specification != null">
-				 specification,
-			</if>
-			<if test="price != null">
-				 price,
-			</if>
-			<if test="quantity != null">
-				 quantity,
-			</if>
-			<if test="goodsImage != null">
-				 goods_image,
-			</if>
+    <!-- 添加 （匹配有值的字段）-->
+    <insert id="insertSelective" parameterType="com.binzhou.zhy.entity.ShoppingCart">
+        INSERT INTO zhy_shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="isProductExists != null">
+                is_product_exists,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="specId != null">
+                spec_id,
+            </if>
+            <if test="specification != null">
+                specification,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="quantity != null">
+                quantity,
+            </if>
+            <if test="goodsImage != null">
+                goods_image,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="modifier != null">
+                modifier,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
 
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id!=null">
-				 #{id},
-			</if>
-			<if test="userId!=null">
-				 #{userId},
-			</if>
-			<if test="shopId!=null">
-				 #{shopId},
-			</if>
-			<if test="productId!=null">
-				 #{productId},
-			</if>
-			<if test="isProductExists!=null">
-				 #{isProductExists},
-			</if>
-			<if test="number!=null">
-				 #{number},
-			</if>
-			<if test="createdTime!=null">
-				 #{createdTime},
-			</if>
-			<if test="specId!=null">
-				 #{specId},
-			</if>
-			<if test="specification!=null">
-				 #{specification},
-			</if>
-			<if test="price!=null">
-				 #{price},
-			</if>
-			<if test="quantity!=null">
-				 #{quantity},
-			</if>
-			<if test="goodsImage!=null">
-				 #{goodsImage},
-			</if>
-		 </trim>
-	</insert>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="userId!=null">
+                #{userId},
+            </if>
+            <if test="shopId!=null">
+                #{shopId},
+            </if>
+            <if test="goodsId!=null">
+                #{goodsId},
+            </if>
+            <if test="isProductExists!=null">
+                #{isProductExists},
+            </if>
+            <if test="count!=null">
+                #{count},
+            </if>
+            <if test="createdTime!=null">
+                #{createdTime},
+            </if>
+            <if test="specId!=null">
+                #{specId},
+            </if>
+            <if test="specification!=null">
+                #{specification},
+            </if>
+            <if test="price!=null">
+                #{price},
+            </if>
+            <if test="type!=null">
+                #{type},
+            </if>
+            <if test="quantity!=null">
+                #{quantity},
+            </if>
+            <if test="goodsImage!=null">
+                #{goodsImage},
+            </if>
+            <if test="gmtCreate!=null">
+                #{gmtCreate},
+            </if>
+            <if test="gmtModified!=null">
+                #{gmtModified},
+            </if>
+            <if test="modifier!=null">
+                #{modifier},
+            </if>
+            <if test="creator!=null">
+                #{creator},
+            </if>
+            <if test="version!=null">
+                #{version},
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 修 改-->
-	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.ShoppingCart">
-		 UPDATE zhy_shopping_cart
- 		 <set> 
-			<if test="userId != null">
-				 user_id = #{userId},
-			</if>
-			<if test="shopId != null">
-				 shop_id = #{shopId},
-			</if>
-			<if test="productId != null">
-				 product_id = #{productId},
-			</if>
-			<if test="isProductExists != null">
-				 is_product_exists = #{isProductExists},
-			</if>
-			<if test="number != null">
-				 number = #{number},
-			</if>
-			<if test="createdTime != null">
-				 created_time = #{createdTime},
-			</if>
-			<if test="specId != null">
-				 spec_id = #{specId},
-			</if>
-			<if test="specification != null">
-				 specification = #{specification},
-			</if>
-			<if test="price != null">
-				 price = #{price},
-			</if>
-			<if test="quantity != null">
-				 quantity = #{quantity},
-			</if>
-			<if test="goodsImage != null">
-				 goods_image = #{goodsImage},
-			</if>
+    <!-- 修 改-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.ShoppingCart">
+        UPDATE zhy_shopping_cart
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="shopId != null">
+                shop_id = #{shopId},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="isProductExists != null">
+                is_product_exists = #{isProductExists},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="specId != null">
+                spec_id = #{specId},
+            </if>
+            <if test="specification != null">
+                specification = #{specification},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="goodsImage != null">
+                goods_image = #{goodsImage},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified},
+            </if>
+            <if test="modifier != null">
+                modifier = #{modifier},
+            </if>
+            <if test="creator != null">
+                creator = #{creator},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
 
- 		 </set>
-		 WHERE id = #{id}
-	</update>
+        </set>
+        WHERE id = #{id}
+    </update>
 
-	<!-- 修 改-->
-	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.ShoppingCart">
+    <!-- 修 改-->
+    <update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.ShoppingCart">
 		 UPDATE zhy_shopping_cart
 		 SET 
 			 user_id = #{userId},
 			 shop_id = #{shopId},
-			 product_id = #{productId},
+			 goods_id = #{goodsId},
 			 is_product_exists = #{isProductExists},
-			 number = #{number},
+			 count = #{count},
 			 created_time = #{createdTime},
 			 spec_id = #{specId},
 			 specification = #{specification},
 			 price = #{price},
+			 type = #{type},
 			 quantity = #{quantity},
-			 goods_image = #{goodsImage}
+			 goods_image = #{goodsImage},
+			 gmt_create = #{gmtCreate},
+			 gmt_modified = #{gmtModified},
+			 modifier = #{modifier},
+			 creator = #{creator},
+			 version = #{version}
 		 WHERE id = #{id}
 	</update>
+    <!-- 修 改-->
 
+
+    <update id="updateNumber" parameterType="com.binzhou.zhy.entity.ShoppingCart">
+        UPDATE zhy_shopping_cart
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId},
+            </if>
+            <if test="isProductExists != null">
+                is_product_exists = #{isProductExists},
+            </if>
+            count = count+1,
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="specId != null">
+                spec_id = #{specId},
+            </if>
+            <if test="specification != null">
+                specification = #{specification},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="goodsImage != null">
+                goods_image = #{goodsImage},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified},
+            </if>
+            <if test="modifier != null">
+                modifier = #{modifier},
+            </if>
+            <if test="creator != null">
+                creator = #{creator},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+        </set>
+        WHERE  user_id = #{userId} AND goods_id = #{goodsId}
+    </update>
 </mapper>

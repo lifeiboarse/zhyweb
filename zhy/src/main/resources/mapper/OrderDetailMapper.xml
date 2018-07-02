@@ -3,45 +3,88 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.binzhou.zhy.mapper.OrderDetailMapper">
 
+	<!--实体映射-->
+	<resultMap id="orderDetailResultMap" type="com.binzhou.zhy.entity.OrderDetail">
+		<!--自动编号-->
+		<id property="id" column="id" />
+		<!--订单编号-->
+		<result property="orderId" column="order_id" />
+		<!--商品编号-->
+		<result property="productId" column="product_id" />
+		<!--商品名称 (product_name, 商品可能删除,所以这里要记录，不能直接读商品表)-->
+		<result property="productName" column="product_name" />
+		<!--商品价格 (product_price, 商品可能删除,所以这里要记录)-->
+		<result property="productPrice" column="product_price" />
+		<!--商品型号 (product_marque，前台展示给客户)-->
+		<result property="productMarque" column="product_marque" />
+		<!--商品条码 (product_store_barcode, 商品仓库条码)-->
+		<result property="productStoreBarcode" column="product_store_barcode" />
+		<!--商品型号信息 (product_mode_desc，记录详细商品型号，如颜色、规格、包装等)-->
+		<result property="productModeDesc" column="product_mode_desc" />
+		<!--商品型号参数 (product_mode_params, JSON格式，记录单位编号、颜色编号、规格编号等)-->
+		<result property="productModeParams" column="product_mode_params" />
+		<!--折扣比例 (discount_rate 打几折)-->
+		<result property="discountRate" column="discount_rate" />
+		<!--折扣金额 (discount_amount)-->
+		<result property="discountAmount" column="discount_amount" />
+		<!--购买数量 (number)-->
+		<result property="number" column="number" />
+		<!--小计金额 (subtotal)-->
+		<result property="subtotal" column="subtotal" />
+		<!--商品是否有效 (is_product_exists)-->
+		<result property="isProductExists" column="is_product_exists" />
+		<!--客户商品备注 (remark)-->
+		<result property="remark" column="remark" />
+	</resultMap>
+
+
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 order_detail_id,	order_id,	product_no,	product_name,	product_price,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	number,	subtotal,	is_product_exists,	remark
+		 id,	order_id,	product_id,	product_name,	product_price,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	number,	subtotal,	is_product_exists,	remark
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.OrderDetail" parameterType="java.lang.String">
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.OrderDetail" parameterType="java.lang.Long">
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM zhy_order_detail
-		 WHERE order_detail_id = #{orderDetailId}
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="orderDetailResultMap" parameterType="com.binzhou.zhy.entity.OrderDetail">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_order_detail
+		 WHERE order_id = #{orderId}
 	</select>
 
 	<!--删除：根据主键ID删除-->
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		 DELETE FROM zhy_order_detail
-		 WHERE order_detail_id = #{orderDetailId}
+		 WHERE id = #{id}
 	</delete>
 
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.OrderDetail">
 		 INSERT INTO zhy_order_detail
- 		(order_detail_id,order_id,product_no,product_name,product_price,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,number,subtotal,is_product_exists,remark) 
+ 		(id,order_id,product_id,product_name,product_price,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,number,subtotal,is_product_exists,remark) 
 		 VALUES 
- 		(#{orderDetailId},#{orderId},#{productNo},#{productName},#{productPrice},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{number},#{subtotal},#{isProductExists},#{remark}) 
+ 		(#{id},#{orderId},#{productId},#{productName},#{productPrice},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{number},#{subtotal},#{isProductExists},#{remark}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
 	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.OrderDetail">
 		 INSERT INTO zhy_order_detail
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="orderDetailId != null">
-				 order_detail_id,
+			<if test="id != null">
+				 id,
 			</if>
 			<if test="orderId != null">
 				 order_id,
 			</if>
-			<if test="productNo != null">
-				 product_no,
+			<if test="productId != null">
+				 product_id,
 			</if>
 			<if test="productName != null">
 				 product_name,
@@ -82,14 +125,14 @@
 
 		 </trim>
 		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="orderDetailId!=null">
-				 #{orderDetailId},
+			<if test="id!=null">
+				 #{id},
 			</if>
 			<if test="orderId!=null">
 				 #{orderId},
 			</if>
-			<if test="productNo!=null">
-				 #{productNo},
+			<if test="productId!=null">
+				 #{productId},
 			</if>
 			<if test="productName!=null">
 				 #{productName},
@@ -137,8 +180,8 @@
 			<if test="orderId != null">
 				 order_id = #{orderId},
 			</if>
-			<if test="productNo != null">
-				 product_no = #{productNo},
+			<if test="productId != null">
+				 product_id = #{productId},
 			</if>
 			<if test="productName != null">
 				 product_name = #{productName},
@@ -178,7 +221,7 @@
 			</if>
 
  		 </set>
-		 WHERE order_detail_id = #{orderDetailId}
+		 WHERE id = #{id}
 	</update>
 
 	<!-- 修 改-->
@@ -186,7 +229,7 @@
 		 UPDATE zhy_order_detail
 		 SET 
 			 order_id = #{orderId},
-			 product_no = #{productNo},
+			 product_id = #{productId},
 			 product_name = #{productName},
 			 product_price = #{productPrice},
 			 product_marque = #{productMarque},
@@ -199,7 +242,7 @@
 			 subtotal = #{subtotal},
 			 is_product_exists = #{isProductExists},
 			 remark = #{remark}
-		 WHERE order_detail_id = #{orderDetailId}
+		 WHERE id = #{id}
 	</update>
 
 </mapper>

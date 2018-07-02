@@ -1,105 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.binzhou.zhy.mapper.CategoryMapper">
 
-    <!-- 通用查询结果列-->
-    <sql id="Base_Column_List">
-		 id,	cate_name,	parent_id,	sort_order,	if_show
+	<!--实体映射-->
+	<resultMap id="categoryResultMap" type="com.binzhou.zhy.entity.Category">
+		<!--分类自增ID-->
+		<id property="id" column="id" />
+		<!--分类名称-->
+		<result property="cateName" column="cate_name" />
+		<!--分类父级ID-->
+		<result property="parentId" column="parent_id" />
+		<!--排序号-->
+		<result property="sortOrder" column="sort_order" />
+		<!--是否显示（1显示，0不显示）-->
+		<result property="ifShow" column="if_show" />
+		<!---->
+		<result property="gmtCreate" column="gmt_create" />
+		<!---->
+		<result property="gmtModified" column="gmt_modified" />
+		<!---->
+		<result property="modifier" column="modifier" />
+		<!---->
+		<result property="version" column="version" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	cate_name,	parent_id,	sort_order,	if_show,	gmt_create,	gmt_modified,	modifier,	version
 	</sql>
 
-    <!-- 查询（根据主键ID查询） -->
-    <select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.Category" parameterType="java.lang.Integer">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM zhy_category
-        WHERE cate_id = #{cateId}
-    </select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.Category" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_category
+		 WHERE id = #{id}
+	</select>
 
-    <!--删除：根据主键ID删除-->
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="categoryResultMap" parameterType="com.binzhou.zhy.entity.Category">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_category
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		 DELETE FROM zhy_category
-		 WHERE cate_id = #{cateId}
+		 WHERE id = #{id}
 	</delete>
 
-    <!-- 添加 -->
-    <insert id="insert" parameterType="com.binzhou.zhy.entity.Category">
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.Category">
 		 INSERT INTO zhy_category
- 		(cate_id,cate_name,parent_id,sort_order,if_show) 
+ 		(id,cate_name,parent_id,sort_order,if_show,gmt_create,gmt_modified,modifier,version) 
 		 VALUES 
- 		(#{cateId},#{cateName},#{parentId},#{sortOrder},#{ifShow}) 
+ 		(#{id},#{cateName},#{parentId},#{sortOrder},#{ifShow},#{gmtCreate},#{gmtModified},#{modifier},#{version}) 
 	</insert>
 
-    <!-- 添加 （匹配有值的字段）-->
-    <insert id="insertSelective" parameterType="com.binzhou.zhy.entity.Category">
-        INSERT INTO zhy_category
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="cateId != null">
-                cate_id,
-            </if>
-            <if test="cateName != null">
-                cate_name,
-            </if>
-            <if test="parentId != null">
-                parent_id,
-            </if>
-            <if test="sortOrder != null">
-                sort_order,
-            </if>
-            <if test="ifShow != null">
-                if_show,
-            </if>
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.Category">
+		 INSERT INTO zhy_category
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="cateName != null">
+				 cate_name,
+			</if>
+			<if test="parentId != null">
+				 parent_id,
+			</if>
+			<if test="sortOrder != null">
+				 sort_order,
+			</if>
+			<if test="ifShow != null">
+				 if_show,
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create,
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified,
+			</if>
+			<if test="modifier != null">
+				 modifier,
+			</if>
+			<if test="version != null">
+				 version,
+			</if>
 
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="cateId!=null">
-                #{cateId},
-            </if>
-            <if test="cateName!=null">
-                #{cateName},
-            </if>
-            <if test="parentId!=null">
-                #{parentId},
-            </if>
-            <if test="sortOrder!=null">
-                #{sortOrder},
-            </if>
-            <if test="ifShow!=null">
-                #{ifShow},
-            </if>
-        </trim>
-    </insert>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="cateName!=null">
+				 #{cateName},
+			</if>
+			<if test="parentId!=null">
+				 #{parentId},
+			</if>
+			<if test="sortOrder!=null">
+				 #{sortOrder},
+			</if>
+			<if test="ifShow!=null">
+				 #{ifShow},
+			</if>
+			<if test="gmtCreate!=null">
+				 #{gmtCreate},
+			</if>
+			<if test="gmtModified!=null">
+				 #{gmtModified},
+			</if>
+			<if test="modifier!=null">
+				 #{modifier},
+			</if>
+			<if test="version!=null">
+				 #{version},
+			</if>
+		 </trim>
+	</insert>
 
-    <!-- 修 改-->
-    <update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.Category">
-        UPDATE zhy_category
-        <set>
-            <if test="cateName != null">
-                cate_name = #{cateName},
-            </if>
-            <if test="parentId != null">
-                parent_id = #{parentId},
-            </if>
-            <if test="sortOrder != null">
-                sort_order = #{sortOrder},
-            </if>
-            <if test="ifShow != null">
-                if_show = #{ifShow},
-            </if>
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.Category">
+		 UPDATE zhy_category
+ 		 <set> 
+			<if test="cateName != null">
+				 cate_name = #{cateName},
+			</if>
+			<if test="parentId != null">
+				 parent_id = #{parentId},
+			</if>
+			<if test="sortOrder != null">
+				 sort_order = #{sortOrder},
+			</if>
+			<if test="ifShow != null">
+				 if_show = #{ifShow},
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified = #{gmtModified},
+			</if>
+			<if test="modifier != null">
+				 modifier = #{modifier},
+			</if>
+			<if test="version != null">
+				 version = #{version},
+			</if>
 
-        </set>
-        WHERE cate_id = #{cateId}
-    </update>
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
 
-    <!-- 修 改-->
-    <update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.Category">
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.Category">
 		 UPDATE zhy_category
 		 SET 
 			 cate_name = #{cateName},
 			 parent_id = #{parentId},
 			 sort_order = #{sortOrder},
-			 if_show = #{ifShow}
-		 WHERE cate_id = #{cateId}
+			 if_show = #{ifShow},
+			 gmt_create = #{gmtCreate},
+			 gmt_modified = #{gmtModified},
+			 modifier = #{modifier},
+			 version = #{version}
+		 WHERE id = #{id}
 	</update>
 
 </mapper>

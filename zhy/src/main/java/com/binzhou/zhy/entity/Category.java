@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
 	/**分类自增ID**/
-	private Integer cateId;
+	private Long id;
 
 	/**分类名称**/
 	private String cateName;
@@ -25,14 +25,26 @@ public class Category implements Serializable {
 	/**是否显示（1显示，0不显示）**/
 	private Integer ifShow;
 
+	/****/
+	private java.util.Date gmtCreate;
+
+	/****/
+	private java.util.Date gmtModified;
+
+	/****/
+	private String modifier;
+
+	/****/
+	private String version;
 
 
-	public void setCateId(Integer cateId){
-		this.cateId = cateId;
+
+	public void setId(Long id){
+		this.id = id;
 	}
 
-	public Integer getCateId(){
-		return this.cateId;
+	public Long getId(){
+		return this.id;
 	}
 
 	public void setCateName(String cateName){
@@ -65,6 +77,38 @@ public class Category implements Serializable {
 
 	public Integer getIfShow(){
 		return this.ifShow;
+	}
+
+	public void setGmtCreate(java.util.Date gmtCreate){
+		this.gmtCreate = gmtCreate;
+	}
+
+	public java.util.Date getGmtCreate(){
+		return this.gmtCreate;
+	}
+
+	public void setGmtModified(java.util.Date gmtModified){
+		this.gmtModified = gmtModified;
+	}
+
+	public java.util.Date getGmtModified(){
+		return this.gmtModified;
+	}
+
+	public void setModifier(String modifier){
+		this.modifier = modifier;
+	}
+
+	public String getModifier(){
+		return this.modifier;
+	}
+
+	public void setVersion(String version){
+		this.version = version;
+	}
+
+	public String getVersion(){
+		return this.version;
 	}
 
 }

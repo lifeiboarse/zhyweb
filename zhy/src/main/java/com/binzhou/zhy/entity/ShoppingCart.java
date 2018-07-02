@@ -1,5 +1,4 @@
 package com.binzhou.zhy.entity;
-
 import java.io.Serializable;
 
 
@@ -12,34 +11,37 @@ import java.io.Serializable;
 public class ShoppingCart implements Serializable {
 
 	/**自动编号 (id)**/
-	private Integer id;
+	private Long id;
 
 	/**用户编号 (user_id)**/
-	private Integer userId;
+	private Long userId;
 
 	/**店铺ID(标识哪个商铺的订单)**/
-	private Integer shopId;
+	private Long shopId;
 
 	/**商品编号 (product_id)**/
-	private Integer productId;
+	private Long goodsId;
 
 	/**是否有效 (is_product_exists)**/
 	private String isProductExists;
 
 	/**购买数量 (number)**/
-	private Integer number;
+	private Integer count;
 
 	/**创建时间 (created_time)**/
 	private java.util.Date createdTime;
 
 	/**规格ID**/
-	private Integer specId;
+	private Long specId;
 
 	/**详细说明**/
 	private String specification;
 
 	/**价格**/
-	private Double price;
+	private java.math.BigDecimal price;
+
+	/**商品是否选中(选中success,反选circle)**/
+	private String type;
 
 	/**数量**/
 	private Integer quantity;
@@ -47,38 +49,53 @@ public class ShoppingCart implements Serializable {
 	/**商品图片地址**/
 	private String goodsImage;
 
+	/****/
+	private java.util.Date gmtCreate;
+
+	/****/
+	private java.util.Date gmtModified;
+
+	/****/
+	private String modifier;
+
+	/****/
+	private String creator;
+
+	/****/
+	private String version;
 
 
-	public void setId(Integer id){
+
+	public void setId(Long id){
 		this.id = id;
 	}
 
-	public Integer getId(){
+	public Long getId(){
 		return this.id;
 	}
 
-	public void setUserId(Integer userId){
+	public void setUserId(Long userId){
 		this.userId = userId;
 	}
 
-	public Integer getUserId(){
+	public Long getUserId(){
 		return this.userId;
 	}
 
-	public void setShopId(Integer shopId){
+	public void setShopId(Long shopId){
 		this.shopId = shopId;
 	}
 
-	public Integer getShopId(){
+	public Long getShopId(){
 		return this.shopId;
 	}
 
-	public void setProductId(Integer productId){
-		this.productId = productId;
+	public void setGoodsId(Long goodsId){
+		this.goodsId = goodsId;
 	}
 
-	public Integer getProductId(){
-		return this.productId;
+	public Long getGoodsId(){
+		return this.goodsId;
 	}
 
 	public void setIsProductExists(String isProductExists){
@@ -89,12 +106,12 @@ public class ShoppingCart implements Serializable {
 		return this.isProductExists;
 	}
 
-	public void setNumber(Integer number){
-		this.number = number;
+	public void setCount(Integer count){
+		this.count = count;
 	}
 
-	public Integer getNumber(){
-		return this.number;
+	public Integer getCount(){
+		return this.count;
 	}
 
 	public void setCreatedTime(java.util.Date createdTime){
@@ -105,11 +122,11 @@ public class ShoppingCart implements Serializable {
 		return this.createdTime;
 	}
 
-	public void setSpecId(Integer specId){
+	public void setSpecId(Long specId){
 		this.specId = specId;
 	}
 
-	public Integer getSpecId(){
+	public Long getSpecId(){
 		return this.specId;
 	}
 
@@ -121,12 +138,20 @@ public class ShoppingCart implements Serializable {
 		return this.specification;
 	}
 
-	public void setPrice(Double price){
+	public void setPrice(java.math.BigDecimal price){
 		this.price = price;
 	}
 
-	public Double getPrice(){
+	public java.math.BigDecimal getPrice(){
 		return this.price;
+	}
+
+	public void setType(String type){
+		this.type = type;
+	}
+
+	public String getType(){
+		return this.type;
 	}
 
 	public void setQuantity(Integer quantity){
@@ -143,6 +168,46 @@ public class ShoppingCart implements Serializable {
 
 	public String getGoodsImage(){
 		return this.goodsImage;
+	}
+
+	public void setGmtCreate(java.util.Date gmtCreate){
+		this.gmtCreate = gmtCreate;
+	}
+
+	public java.util.Date getGmtCreate(){
+		return this.gmtCreate;
+	}
+
+	public void setGmtModified(java.util.Date gmtModified){
+		this.gmtModified = gmtModified;
+	}
+
+	public java.util.Date getGmtModified(){
+		return this.gmtModified;
+	}
+
+	public void setModifier(String modifier){
+		this.modifier = modifier;
+	}
+
+	public String getModifier(){
+		return this.modifier;
+	}
+
+	public void setCreator(String creator){
+		this.creator = creator;
+	}
+
+	public String getCreator(){
+		return this.creator;
+	}
+
+	public void setVersion(String version){
+		this.version = version;
+	}
+
+	public String getVersion(){
+		return this.version;
 	}
 
 }

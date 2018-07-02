@@ -1,4 +1,4 @@
-package com.binzhou.zhy.entity;
+package com.binzhou.zhy.model.dto.basic;
 import java.io.Serializable;
 
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 
  **/
 @SuppressWarnings("serial")
-public class OrderDetail implements Serializable {
+public class OrderDetailDTO implements Serializable {
 
 	/**自动编号**/
 	private Long id;

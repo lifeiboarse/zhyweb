@@ -16,5 +16,15 @@ public interface IGoodsService {
     
     public Result<GoodsDTO> selectByPrimaryKey(Long id);
 
-    public Result<List<GoodsDTO>> selectGoodsListByParam();
+    public Result<List<GoodsDTO>> selectListByOption(GoodsDTO record);
+
+    public Result deleteByPrimaryKey(Long id);
+
+    public Result insert(GoodsDTO record);
+
+    public Result insertSelective(GoodsDTO record);
+
+    public Result updateByPrimaryKeySelective(GoodsDTO record);
+
+    public Result updateByPrimaryKey(GoodsDTO record);
 }

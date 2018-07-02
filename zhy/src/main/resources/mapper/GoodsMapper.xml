@@ -1,316 +1,428 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.binzhou.zhy.mapper.GoodsMapper">
 
-    <resultMap id="baseResultMap" type="com.binzhou.zhy.entity.GoodsDO">
-        <result property="goodsId" column="goods_id"/>
-        <result property="storeId" column="store_id"/>
-        <result property="type" column="type"/>
-        <result property="goodsName" column="goods_name"/>
-        <result property="description" column="description"/>
-        <result property="cateId" column="cate_id"/>
-        <result property="cateName" column="cate_name"/>
-        <result property="brand" column="brand"/>
-        <result property="price" column="price"/>
-        <result property="unit" column="unit"/>
-        <result property="defaultImage" column="default_image"/>
-    </resultMap>
+	<!--实体映射-->
+	<resultMap id="goodsResultMap" type="com.binzhou.zhy.entity.Goods">
+		<!--商品ID-->
+		<id property="id" column="id" />
+		<!--店铺ID-->
+		<result property="shopId" column="shop_id" />
+		<!--商品所属分类ID-->
+		<result property="cateId" column="cate_id" />
+		<!--商品名-->
+		<result property="name" column="name" />
+		<!--商品价格-->
+		<result property="price" column="price" />
+		<!---->
+		<result property="count" column="count" />
+		<!--单位-->
+		<result property="unit" column="unit" />
+		<!--默认商品图片地址-->
+		<result property="image" column="image" />
+		<!--商品描述-->
+		<result property="description" column="description" />
+		<!--商品品牌名-->
+		<result property="brand" column="brand" />
+		<!--商品类型-->
+		<result property="type" column="type" />
+		<!--商品分类名-->
+		<result property="cateName" column="cate_name" />
+		<!--属性的数量数目-->
+		<result property="specNumber" column="spec_number" />
+		<!--第一属性名（比如颜色）-->
+		<result property="speName1" column="spe_name_1" />
+		<!--第二属性名（比如尺码）-->
+		<result property="speName2" column="spe_name_2" />
+		<!--是否显示（默认为1显示）-->
+		<result property="ifShow" column="if_show" />
+		<!--是否处于关闭状态（默认为0不关闭）-->
+		<result property="closed" column="closed" />
+		<!--状态关闭原因-->
+		<result property="closeReason" column="close_reason" />
+		<!--默认属性ID-->
+		<result property="defaultSpec" column="default_spec" />
+		<!--是否推荐-->
+		<result property="recommended" column="recommended" />
+		<!--该商品第一级分类ID-->
+		<result property="cateId1" column="cate_id_1" />
+		<!--该商品第二级分类ID-->
+		<result property="cateId2" column="cate_id_2" />
+		<!--该商品第三级分类ID-->
+		<result property="cateId3" column="cate_id_3" />
+		<!--该商品第四级分类ID-->
+		<result property="cateId4" column="cate_id_4" />
+		<!--检索标签-->
+		<result property="tag" column="tag" />
+		<!---->
+		<result property="gmtCreate" column="gmt_create" />
+		<!---->
+		<result property="gmtModified" column="gmt_modified" />
+		<!---->
+		<result property="modifier" column="modifier" />
+		<!---->
+		<result property="version" column="version" />
+		<!---->
+		<result property="creator" column="creator" />
+	</resultMap>
 
-    <!-- 通用查询结果列-->
-    <sql id="Base_Column_List">
-		 goods_id,	store_id,	type,	goods_name,	description,	cate_id,	cate_name,	brand,	spec_qty,	spe_name_1,	spe_name_2,	if_show,	closed,	close_reason,	default_spec,	default_image,	recommended,	cate_id_1,	cate_id_2,	cate_id_3,	cate_id_4,	price,	tag,	unit
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	shop_id,	cate_id,	name,	price,	count,	unit,	image,	description,	brand,	type,	cate_name,	spec_number,	spe_name_1,	spe_name_2,	if_show,	closed,	close_reason,	default_spec,	recommended,	cate_id_1,	cate_id_2,	cate_id_3,	cate_id_4,	tag,	gmt_create,	gmt_modified,	modifier,	version,	creator
 	</sql>
 
-    <!-- 查询（根据主键ID查询） -->
-    <select id="selectByPrimaryKey" resultMap="baseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM zhy_goods
-        WHERE goods_id = #{goodsId}
-    </select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.Goods" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_goods
+		 WHERE id = #{id}
+	</select>
 
-    <select id="selectGoodsListByParam" resultMap="baseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM zhy_goods
-        WHERE 1=1
-    </select>
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="goodsResultMap" parameterType="com.binzhou.zhy.entity.Goods">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_goods
+		 WHERE id = #{id}
+	</select>
 
-    <!--删除：根据主键ID删除-->
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		 DELETE FROM zhy_goods
-		 WHERE goods_id = #{goodsId}
+		 WHERE id = #{id}
 	</delete>
 
-    <!-- 添加 -->
-    <insert id="insert" parameterType="java.util.List">
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.Goods">
 		 INSERT INTO zhy_goods
- 		(goods_id,store_id,type,goods_name,description,cate_id,cate_name,brand,spec_qty,spe_name_1,spe_name_2,if_show,closed,close_reason,default_spec,default_image,recommended,cate_id_1,cate_id_2,cate_id_3,cate_id_4,price,tag,unit) 
+ 		(id,shop_id,cate_id,name,price,count,unit,image,description,brand,type,cate_name,spec_number,spe_name_1,spe_name_2,if_show,closed,close_reason,default_spec,recommended,cate_id_1,cate_id_2,cate_id_3,cate_id_4,tag,gmt_create,gmt_modified,modifier,version,creator) 
 		 VALUES 
- 		(#{goodsId},#{storeId},#{type},#{goodsName},#{description},#{cateId},#{cateName},#{brand},#{specQty},#{speName1},#{speName2},#{ifShow},#{closed},#{closeReason},#{defaultSpec},#{defaultImage},#{recommended},#{cateId1},#{cateId2},#{cateId3},#{cateId4},#{price},#{tag},#{unit}) 
+ 		(#{id},#{shopId},#{cateId},#{name},#{price},#{count},#{unit},#{image},#{description},#{brand},#{type},#{cateName},#{specNumber},#{speName1},#{speName2},#{ifShow},#{closed},#{closeReason},#{defaultSpec},#{recommended},#{cateId1},#{cateId2},#{cateId3},#{cateId4},#{tag},#{gmtCreate},#{gmtModified},#{modifier},#{version},#{creator}) 
 	</insert>
 
-    <!-- 添加 （匹配有值的字段）-->
-    <insert id="insertSelective" parameterType="java.util.List">
-        INSERT INTO zhy_goods
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="goodsId != null">
-                goods_id,
-            </if>
-            <if test="storeId != null">
-                store_id,
-            </if>
-            <if test="type != null">
-                type,
-            </if>
-            <if test="goodsName != null">
-                goods_name,
-            </if>
-            <if test="description != null">
-                description,
-            </if>
-            <if test="cateId != null">
-                cate_id,
-            </if>
-            <if test="cateName != null">
-                cate_name,
-            </if>
-            <if test="brand != null">
-                brand,
-            </if>
-            <if test="specQty != null">
-                spec_qty,
-            </if>
-            <if test="speName1 != null">
-                spe_name_1,
-            </if>
-            <if test="speName2 != null">
-                spe_name_2,
-            </if>
-            <if test="ifShow != null">
-                if_show,
-            </if>
-            <if test="closed != null">
-                closed,
-            </if>
-            <if test="closeReason != null">
-                close_reason,
-            </if>
-            <if test="defaultSpec != null">
-                default_spec,
-            </if>
-            <if test="defaultImage != null">
-                default_image,
-            </if>
-            <if test="recommended != null">
-                recommended,
-            </if>
-            <if test="cateId1 != null">
-                cate_id_1,
-            </if>
-            <if test="cateId2 != null">
-                cate_id_2,
-            </if>
-            <if test="cateId3 != null">
-                cate_id_3,
-            </if>
-            <if test="cateId4 != null">
-                cate_id_4,
-            </if>
-            <if test="price != null">
-                price,
-            </if>
-            <if test="tag != null">
-                tag,
-            </if>
-            <if test="unit != null">
-                unit,
-            </if>
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.Goods">
+		 INSERT INTO zhy_goods
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="shopId != null">
+				 shop_id,
+			</if>
+			<if test="cateId != null">
+				 cate_id,
+			</if>
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="price != null">
+				 price,
+			</if>
+			<if test="count != null">
+				 count,
+			</if>
+			<if test="unit != null">
+				 unit,
+			</if>
+			<if test="image != null">
+				 image,
+			</if>
+			<if test="description != null">
+				 description,
+			</if>
+			<if test="brand != null">
+				 brand,
+			</if>
+			<if test="type != null">
+				 type,
+			</if>
+			<if test="cateName != null">
+				 cate_name,
+			</if>
+			<if test="specNumber != null">
+				 spec_number,
+			</if>
+			<if test="speName1 != null">
+				 spe_name_1,
+			</if>
+			<if test="speName2 != null">
+				 spe_name_2,
+			</if>
+			<if test="ifShow != null">
+				 if_show,
+			</if>
+			<if test="closed != null">
+				 closed,
+			</if>
+			<if test="closeReason != null">
+				 close_reason,
+			</if>
+			<if test="defaultSpec != null">
+				 default_spec,
+			</if>
+			<if test="recommended != null">
+				 recommended,
+			</if>
+			<if test="cateId1 != null">
+				 cate_id_1,
+			</if>
+			<if test="cateId2 != null">
+				 cate_id_2,
+			</if>
+			<if test="cateId3 != null">
+				 cate_id_3,
+			</if>
+			<if test="cateId4 != null">
+				 cate_id_4,
+			</if>
+			<if test="tag != null">
+				 tag,
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create,
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified,
+			</if>
+			<if test="modifier != null">
+				 modifier,
+			</if>
+			<if test="version != null">
+				 version,
+			</if>
+			<if test="creator != null">
+				 creator,
+			</if>
 
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="goodsId!=null">
-                #{goodsId},
-            </if>
-            <if test="storeId!=null">
-                #{storeId},
-            </if>
-            <if test="type!=null">
-                #{type},
-            </if>
-            <if test="goodsName!=null">
-                #{goodsName},
-            </if>
-            <if test="description!=null">
-                #{description},
-            </if>
-            <if test="cateId!=null">
-                #{cateId},
-            </if>
-            <if test="cateName!=null">
-                #{cateName},
-            </if>
-            <if test="brand!=null">
-                #{brand},
-            </if>
-            <if test="specQty!=null">
-                #{specQty},
-            </if>
-            <if test="speName1!=null">
-                #{speName1},
-            </if>
-            <if test="speName2!=null">
-                #{speName2},
-            </if>
-            <if test="ifShow!=null">
-                #{ifShow},
-            </if>
-            <if test="closed!=null">
-                #{closed},
-            </if>
-            <if test="closeReason!=null">
-                #{closeReason},
-            </if>
-            <if test="defaultSpec!=null">
-                #{defaultSpec},
-            </if>
-            <if test="defaultImage!=null">
-                #{defaultImage},
-            </if>
-            <if test="recommended!=null">
-                #{recommended},
-            </if>
-            <if test="cateId1!=null">
-                #{cateId1},
-            </if>
-            <if test="cateId2!=null">
-                #{cateId2},
-            </if>
-            <if test="cateId3!=null">
-                #{cateId3},
-            </if>
-            <if test="cateId4!=null">
-                #{cateId4},
-            </if>
-            <if test="price!=null">
-                #{price},
-            </if>
-            <if test="tag!=null">
-                #{tag},
-            </if>
-            <if test="unit!=null">
-                #{unit},
-            </if>
-        </trim>
-    </insert>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="shopId!=null">
+				 #{shopId},
+			</if>
+			<if test="cateId!=null">
+				 #{cateId},
+			</if>
+			<if test="name!=null">
+				 #{name},
+			</if>
+			<if test="price!=null">
+				 #{price},
+			</if>
+			<if test="count!=null">
+				 #{count},
+			</if>
+			<if test="unit!=null">
+				 #{unit},
+			</if>
+			<if test="image!=null">
+				 #{image},
+			</if>
+			<if test="description!=null">
+				 #{description},
+			</if>
+			<if test="brand!=null">
+				 #{brand},
+			</if>
+			<if test="type!=null">
+				 #{type},
+			</if>
+			<if test="cateName!=null">
+				 #{cateName},
+			</if>
+			<if test="specNumber!=null">
+				 #{specNumber},
+			</if>
+			<if test="speName1!=null">
+				 #{speName1},
+			</if>
+			<if test="speName2!=null">
+				 #{speName2},
+			</if>
+			<if test="ifShow!=null">
+				 #{ifShow},
+			</if>
+			<if test="closed!=null">
+				 #{closed},
+			</if>
+			<if test="closeReason!=null">
+				 #{closeReason},
+			</if>
+			<if test="defaultSpec!=null">
+				 #{defaultSpec},
+			</if>
+			<if test="recommended!=null">
+				 #{recommended},
+			</if>
+			<if test="cateId1!=null">
+				 #{cateId1},
+			</if>
+			<if test="cateId2!=null">
+				 #{cateId2},
+			</if>
+			<if test="cateId3!=null">
+				 #{cateId3},
+			</if>
+			<if test="cateId4!=null">
+				 #{cateId4},
+			</if>
+			<if test="tag!=null">
+				 #{tag},
+			</if>
+			<if test="gmtCreate!=null">
+				 #{gmtCreate},
+			</if>
+			<if test="gmtModified!=null">
+				 #{gmtModified},
+			</if>
+			<if test="modifier!=null">
+				 #{modifier},
+			</if>
+			<if test="version!=null">
+				 #{version},
+			</if>
+			<if test="creator!=null">
+				 #{creator},
+			</if>
+		 </trim>
+	</insert>
 
-    <!-- 修 改-->
-    <update id="updateByPrimaryKeySelective" parameterType="java.util.List">
-        UPDATE zhy_goods
-        <set>
-            <if test="storeId != null">
-                store_id = #{storeId},
-            </if>
-            <if test="type != null">
-                type = #{type},
-            </if>
-            <if test="goodsName != null">
-                goods_name = #{goodsName},
-            </if>
-            <if test="description != null">
-                description = #{description},
-            </if>
-            <if test="cateId != null">
-                cate_id = #{cateId},
-            </if>
-            <if test="cateName != null">
-                cate_name = #{cateName},
-            </if>
-            <if test="brand != null">
-                brand = #{brand},
-            </if>
-            <if test="specQty != null">
-                spec_qty = #{specQty},
-            </if>
-            <if test="speName1 != null">
-                spe_name_1 = #{speName1},
-            </if>
-            <if test="speName2 != null">
-                spe_name_2 = #{speName2},
-            </if>
-            <if test="ifShow != null">
-                if_show = #{ifShow},
-            </if>
-            <if test="closed != null">
-                closed = #{closed},
-            </if>
-            <if test="closeReason != null">
-                close_reason = #{closeReason},
-            </if>
-            <if test="defaultSpec != null">
-                default_spec = #{defaultSpec},
-            </if>
-            <if test="defaultImage != null">
-                default_image = #{defaultImage},
-            </if>
-            <if test="recommended != null">
-                recommended = #{recommended},
-            </if>
-            <if test="cateId1 != null">
-                cate_id_1 = #{cateId1},
-            </if>
-            <if test="cateId2 != null">
-                cate_id_2 = #{cateId2},
-            </if>
-            <if test="cateId3 != null">
-                cate_id_3 = #{cateId3},
-            </if>
-            <if test="cateId4 != null">
-                cate_id_4 = #{cateId4},
-            </if>
-            <if test="price != null">
-                price = #{price},
-            </if>
-            <if test="tag != null">
-                tag = #{tag},
-            </if>
-            <if test="unit != null">
-                unit = #{unit},
-            </if>
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.Goods">
+		 UPDATE zhy_goods
+ 		 <set> 
+			<if test="shopId != null">
+				 shop_id = #{shopId},
+			</if>
+			<if test="cateId != null">
+				 cate_id = #{cateId},
+			</if>
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="price != null">
+				 price = #{price},
+			</if>
+			<if test="count != null">
+				 count = #{count},
+			</if>
+			<if test="unit != null">
+				 unit = #{unit},
+			</if>
+			<if test="image != null">
+				 image = #{image},
+			</if>
+			<if test="description != null">
+				 description = #{description},
+			</if>
+			<if test="brand != null">
+				 brand = #{brand},
+			</if>
+			<if test="type != null">
+				 type = #{type},
+			</if>
+			<if test="cateName != null">
+				 cate_name = #{cateName},
+			</if>
+			<if test="specNumber != null">
+				 spec_number = #{specNumber},
+			</if>
+			<if test="speName1 != null">
+				 spe_name_1 = #{speName1},
+			</if>
+			<if test="speName2 != null">
+				 spe_name_2 = #{speName2},
+			</if>
+			<if test="ifShow != null">
+				 if_show = #{ifShow},
+			</if>
+			<if test="closed != null">
+				 closed = #{closed},
+			</if>
+			<if test="closeReason != null">
+				 close_reason = #{closeReason},
+			</if>
+			<if test="defaultSpec != null">
+				 default_spec = #{defaultSpec},
+			</if>
+			<if test="recommended != null">
+				 recommended = #{recommended},
+			</if>
+			<if test="cateId1 != null">
+				 cate_id_1 = #{cateId1},
+			</if>
+			<if test="cateId2 != null">
+				 cate_id_2 = #{cateId2},
+			</if>
+			<if test="cateId3 != null">
+				 cate_id_3 = #{cateId3},
+			</if>
+			<if test="cateId4 != null">
+				 cate_id_4 = #{cateId4},
+			</if>
+			<if test="tag != null">
+				 tag = #{tag},
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified = #{gmtModified},
+			</if>
+			<if test="modifier != null">
+				 modifier = #{modifier},
+			</if>
+			<if test="version != null">
+				 version = #{version},
+			</if>
+			<if test="creator != null">
+				 creator = #{creator},
+			</if>
 
-        </set>
-        WHERE goods_id = #{goodsId}
-    </update>
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
 
-    <!-- 修 改-->
-    <update id="updateByPrimaryKey" parameterType="java.util.List">
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.Goods">
 		 UPDATE zhy_goods
 		 SET 
-			 store_id = #{storeId},
-			 type = #{type},
-			 goods_name = #{goodsName},
-			 description = #{description},
+			 shop_id = #{shopId},
 			 cate_id = #{cateId},
-			 cate_name = #{cateName},
+			 name = #{name},
+			 price = #{price},
+			 count = #{count},
+			 unit = #{unit},
+			 image = #{image},
+			 description = #{description},
 			 brand = #{brand},
-			 spec_qty = #{specQty},
+			 type = #{type},
+			 cate_name = #{cateName},
+			 spec_number = #{specNumber},
 			 spe_name_1 = #{speName1},
 			 spe_name_2 = #{speName2},
 			 if_show = #{ifShow},
 			 closed = #{closed},
 			 close_reason = #{closeReason},
 			 default_spec = #{defaultSpec},
-			 default_image = #{defaultImage},
 			 recommended = #{recommended},
 			 cate_id_1 = #{cateId1},
 			 cate_id_2 = #{cateId2},
 			 cate_id_3 = #{cateId3},
 			 cate_id_4 = #{cateId4},
-			 price = #{price},
 			 tag = #{tag},
-			 unit = #{unit}
-		 WHERE goods_id = #{goodsId}
+			 gmt_create = #{gmtCreate},
+			 gmt_modified = #{gmtModified},
+			 modifier = #{modifier},
+			 version = #{version},
+			 creator = #{creator}
+		 WHERE id = #{id}
 	</update>
 
 </mapper>

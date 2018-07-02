@@ -1,333 +1,387 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.binzhou.zhy.mapper.OrderMapper">
 
-    <resultMap id="orderResultMap" type="com.binzhou.zhy.entity.OrderDO">
-        <result property="orderId" column="order_id"/>
-        <result property="orderNo" column="order_no"/>
-    </resultMap>
+	<!--实体映射-->
+	<resultMap id="orderResultMap" type="com.binzhou.zhy.entity.Order">
+		<!--自动编号（order_id, 自增长主键）-->
+		<id property="id" column="id" />
+		<!--订单单号（order_no, 唯一值，供客户查询）-->
+		<result property="orderNo" column="order_no" />
+		<!--商店编号（shop_id, 商店表自动编号）-->
+		<result property="shopId" column="shop_id" />
+		<!--订单状态 (order_status,未付款,已付款,已发货,已签收,退货申请,退货中,已退货,取消交易)-->
+		<result property="orderStatus" column="order_status" />
+		<!--商品数量 (product_count, 商品项目数量，不是商品-->
+		<result property="productCount" column="product_count" />
+		<!--商品总价 (product_amount_total)-->
+		<result property="productAmountTotal" column="product_amount_total" />
+		<!--订单金额 (order_amount_total，实际付款金额)-->
+		<result property="orderAmountTotal" column="order_amount_total" />
+		<!--运费金额 (logistics_fee)-->
+		<result property="logisticsFee" column="logistics_fee" />
+		<!--是否开箱验货 (is_unpacking_inspection)-->
+		<result property="isUnpackingInspection" column="is_unpacking_inspection" />
+		<!--是否开票（是否开具发票）-->
+		<result property="openInvoice" column="open_invoice" />
+		<!--发票编号 (订单发票表自动编号)-->
+		<result property="invoiceId" column="invoice_id" />
+		<!--收货地址编号 (address_id, 收货地址表自动编号)-->
+		<result property="addressId" column="address_id" />
+		<!--订单物流编号 (orderlogistics_id, 订单物流表自动编号)-->
+		<result property="orderlogisticsId" column="orderlogistics_id" />
+		<!--订单支付渠道 (pay_channel)-->
+		<result property="payChannel" column="pay_channel" />
+		<!--订单支付单号 (out_trade_no/escrow_trade_no,第三方支付流水号)-->
+		<result property="outTradeNo" column="out_trade_no" />
+		<!--创建时间 (下单时间)-->
+		<result property="createdTime" column="created_time" />
+		<!--付款时间-->
+		<result property="payTime" column="pay_time" />
+		<!--发货时间-->
+		<result property="deliveryTime" column="delivery_time" />
+		<!--客户编号 (user_id，用户表自动编号)-->
+		<result property="userId" column="user_id" />
+		<!--客户备注-->
+		<result property="customerRemark" column="customer_remark" />
+		<!--订单结算状态 (order_settlement_status，货到付款、分期付款会用到)-->
+		<result property="orderSettlementStatus" column="order_settlement_status" />
+		<!--订单结算时间 (order_settlement_time)-->
+		<result property="orderSettlementTime" column="order_settlement_time" />
+		<!--是否删除(0、正常，-1删除)-->
+		<result property="isDeleted" column="is_deleted" />
+		<!---->
+		<result property="operStatus" column="oper_status" />
+		<!---->
+		<result property="status" column="status" />
+		<!---->
+		<result property="gmtCreate" column="gmt_create" />
+		<!---->
+		<result property="gmtModified" column="gmt_modified" />
+		<!---->
+		<result property="modifier" column="modifier" />
+		<!---->
+		<result property="version" column="version" />
+	</resultMap>
 
-    <parameterMap id="orderParamMap" type="com.binzhou.zhy.entity.OrderDO">
-        <parameter property="orderId" resultMap="orderResultMap"/>
-    </parameterMap>
 
-    <!-- 通用查询结果列-->
-    <sql id="Base_Column_List">
-		 order_id,	order_no,	shop_id,	order_status,	product_count,	product_amount_total,	order_amount_total,	logistics_fee,	is_unpacking_inspection,	open_invoice,	invoice_id,	address_id,	orderlogistics_id,	pay_channel,	out_trade_no,	created_time,	pay_time,	delivery_time,	user_id,	customer_remark,	order_settlement_status,	order_settlement_time,	is_deleted,	oper_status,	status,	gmt_create,	gmt_modified,	modifier,	version
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	order_no,	shop_id,	order_status,	product_count,	product_amount_total,	order_amount_total,	logistics_fee,	is_unpacking_inspection,	open_invoice,	invoice_id,	address_id,	orderlogistics_id,	pay_channel,	out_trade_no,	created_time,	pay_time,	delivery_time,	user_id,	customer_remark,	order_settlement_status,	order_settlement_time,	is_deleted,	oper_status,	status,	gmt_create,	gmt_modified,	modifier,	version
 	</sql>
 
-    <!-- 查询（根据主键ID查询） -->
-    <select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.OrderDO" parameterType="java.lang.Integer">
-        SELECT
-        <include refid="Base_Column_List" />
-        FROM zhy_order
-        WHERE order_id = #{orderId}
-    </select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.Order" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_order
+		 WHERE id = #{id}
+	</select>
 
-    <!-- 查询-->
-    <select id="selecOrdertListByParam" resultMap="orderResultMap">
-        SELECT
-        <include refid="Base_Column_List" />
-        FROM zhy_order
-        WHERE 1=1
-    </select>
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="orderResultMap" parameterType="com.binzhou.zhy.entity.Order">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_order
 
-    <!--删除：根据主键ID删除-->
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		 DELETE FROM zhy_order
-		 WHERE order_id = #{orderId}
+		 WHERE id = #{id}
 	</delete>
 
-    <!-- 添加 -->
-    <insert id="insert" parameterType="com.binzhou.zhy.entity.OrderDO">
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.Order">
 		 INSERT INTO zhy_order
- 		(order_id,order_no,shop_id,order_status,product_count,product_amount_total,order_amount_total,logistics_fee,is_unpacking_inspection,open_invoice,invoice_id,address_id,orderlogistics_id,pay_channel,out_trade_no,created_time,pay_time,delivery_time,user_id,customer_remark,order_settlement_status,order_settlement_time,is_deleted,oper_status,status,gmt_create,gmt_modified,modifier,version)
-		 VALUES
- 		(#{orderId},#{orderNo},#{shopId},#{orderStatus},#{productCount},#{productAmountTotal},#{orderAmountTotal},#{logisticsFee},#{isUnpackingInspection},#{openInvoice},#{invoiceId},#{addressId},#{orderlogisticsId},#{payChannel},#{outTradeNo},#{createdTime},#{payTime},#{deliveryTime},#{userId},#{customerRemark},#{orderSettlementStatus},#{orderSettlementTime},#{isDeleted},#{operStatus},#{status},#{gmtCreate},#{gmtModified},#{modifier},#{version})
+ 		(id,order_no,shop_id,order_status,product_count,product_amount_total,order_amount_total,logistics_fee,is_unpacking_inspection,open_invoice,invoice_id,address_id,orderlogistics_id,pay_channel,out_trade_no,created_time,pay_time,delivery_time,user_id,customer_remark,order_settlement_status,order_settlement_time,is_deleted,oper_status,status,gmt_create,gmt_modified,modifier,version) 
+		 VALUES 
+ 		(#{id},#{orderNo},#{shopId},#{orderStatus},#{productCount},#{productAmountTotal},#{orderAmountTotal},#{logisticsFee},#{isUnpackingInspection},#{openInvoice},#{invoiceId},#{addressId},#{orderlogisticsId},#{payChannel},#{outTradeNo},#{createdTime},#{payTime},#{deliveryTime},#{userId},#{customerRemark},#{orderSettlementStatus},#{orderSettlementTime},#{isDeleted},#{operStatus},#{status},#{gmtCreate},#{gmtModified},#{modifier},#{version}) 
 	</insert>
 
-    <!-- 添加 （匹配有值的字段）-->
-    <insert id="insertSelective" parameterType="com.binzhou.zhy.entity.OrderDO">
-        INSERT INTO zhy_order
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="orderId != null">
-                order_id,
-            </if>
-            <if test="orderNo != null">
-                order_no,
-            </if>
-            <if test="shopId != null">
-                shop_id,
-            </if>
-            <if test="orderStatus != null">
-                order_status,
-            </if>
-            <if test="productCount != null">
-                product_count,
-            </if>
-            <if test="productAmountTotal != null">
-                product_amount_total,
-            </if>
-            <if test="orderAmountTotal != null">
-                order_amount_total,
-            </if>
-            <if test="logisticsFee != null">
-                logistics_fee,
-            </if>
-            <if test="isUnpackingInspection != null">
-                is_unpacking_inspection,
-            </if>
-            <if test="openInvoice != null">
-                open_invoice,
-            </if>
-            <if test="invoiceId != null">
-                invoice_id,
-            </if>
-            <if test="addressId != null">
-                address_id,
-            </if>
-            <if test="orderlogisticsId != null">
-                orderlogistics_id,
-            </if>
-            <if test="payChannel != null">
-                pay_channel,
-            </if>
-            <if test="outTradeNo != null">
-                out_trade_no,
-            </if>
-            <if test="createdTime != null">
-                created_time,
-            </if>
-            <if test="payTime != null">
-                pay_time,
-            </if>
-            <if test="deliveryTime != null">
-                delivery_time,
-            </if>
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="customerRemark != null">
-                customer_remark,
-            </if>
-            <if test="orderSettlementStatus != null">
-                order_settlement_status,
-            </if>
-            <if test="orderSettlementTime != null">
-                order_settlement_time,
-            </if>
-            <if test="isDeleted != null">
-                is_deleted,
-            </if>
-            <if test="operStatus != null">
-                oper_status,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create,
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified,
-            </if>
-            <if test="modifier != null">
-                modifier,
-            </if>
-            <if test="version != null">
-                version,
-            </if>
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.Order">
+		 INSERT INTO zhy_order
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="orderNo != null">
+				 order_no,
+			</if>
+			<if test="shopId != null">
+				 shop_id,
+			</if>
+			<if test="orderStatus != null">
+				 order_status,
+			</if>
+			<if test="productCount != null">
+				 product_count,
+			</if>
+			<if test="productAmountTotal != null">
+				 product_amount_total,
+			</if>
+			<if test="orderAmountTotal != null">
+				 order_amount_total,
+			</if>
+			<if test="logisticsFee != null">
+				 logistics_fee,
+			</if>
+			<if test="isUnpackingInspection != null">
+				 is_unpacking_inspection,
+			</if>
+			<if test="openInvoice != null">
+				 open_invoice,
+			</if>
+			<if test="invoiceId != null">
+				 invoice_id,
+			</if>
+			<if test="addressId != null">
+				 address_id,
+			</if>
+			<if test="orderlogisticsId != null">
+				 orderlogistics_id,
+			</if>
+			<if test="payChannel != null">
+				 pay_channel,
+			</if>
+			<if test="outTradeNo != null">
+				 out_trade_no,
+			</if>
+			<if test="createdTime != null">
+				 created_time,
+			</if>
+			<if test="payTime != null">
+				 pay_time,
+			</if>
+			<if test="deliveryTime != null">
+				 delivery_time,
+			</if>
+			<if test="userId != null">
+				 user_id,
+			</if>
+			<if test="customerRemark != null">
+				 customer_remark,
+			</if>
+			<if test="orderSettlementStatus != null">
+				 order_settlement_status,
+			</if>
+			<if test="orderSettlementTime != null">
+				 order_settlement_time,
+			</if>
+			<if test="isDeleted != null">
+				 is_deleted,
+			</if>
+			<if test="operStatus != null">
+				 oper_status,
+			</if>
+			<if test="status != null">
+				 status,
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create,
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified,
+			</if>
+			<if test="modifier != null">
+				 modifier,
+			</if>
+			<if test="version != null">
+				 version,
+			</if>
 
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="orderId!=null">
-                #{orderId},
-            </if>
-            <if test="orderNo!=null">
-                #{orderNo},
-            </if>
-            <if test="shopId!=null">
-                #{shopId},
-            </if>
-            <if test="orderStatus!=null">
-                #{orderStatus},
-            </if>
-            <if test="productCount!=null">
-                #{productCount},
-            </if>
-            <if test="productAmountTotal!=null">
-                #{productAmountTotal},
-            </if>
-            <if test="orderAmountTotal!=null">
-                #{orderAmountTotal},
-            </if>
-            <if test="logisticsFee!=null">
-                #{logisticsFee},
-            </if>
-            <if test="isUnpackingInspection!=null">
-                #{isUnpackingInspection},
-            </if>
-            <if test="openInvoice!=null">
-                #{openInvoice},
-            </if>
-            <if test="invoiceId!=null">
-                #{invoiceId},
-            </if>
-            <if test="addressId!=null">
-                #{addressId},
-            </if>
-            <if test="orderlogisticsId!=null">
-                #{orderlogisticsId},
-            </if>
-            <if test="payChannel!=null">
-                #{payChannel},
-            </if>
-            <if test="outTradeNo!=null">
-                #{outTradeNo},
-            </if>
-            <if test="createdTime!=null">
-                #{createdTime},
-            </if>
-            <if test="payTime!=null">
-                #{payTime},
-            </if>
-            <if test="deliveryTime!=null">
-                #{deliveryTime},
-            </if>
-            <if test="userId!=null">
-                #{userId},
-            </if>
-            <if test="customerRemark!=null">
-                #{customerRemark},
-            </if>
-            <if test="orderSettlementStatus!=null">
-                #{orderSettlementStatus},
-            </if>
-            <if test="orderSettlementTime!=null">
-                #{orderSettlementTime},
-            </if>
-            <if test="isDeleted!=null">
-                #{isDeleted},
-            </if>
-            <if test="operStatus!=null">
-                #{operStatus},
-            </if>
-            <if test="status!=null">
-                #{status},
-            </if>
-            <if test="gmtCreate!=null">
-                #{gmtCreate},
-            </if>
-            <if test="gmtModified!=null">
-                #{gmtModified},
-            </if>
-            <if test="modifier!=null">
-                #{modifier},
-            </if>
-            <if test="version!=null">
-                #{version},
-            </if>
-        </trim>
-    </insert>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="orderNo!=null">
+				 #{orderNo},
+			</if>
+			<if test="shopId!=null">
+				 #{shopId},
+			</if>
+			<if test="orderStatus!=null">
+				 #{orderStatus},
+			</if>
+			<if test="productCount!=null">
+				 #{productCount},
+			</if>
+			<if test="productAmountTotal!=null">
+				 #{productAmountTotal},
+			</if>
+			<if test="orderAmountTotal!=null">
+				 #{orderAmountTotal},
+			</if>
+			<if test="logisticsFee!=null">
+				 #{logisticsFee},
+			</if>
+			<if test="isUnpackingInspection!=null">
+				 #{isUnpackingInspection},
+			</if>
+			<if test="openInvoice!=null">
+				 #{openInvoice},
+			</if>
+			<if test="invoiceId!=null">
+				 #{invoiceId},
+			</if>
+			<if test="addressId!=null">
+				 #{addressId},
+			</if>
+			<if test="orderlogisticsId!=null">
+				 #{orderlogisticsId},
+			</if>
+			<if test="payChannel!=null">
+				 #{payChannel},
+			</if>
+			<if test="outTradeNo!=null">
+				 #{outTradeNo},
+			</if>
+			<if test="createdTime!=null">
+				 #{createdTime},
+			</if>
+			<if test="payTime!=null">
+				 #{payTime},
+			</if>
+			<if test="deliveryTime!=null">
+				 #{deliveryTime},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+			<if test="customerRemark!=null">
+				 #{customerRemark},
+			</if>
+			<if test="orderSettlementStatus!=null">
+				 #{orderSettlementStatus},
+			</if>
+			<if test="orderSettlementTime!=null">
+				 #{orderSettlementTime},
+			</if>
+			<if test="isDeleted!=null">
+				 #{isDeleted},
+			</if>
+			<if test="operStatus!=null">
+				 #{operStatus},
+			</if>
+			<if test="status!=null">
+				 #{status},
+			</if>
+			<if test="gmtCreate!=null">
+				 #{gmtCreate},
+			</if>
+			<if test="gmtModified!=null">
+				 #{gmtModified},
+			</if>
+			<if test="modifier!=null">
+				 #{modifier},
+			</if>
+			<if test="version!=null">
+				 #{version},
+			</if>
+		 </trim>
+	</insert>
 
-    <!-- 修 改-->
-    <update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.OrderDO">
-        UPDATE zhy_order
-        <set>
-            <if test="orderNo != null">
-                order_no = #{orderNo},
-            </if>
-            <if test="shopId != null">
-                shop_id = #{shopId},
-            </if>
-            <if test="orderStatus != null">
-                order_status = #{orderStatus},
-            </if>
-            <if test="productCount != null">
-                product_count = #{productCount},
-            </if>
-            <if test="productAmountTotal != null">
-                product_amount_total = #{productAmountTotal},
-            </if>
-            <if test="orderAmountTotal != null">
-                order_amount_total = #{orderAmountTotal},
-            </if>
-            <if test="logisticsFee != null">
-                logistics_fee = #{logisticsFee},
-            </if>
-            <if test="isUnpackingInspection != null">
-                is_unpacking_inspection = #{isUnpackingInspection},
-            </if>
-            <if test="openInvoice != null">
-                open_invoice = #{openInvoice},
-            </if>
-            <if test="invoiceId != null">
-                invoice_id = #{invoiceId},
-            </if>
-            <if test="addressId != null">
-                address_id = #{addressId},
-            </if>
-            <if test="orderlogisticsId != null">
-                orderlogistics_id = #{orderlogisticsId},
-            </if>
-            <if test="payChannel != null">
-                pay_channel = #{payChannel},
-            </if>
-            <if test="outTradeNo != null">
-                out_trade_no = #{outTradeNo},
-            </if>
-            <if test="createdTime != null">
-                created_time = #{createdTime},
-            </if>
-            <if test="payTime != null">
-                pay_time = #{payTime},
-            </if>
-            <if test="deliveryTime != null">
-                delivery_time = #{deliveryTime},
-            </if>
-            <if test="userId != null">
-                user_id = #{userId},
-            </if>
-            <if test="customerRemark != null">
-                customer_remark = #{customerRemark},
-            </if>
-            <if test="orderSettlementStatus != null">
-                order_settlement_status = #{orderSettlementStatus},
-            </if>
-            <if test="orderSettlementTime != null">
-                order_settlement_time = #{orderSettlementTime},
-            </if>
-            <if test="isDeleted != null">
-                is_deleted = #{isDeleted},
-            </if>
-            <if test="operStatus != null">
-                oper_status = #{operStatus},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create = #{gmtCreate},
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified = #{gmtModified},
-            </if>
-            <if test="modifier != null">
-                modifier = #{modifier},
-            </if>
-            <if test="version != null">
-                version = #{version},
-            </if>
-
-        </set>
-        WHERE order_id = #{orderId}
-    </update>
-
-    <!-- 修 改-->
-    <update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.OrderDO">
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.Order">
 		 UPDATE zhy_order
-		 SET
+ 		 <set> 
+			<if test="orderNo != null">
+				 order_no = #{orderNo},
+			</if>
+			<if test="shopId != null">
+				 shop_id = #{shopId},
+			</if>
+			<if test="orderStatus != null">
+				 order_status = #{orderStatus},
+			</if>
+			<if test="productCount != null">
+				 product_count = #{productCount},
+			</if>
+			<if test="productAmountTotal != null">
+				 product_amount_total = #{productAmountTotal},
+			</if>
+			<if test="orderAmountTotal != null">
+				 order_amount_total = #{orderAmountTotal},
+			</if>
+			<if test="logisticsFee != null">
+				 logistics_fee = #{logisticsFee},
+			</if>
+			<if test="isUnpackingInspection != null">
+				 is_unpacking_inspection = #{isUnpackingInspection},
+			</if>
+			<if test="openInvoice != null">
+				 open_invoice = #{openInvoice},
+			</if>
+			<if test="invoiceId != null">
+				 invoice_id = #{invoiceId},
+			</if>
+			<if test="addressId != null">
+				 address_id = #{addressId},
+			</if>
+			<if test="orderlogisticsId != null">
+				 orderlogistics_id = #{orderlogisticsId},
+			</if>
+			<if test="payChannel != null">
+				 pay_channel = #{payChannel},
+			</if>
+			<if test="outTradeNo != null">
+				 out_trade_no = #{outTradeNo},
+			</if>
+			<if test="createdTime != null">
+				 created_time = #{createdTime},
+			</if>
+			<if test="payTime != null">
+				 pay_time = #{payTime},
+			</if>
+			<if test="deliveryTime != null">
+				 delivery_time = #{deliveryTime},
+			</if>
+			<if test="userId != null">
+				 user_id = #{userId},
+			</if>
+			<if test="customerRemark != null">
+				 customer_remark = #{customerRemark},
+			</if>
+			<if test="orderSettlementStatus != null">
+				 order_settlement_status = #{orderSettlementStatus},
+			</if>
+			<if test="orderSettlementTime != null">
+				 order_settlement_time = #{orderSettlementTime},
+			</if>
+			<if test="isDeleted != null">
+				 is_deleted = #{isDeleted},
+			</if>
+			<if test="operStatus != null">
+				 oper_status = #{operStatus},
+			</if>
+			<if test="status != null">
+				 status = #{status},
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified = #{gmtModified},
+			</if>
+			<if test="modifier != null">
+				 modifier = #{modifier},
+			</if>
+			<if test="version != null">
+				 version = #{version},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.Order">
+		 UPDATE zhy_order
+		 SET 
 			 order_no = #{orderNo},
 			 shop_id = #{shopId},
 			 order_status = #{orderStatus},
@@ -356,9 +410,7 @@
 			 gmt_modified = #{gmtModified},
 			 modifier = #{modifier},
 			 version = #{version}
-		 WHERE order_id = #{orderId}
+		 WHERE id = #{id}
 	</update>
-
-
 
 </mapper>
