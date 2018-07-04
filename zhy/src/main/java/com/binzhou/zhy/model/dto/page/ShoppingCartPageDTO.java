@@ -1,6 +1,6 @@
 package com.binzhou.zhy.model.dto.page;
 
-import com.binzhou.zhy.model.dto.basic.GoodsDTO;
+import com.binzhou.zhy.model.dto.basic.ProductDTO;
 import com.binzhou.zhy.model.dto.basic.ShoppingCartDTO;
 
 /**
@@ -11,7 +11,7 @@ import com.binzhou.zhy.model.dto.basic.ShoppingCartDTO;
 public class ShoppingCartPageDTO {
 
     private ShoppingCartDTO cart;
-    private GoodsDTO goods;
+    private ProductDTO product;
 
     public ShoppingCartDTO getCart() {
         return cart;
@@ -21,11 +21,11 @@ public class ShoppingCartPageDTO {
         this.cart = cart;
     }
 
-    public GoodsDTO getGoods() {
-        return goods;
+    public ProductDTO getProduct() {
+        return product;
     }
 
-    public void setGoods(GoodsDTO goods) {
-        this.goods = goods;
+    public void setProduct(ProductDTO product) {
+        this.product = product;
     }
 }

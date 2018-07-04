@@ -1,9 +1,9 @@
 package com.binzhou.zhy.service.impl;
 
 import com.binzhou.zhy.common.util.ObjectConvertUtil;
-import com.binzhou.zhy.dao.GoodsDao;
+import com.binzhou.zhy.dao.ProductDao;
 import com.binzhou.zhy.dao.ShoppingCartDao;
-import com.binzhou.zhy.entity.Goods;
+import com.binzhou.zhy.entity.Product;
 import com.binzhou.zhy.entity.ShoppingCart;
 import com.binzhou.zhy.model.dto.page.ShoppingCartPageDTO;
 import com.binzhou.zhy.model.result.Result;
@@ -25,7 +25,7 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
     @Autowired
     ShoppingCartDao shoppingCartDao;
     @Autowired
-    GoodsDao goodsDao;
+    ProductDao productDao;
 
     @Override
     public ShoppingCart selectByPrimaryKey(Long id) {
@@ -39,9 +39,9 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         List<ShoppingCart> cartList = shoppingCartDao.selectListByOption(record);
         for (ShoppingCart cart : cartList) {
             ShoppingCartPageDTO cartPageDTO = new ShoppingCartPageDTO();
-            Goods goods = goodsDao.selectByPrimaryKey(cart.getGoodsId());
+            Product goods = productDao.selectByPrimaryKey(cart.getProductId());
             cartPageDTO.setCart(ObjectConvertUtil.convertCartToCartDTO(cart));
-            cartPageDTO.setGoods(ObjectConvertUtil.convertGoodsToGoodsDTO(goods));
+            cartPageDTO.setProduct(ObjectConvertUtil.convertProductToProductDTO(goods));
             cartPageList.add(cartPageDTO);
         }
         result.setData(cartPageList);

@@ -76,7 +76,7 @@ public class ShoppingCartController {
         Result result = new Result();
         try {
             int insert = cartService.insertSelective(record);
-            result.setData(insert);
+            result.setData(record.getId());
             result.setStatus(HttpStatus.CREATED);
             return result;
         } catch (Exception e) {

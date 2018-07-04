@@ -133,8 +133,6 @@ public class EntityUtil {
             return "java.util.Date";
         } else if (type.indexOf(type_bit) > -1) {
             return "Boolean";
-        }else if (type.indexOf(type_bit) > -1) {
-            return "Boolean";
         } else if (type.indexOf(type_decimal) > -1) {
             return "java.math.BigDecimal";
         } else if (type.indexOf(type_blob) > -1) {

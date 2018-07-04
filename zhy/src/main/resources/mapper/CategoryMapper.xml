@@ -15,12 +15,20 @@
 		<result property="sortOrder" column="sort_order" />
 		<!--是否显示（1显示，0不显示）-->
 		<result property="ifShow" column="if_show" />
-		<!---->
+		<!--创建者-->
+		<result property="creator" column="creator" />
+		<!--创建时间-->
 		<result property="gmtCreate" column="gmt_create" />
-		<!---->
-		<result property="gmtModified" column="gmt_modified" />
-		<!---->
+		<!--修改者-->
 		<result property="modifier" column="modifier" />
+		<!--修改时间-->
+		<result property="gmtModified" column="gmt_modified" />
+		<!--状态，0正常，1审核中，2审核不通过-->
+		<result property="status" column="status" />
+		<!--0:生效，-1:待生效-->
+		<result property="operStatus" column="oper_status" />
+		<!--是否删除(0、正常，-1删除)-->
+		<result property="isDeleted" column="is_deleted" />
 		<!---->
 		<result property="version" column="version" />
 	</resultMap>
@@ -28,7 +36,7 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id,	cate_name,	parent_id,	sort_order,	if_show,	gmt_create,	gmt_modified,	modifier,	version
+		 id,	cate_name,	parent_id,	sort_order,	if_show,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -56,9 +64,9 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.Category">
 		 INSERT INTO zhy_category
- 		(id,cate_name,parent_id,sort_order,if_show,gmt_create,gmt_modified,modifier,version) 
+ 		(id,cate_name,parent_id,sort_order,if_show,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
 		 VALUES 
- 		(#{id},#{cateName},#{parentId},#{sortOrder},#{ifShow},#{gmtCreate},#{gmtModified},#{modifier},#{version}) 
+ 		(#{id},#{cateName},#{parentId},#{sortOrder},#{ifShow},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
@@ -80,14 +88,26 @@
 			<if test="ifShow != null">
 				 if_show,
 			</if>
+			<if test="creator != null">
+				 creator,
+			</if>
 			<if test="gmtCreate != null">
 				 gmt_create,
+			</if>
+			<if test="modifier != null">
+				 modifier,
 			</if>
 			<if test="gmtModified != null">
 				 gmt_modified,
 			</if>
-			<if test="modifier != null">
-				 modifier,
+			<if test="status != null">
+				 status,
+			</if>
+			<if test="operStatus != null">
+				 oper_status,
+			</if>
+			<if test="isDeleted != null">
+				 is_deleted,
 			</if>
 			<if test="version != null">
 				 version,
@@ -110,14 +130,26 @@
 			<if test="ifShow!=null">
 				 #{ifShow},
 			</if>
+			<if test="creator!=null">
+				 #{creator},
+			</if>
 			<if test="gmtCreate!=null">
 				 #{gmtCreate},
+			</if>
+			<if test="modifier!=null">
+				 #{modifier},
 			</if>
 			<if test="gmtModified!=null">
 				 #{gmtModified},
 			</if>
-			<if test="modifier!=null">
-				 #{modifier},
+			<if test="status!=null">
+				 #{status},
+			</if>
+			<if test="operStatus!=null">
+				 #{operStatus},
+			</if>
+			<if test="isDeleted!=null">
+				 #{isDeleted},
 			</if>
 			<if test="version!=null">
 				 #{version},
@@ -141,14 +173,26 @@
 			<if test="ifShow != null">
 				 if_show = #{ifShow},
 			</if>
+			<if test="creator != null">
+				 creator = #{creator},
+			</if>
 			<if test="gmtCreate != null">
 				 gmt_create = #{gmtCreate},
+			</if>
+			<if test="modifier != null">
+				 modifier = #{modifier},
 			</if>
 			<if test="gmtModified != null">
 				 gmt_modified = #{gmtModified},
 			</if>
-			<if test="modifier != null">
-				 modifier = #{modifier},
+			<if test="status != null">
+				 status = #{status},
+			</if>
+			<if test="operStatus != null">
+				 oper_status = #{operStatus},
+			</if>
+			<if test="isDeleted != null">
+				 is_deleted = #{isDeleted},
 			</if>
 			<if test="version != null">
 				 version = #{version},
@@ -166,9 +210,13 @@
 			 parent_id = #{parentId},
 			 sort_order = #{sortOrder},
 			 if_show = #{ifShow},
+			 creator = #{creator},
 			 gmt_create = #{gmtCreate},
-			 gmt_modified = #{gmtModified},
 			 modifier = #{modifier},
+			 gmt_modified = #{gmtModified},
+			 status = #{status},
+			 oper_status = #{operStatus},
+			 is_deleted = #{isDeleted},
 			 version = #{version}
 		 WHERE id = #{id}
 	</update>

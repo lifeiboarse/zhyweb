@@ -25,14 +25,26 @@ public class Category implements Serializable {
 	/**是否显示（1显示，0不显示）**/
 	private Integer ifShow;
 
-	/****/
+	/**创建者**/
+	private String creator;
+
+	/**创建时间**/
 	private java.util.Date gmtCreate;
 
-	/****/
+	/**修改者**/
+	private String modifier;
+
+	/**修改时间**/
 	private java.util.Date gmtModified;
 
-	/****/
-	private String modifier;
+	/**状态，0正常，1审核中，2审核不通过**/
+	private Integer status;
+
+	/**0:生效，-1:待生效**/
+	private Integer operStatus;
+
+	/**是否删除(0、正常，-1删除)**/
+	private Integer isDeleted;
 
 	/****/
 	private String version;
@@ -79,12 +91,28 @@ public class Category implements Serializable {
 		return this.ifShow;
 	}
 
+	public void setCreator(String creator){
+		this.creator = creator;
+	}
+
+	public String getCreator(){
+		return this.creator;
+	}
+
 	public void setGmtCreate(java.util.Date gmtCreate){
 		this.gmtCreate = gmtCreate;
 	}
 
 	public java.util.Date getGmtCreate(){
 		return this.gmtCreate;
+	}
+
+	public void setModifier(String modifier){
+		this.modifier = modifier;
+	}
+
+	public String getModifier(){
+		return this.modifier;
 	}
 
 	public void setGmtModified(java.util.Date gmtModified){
@@ -95,12 +123,28 @@ public class Category implements Serializable {
 		return this.gmtModified;
 	}
 
-	public void setModifier(String modifier){
-		this.modifier = modifier;
+	public void setStatus(Integer status){
+		this.status = status;
 	}
 
-	public String getModifier(){
-		return this.modifier;
+	public Integer getStatus(){
+		return this.status;
+	}
+
+	public void setOperStatus(Integer operStatus){
+		this.operStatus = operStatus;
+	}
+
+	public Integer getOperStatus(){
+		return this.operStatus;
+	}
+
+	public void setIsDeleted(Integer isDeleted){
+		this.isDeleted = isDeleted;
+	}
+
+	public Integer getIsDeleted(){
+		return this.isDeleted;
 	}
 
 	public void setVersion(String version){

@@ -1,6 +1,5 @@
 package com.binzhou.zhy.model.dto.page;
 
-import com.binzhou.zhy.model.dto.basic.GoodsDTO;
 import com.binzhou.zhy.model.dto.basic.OrderDTO;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class OrderPageDTO {
     private Long orderId;
     private OrderDTO order;
     private List<OrderDTO> orderList;
-    private List<GoodsDTO> cartProductList;
+    //private List<ProductDTO> cartProductList;
 
     public Long getOrderId() {
         return orderId;
@@ -41,11 +40,4 @@ public class OrderPageDTO {
         this.orderList = orderList;
     }
 
-    public List<GoodsDTO> getCartProductList() {
-        return cartProductList;
-    }
-
-    public void setCartProductList(List<GoodsDTO> cartProductList) {
-        this.cartProductList = cartProductList;
-    }
 }

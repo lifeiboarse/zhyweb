@@ -2,7 +2,7 @@ package com.binzhou.zhy.entity;
 import java.io.Serializable;
 
 
-/**
+/**id
  * 
  * 
  * 
@@ -20,13 +20,19 @@ public class ShoppingCart implements Serializable {
 	private Long shopId;
 
 	/**商品编号 (product_id)**/
-	private Long goodsId;
+	private Long productId;
+
+	/**商品图片地址**/
+	private String productImage;
+
+	/**购买数量 (number)**/
+	private Integer productCount;
+
+	/**价格**/
+	private java.math.BigDecimal productPrice;
 
 	/**是否有效 (is_product_exists)**/
 	private String isProductExists;
-
-	/**购买数量 (number)**/
-	private Integer count;
 
 	/**创建时间 (created_time)**/
 	private java.util.Date createdTime;
@@ -37,32 +43,32 @@ public class ShoppingCart implements Serializable {
 	/**详细说明**/
 	private String specification;
 
-	/**价格**/
-	private java.math.BigDecimal price;
-
 	/**商品是否选中(选中success,反选circle)**/
 	private String type;
 
-	/**数量**/
-	private Integer quantity;
-
-	/**商品图片地址**/
-	private String goodsImage;
-
-	/****/
-	private java.util.Date gmtCreate;
-
-	/****/
-	private java.util.Date gmtModified;
-
-	/****/
-	private String modifier;
-
-	/****/
+	/**创建者**/
 	private String creator;
 
-	/****/
-	private String version;
+	/**创建时间**/
+	private java.util.Date gmtCreate;
+
+	/**修改人**/
+	private String modifier;
+
+	/**修改时间**/
+	private java.util.Date gmtModified;
+
+	/**状态，0正常，1审核中，2审核不通过**/
+	private Integer status;
+
+	/**0:生效，-1:待生效**/
+	private Integer operStatus;
+
+	/**是否删除(0、正常，-1删除)**/
+	private Integer isDeleted;
+
+	/**版本号**/
+	private Long version;
 
 
 
@@ -90,12 +96,36 @@ public class ShoppingCart implements Serializable {
 		return this.shopId;
 	}
 
-	public void setGoodsId(Long goodsId){
-		this.goodsId = goodsId;
+	public void setProductId(Long productId){
+		this.productId = productId;
 	}
 
-	public Long getGoodsId(){
-		return this.goodsId;
+	public Long getProductId(){
+		return this.productId;
+	}
+
+	public void setProductImage(String productImage){
+		this.productImage = productImage;
+	}
+
+	public String getProductImage(){
+		return this.productImage;
+	}
+
+	public void setProductCount(Integer productCount){
+		this.productCount = productCount;
+	}
+
+	public Integer getProductCount(){
+		return this.productCount;
+	}
+
+	public void setProductPrice(java.math.BigDecimal productPrice){
+		this.productPrice = productPrice;
+	}
+
+	public java.math.BigDecimal getProductPrice(){
+		return this.productPrice;
 	}
 
 	public void setIsProductExists(String isProductExists){
@@ -104,14 +134,6 @@ public class ShoppingCart implements Serializable {
 
 	public String getIsProductExists(){
 		return this.isProductExists;
-	}
-
-	public void setCount(Integer count){
-		this.count = count;
-	}
-
-	public Integer getCount(){
-		return this.count;
 	}
 
 	public void setCreatedTime(java.util.Date createdTime){
@@ -138,60 +160,12 @@ public class ShoppingCart implements Serializable {
 		return this.specification;
 	}
 
-	public void setPrice(java.math.BigDecimal price){
-		this.price = price;
-	}
-
-	public java.math.BigDecimal getPrice(){
-		return this.price;
-	}
-
 	public void setType(String type){
 		this.type = type;
 	}
 
 	public String getType(){
 		return this.type;
-	}
-
-	public void setQuantity(Integer quantity){
-		this.quantity = quantity;
-	}
-
-	public Integer getQuantity(){
-		return this.quantity;
-	}
-
-	public void setGoodsImage(String goodsImage){
-		this.goodsImage = goodsImage;
-	}
-
-	public String getGoodsImage(){
-		return this.goodsImage;
-	}
-
-	public void setGmtCreate(java.util.Date gmtCreate){
-		this.gmtCreate = gmtCreate;
-	}
-
-	public java.util.Date getGmtCreate(){
-		return this.gmtCreate;
-	}
-
-	public void setGmtModified(java.util.Date gmtModified){
-		this.gmtModified = gmtModified;
-	}
-
-	public java.util.Date getGmtModified(){
-		return this.gmtModified;
-	}
-
-	public void setModifier(String modifier){
-		this.modifier = modifier;
-	}
-
-	public String getModifier(){
-		return this.modifier;
 	}
 
 	public void setCreator(String creator){
@@ -202,11 +176,59 @@ public class ShoppingCart implements Serializable {
 		return this.creator;
 	}
 
-	public void setVersion(String version){
+	public void setGmtCreate(java.util.Date gmtCreate){
+		this.gmtCreate = gmtCreate;
+	}
+
+	public java.util.Date getGmtCreate(){
+		return this.gmtCreate;
+	}
+
+	public void setModifier(String modifier){
+		this.modifier = modifier;
+	}
+
+	public String getModifier(){
+		return this.modifier;
+	}
+
+	public void setGmtModified(java.util.Date gmtModified){
+		this.gmtModified = gmtModified;
+	}
+
+	public java.util.Date getGmtModified(){
+		return this.gmtModified;
+	}
+
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+
+	public Integer getStatus(){
+		return this.status;
+	}
+
+	public void setOperStatus(Integer operStatus){
+		this.operStatus = operStatus;
+	}
+
+	public Integer getOperStatus(){
+		return this.operStatus;
+	}
+
+	public void setIsDeleted(Integer isDeleted){
+		this.isDeleted = isDeleted;
+	}
+
+	public Integer getIsDeleted(){
+		return this.isDeleted;
+	}
+
+	public void setVersion(Long version){
 		this.version = version;
 	}
 
-	public String getVersion(){
+	public Long getVersion(){
 		return this.version;
 	}
 

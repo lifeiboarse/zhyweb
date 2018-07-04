@@ -8,13 +8,15 @@
 		<!--自动编号-->
 		<id property="id" column="id" />
 		<!--订单编号-->
-		<result property="orderId" column="order_id" />
+		<result property="orderNo" column="order_no" />
 		<!--商品编号-->
 		<result property="productId" column="product_id" />
 		<!--商品名称 (product_name, 商品可能删除,所以这里要记录，不能直接读商品表)-->
 		<result property="productName" column="product_name" />
 		<!--商品价格 (product_price, 商品可能删除,所以这里要记录)-->
 		<result property="productPrice" column="product_price" />
+		<!--购买数量 (number)-->
+		<result property="productNumber" column="product_number" />
 		<!--商品型号 (product_marque，前台展示给客户)-->
 		<result property="productMarque" column="product_marque" />
 		<!--商品条码 (product_store_barcode, 商品仓库条码)-->
@@ -27,20 +29,34 @@
 		<result property="discountRate" column="discount_rate" />
 		<!--折扣金额 (discount_amount)-->
 		<result property="discountAmount" column="discount_amount" />
-		<!--购买数量 (number)-->
-		<result property="number" column="number" />
 		<!--小计金额 (subtotal)-->
 		<result property="subtotal" column="subtotal" />
 		<!--商品是否有效 (is_product_exists)-->
 		<result property="isProductExists" column="is_product_exists" />
 		<!--客户商品备注 (remark)-->
 		<result property="remark" column="remark" />
+		<!--创建者-->
+		<result property="creator" column="creator" />
+		<!--创建时间-->
+		<result property="gmtCreate" column="gmt_create" />
+		<!--修改人-->
+		<result property="modifier" column="modifier" />
+		<!--修改时间-->
+		<result property="gmtModified" column="gmt_modified" />
+		<!--状态，0正常，1审核中，2审核不通过-->
+		<result property="status" column="status" />
+		<!--0:生效，-1:待生效-->
+		<result property="operStatus" column="oper_status" />
+		<!--是否删除(0、正常，-1删除)-->
+		<result property="isDeleted" column="is_deleted" />
+		<!--版本号-->
+		<result property="version" column="version" />
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id,	order_id,	product_id,	product_name,	product_price,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	number,	subtotal,	is_product_exists,	remark
+		 id,	order_no,	product_id,	product_name,	product_price,	product_number,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	subtotal,	is_product_exists,	remark,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -56,7 +72,7 @@
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM zhy_order_detail
-		 WHERE order_id = #{orderId}
+		 WHERE order_no = #{orderNo}
 	</select>
 
 	<!--删除：根据主键ID删除-->
@@ -68,9 +84,9 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.OrderDetail">
 		 INSERT INTO zhy_order_detail
- 		(id,order_id,product_id,product_name,product_price,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,number,subtotal,is_product_exists,remark) 
+ 		(id,order_no,product_id,product_name,product_price,product_number,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,subtotal,is_product_exists,remark,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
 		 VALUES 
- 		(#{id},#{orderId},#{productId},#{productName},#{productPrice},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{number},#{subtotal},#{isProductExists},#{remark}) 
+ 		(#{id},#{orderNo},#{productId},#{productName},#{productPrice},#{productNumber},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{subtotal},#{isProductExists},#{remark},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
@@ -80,8 +96,8 @@
 			<if test="id != null">
 				 id,
 			</if>
-			<if test="orderId != null">
-				 order_id,
+			<if test="orderNo != null">
+				 order_no,
 			</if>
 			<if test="productId != null">
 				 product_id,
@@ -91,6 +107,9 @@
 			</if>
 			<if test="productPrice != null">
 				 product_price,
+			</if>
+			<if test="productNumber != null">
+				 product_number,
 			</if>
 			<if test="productMarque != null">
 				 product_marque,
@@ -110,9 +129,6 @@
 			<if test="discountAmount != null">
 				 discount_amount,
 			</if>
-			<if test="number != null">
-				 number,
-			</if>
 			<if test="subtotal != null">
 				 subtotal,
 			</if>
@@ -122,14 +138,38 @@
 			<if test="remark != null">
 				 remark,
 			</if>
+			<if test="creator != null">
+				 creator,
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create,
+			</if>
+			<if test="modifier != null">
+				 modifier,
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified,
+			</if>
+			<if test="status != null">
+				 status,
+			</if>
+			<if test="operStatus != null">
+				 oper_status,
+			</if>
+			<if test="isDeleted != null">
+				 is_deleted,
+			</if>
+			<if test="version != null">
+				 version,
+			</if>
 
 		 </trim>
 		 <trim prefix="values (" suffix=")" suffixOverrides="," >
 			<if test="id!=null">
 				 #{id},
 			</if>
-			<if test="orderId!=null">
-				 #{orderId},
+			<if test="orderNo!=null">
+				 #{orderNo},
 			</if>
 			<if test="productId!=null">
 				 #{productId},
@@ -139,6 +179,9 @@
 			</if>
 			<if test="productPrice!=null">
 				 #{productPrice},
+			</if>
+			<if test="productNumber!=null">
+				 #{productNumber},
 			</if>
 			<if test="productMarque!=null">
 				 #{productMarque},
@@ -158,9 +201,6 @@
 			<if test="discountAmount!=null">
 				 #{discountAmount},
 			</if>
-			<if test="number!=null">
-				 #{number},
-			</if>
 			<if test="subtotal!=null">
 				 #{subtotal},
 			</if>
@@ -170,6 +210,30 @@
 			<if test="remark!=null">
 				 #{remark},
 			</if>
+			<if test="creator!=null">
+				 #{creator},
+			</if>
+			<if test="gmtCreate!=null">
+				 #{gmtCreate},
+			</if>
+			<if test="modifier!=null">
+				 #{modifier},
+			</if>
+			<if test="gmtModified!=null">
+				 #{gmtModified},
+			</if>
+			<if test="status!=null">
+				 #{status},
+			</if>
+			<if test="operStatus!=null">
+				 #{operStatus},
+			</if>
+			<if test="isDeleted!=null">
+				 #{isDeleted},
+			</if>
+			<if test="version!=null">
+				 #{version},
+			</if>
 		 </trim>
 	</insert>
 
@@ -177,8 +241,8 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.OrderDetail">
 		 UPDATE zhy_order_detail
  		 <set> 
-			<if test="orderId != null">
-				 order_id = #{orderId},
+			<if test="orderNo != null">
+				 order_no = #{orderNo},
 			</if>
 			<if test="productId != null">
 				 product_id = #{productId},
@@ -188,6 +252,9 @@
 			</if>
 			<if test="productPrice != null">
 				 product_price = #{productPrice},
+			</if>
+			<if test="productNumber != null">
+				 product_number = #{productNumber},
 			</if>
 			<if test="productMarque != null">
 				 product_marque = #{productMarque},
@@ -207,9 +274,6 @@
 			<if test="discountAmount != null">
 				 discount_amount = #{discountAmount},
 			</if>
-			<if test="number != null">
-				 number = #{number},
-			</if>
 			<if test="subtotal != null">
 				 subtotal = #{subtotal},
 			</if>
@@ -218,6 +282,30 @@
 			</if>
 			<if test="remark != null">
 				 remark = #{remark},
+			</if>
+			<if test="creator != null">
+				 creator = #{creator},
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create = #{gmtCreate},
+			</if>
+			<if test="modifier != null">
+				 modifier = #{modifier},
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified = #{gmtModified},
+			</if>
+			<if test="status != null">
+				 status = #{status},
+			</if>
+			<if test="operStatus != null">
+				 oper_status = #{operStatus},
+			</if>
+			<if test="isDeleted != null">
+				 is_deleted = #{isDeleted},
+			</if>
+			<if test="version != null">
+				 version = #{version},
 			</if>
 
  		 </set>
@@ -228,20 +316,28 @@
 	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.OrderDetail">
 		 UPDATE zhy_order_detail
 		 SET 
-			 order_id = #{orderId},
+			 order_no = #{orderNo},
 			 product_id = #{productId},
 			 product_name = #{productName},
 			 product_price = #{productPrice},
+			 product_number = #{productNumber},
 			 product_marque = #{productMarque},
 			 product_store_barcode = #{productStoreBarcode},
 			 product_mode_desc = #{productModeDesc},
 			 product_mode_params = #{productModeParams},
 			 discount_rate = #{discountRate},
 			 discount_amount = #{discountAmount},
-			 number = #{number},
 			 subtotal = #{subtotal},
 			 is_product_exists = #{isProductExists},
-			 remark = #{remark}
+			 remark = #{remark},
+			 creator = #{creator},
+			 gmt_create = #{gmtCreate},
+			 modifier = #{modifier},
+			 gmt_modified = #{gmtModified},
+			 status = #{status},
+			 oper_status = #{operStatus},
+			 is_deleted = #{isDeleted},
+			 version = #{version}
 		 WHERE id = #{id}
 	</update>
 

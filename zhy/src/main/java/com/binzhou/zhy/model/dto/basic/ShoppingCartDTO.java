@@ -6,23 +6,29 @@ package com.binzhou.zhy.model.dto.basic;
  **/
 
 public class ShoppingCartDTO {
-    /**自动编号 (id)**/
-    private Long id;
+	/**自动编号 (id)**/
+	private Long id;
 
-    /**用户编号 (user_id)**/
-    private Long userId;
+	/**用户编号 (user_id)**/
+	private Long userId;
 
-    /**店铺ID(标识哪个商铺的订单)**/
-    private Long shopId;
+	/**店铺ID(标识哪个商铺的订单)**/
+	private Long shopId;
 
-    /**商品编号 (product_id)**/
-    private Long goodsId;
+	/**商品编号 (product_id)**/
+	private Long productId;
 
-    /**是否有效 (is_product_exists)**/
-    private String isProductExists;
+	/**商品图片地址**/
+	private String productImage;
 
 	/**购买数量 (number)**/
-	private Integer count;
+	private Integer productCount;
+
+	/**价格**/
+	private java.math.BigDecimal productPrice;
+
+	/**是否有效 (is_product_exists)**/
+	private String isProductExists;
 
 	/**创建时间 (created_time)**/
 	private java.util.Date createdTime;
@@ -30,84 +36,100 @@ public class ShoppingCartDTO {
 	/**规格ID**/
 	private Long specId;
 
-    /**详细说明**/
-    private String specification;
-
-    /**价格**/
-    private java.math.BigDecimal price;
+	/**详细说明**/
+	private String specification;
 
 	/**商品是否选中(选中success,反选circle)**/
 	private String type;
 
-	/**数量**/
-	private Integer quantity;
+	/**创建者**/
+	private String creator;
 
-    /**商品图片地址**/
-    private String goodsImage;
+	/**创建时间**/
+	private java.util.Date gmtCreate;
 
-    /****/
-    private java.util.Date gmtCreate;
+	/**修改人**/
+	private String modifier;
 
-    /****/
-    private java.util.Date gmtModified;
+	/**修改时间**/
+	private java.util.Date gmtModified;
 
-    /****/
-    private String modifier;
+	/**状态，0正常，1审核中，2审核不通过**/
+	private Integer status;
 
-    /****/
-    private String creator;
+	/**0:生效，-1:待生效**/
+	private Integer operStatus;
 
-    /****/
-    private String version;
+	/**是否删除(0、正常，-1删除)**/
+	private Integer isDeleted;
+
+	/**版本号**/
+	private Long version;
 
 
 
-    public void setId(Long id){
-        this.id = id;
-    }
-
-    public Long getId(){
-        return this.id;
-    }
-
-    public void setUserId(Long userId){
-        this.userId = userId;
-    }
-
-    public Long getUserId(){
-        return this.userId;
-    }
-
-    public void setShopId(Long shopId){
-        this.shopId = shopId;
-    }
-
-    public Long getShopId(){
-        return this.shopId;
-    }
-
-    public void setGoodsId(Long goodsId){
-        this.goodsId = goodsId;
-    }
-
-    public Long getGoodsId(){
-        return this.goodsId;
-    }
-
-    public void setIsProductExists(String isProductExists){
-        this.isProductExists = isProductExists;
-    }
-
-    public String getIsProductExists(){
-        return this.isProductExists;
-    }
-
-	public void setCount(Integer count){
-		this.count = count;
+	public void setId(Long id){
+		this.id = id;
 	}
 
-	public Integer getCount(){
-		return this.count;
+	public Long getId(){
+		return this.id;
+	}
+
+	public void setUserId(Long userId){
+		this.userId = userId;
+	}
+
+	public Long getUserId(){
+		return this.userId;
+	}
+
+	public void setShopId(Long shopId){
+		this.shopId = shopId;
+	}
+
+	public Long getShopId(){
+		return this.shopId;
+	}
+
+	public void setProductId(Long productId){
+		this.productId = productId;
+	}
+
+	public Long getProductId(){
+		return this.productId;
+	}
+
+	public void setProductImage(String productImage){
+		this.productImage = productImage;
+	}
+
+	public String getProductImage(){
+		return this.productImage;
+	}
+
+	public void setProductCount(Integer productCount){
+		this.productCount = productCount;
+	}
+
+	public Integer getProductCount(){
+		return this.productCount;
+	}
+
+	public void setProductPrice(java.math.BigDecimal productPrice){
+		this.productPrice = productPrice;
+	}
+
+	public java.math.BigDecimal getProductPrice(){
+		return this.productPrice;
+	}
+
+	public void setIsProductExists(String isProductExists){
+		this.isProductExists = isProductExists;
+	}
+
+	public String getIsProductExists(){
+		return this.isProductExists;
 	}
 
 	public void setCreatedTime(java.util.Date createdTime){
@@ -126,21 +148,13 @@ public class ShoppingCartDTO {
 		return this.specId;
 	}
 
-    public void setSpecification(String specification){
-        this.specification = specification;
-    }
+	public void setSpecification(String specification){
+		this.specification = specification;
+	}
 
-    public String getSpecification(){
-        return this.specification;
-    }
-
-    public void setPrice(java.math.BigDecimal price){
-        this.price = price;
-    }
-
-    public java.math.BigDecimal getPrice(){
-        return this.price;
-    }
+	public String getSpecification(){
+		return this.specification;
+	}
 
 	public void setType(String type){
 		this.type = type;
@@ -149,59 +163,68 @@ public class ShoppingCartDTO {
 	public String getType(){
 		return this.type;
 	}
-    public void setQuantity(Integer quantity){
-        this.quantity = quantity;
-    }
 
-    public Integer getQuantity(){
-        return this.quantity;
-    }
+	public void setCreator(String creator){
+		this.creator = creator;
+	}
 
-    public void setGoodsImage(String goodsImage){
-        this.goodsImage = goodsImage;
-    }
+	public String getCreator(){
+		return this.creator;
+	}
 
-    public String getGoodsImage(){
-        return this.goodsImage;
-    }
+	public void setGmtCreate(java.util.Date gmtCreate){
+		this.gmtCreate = gmtCreate;
+	}
 
-    public void setGmtCreate(java.util.Date gmtCreate){
-        this.gmtCreate = gmtCreate;
-    }
+	public java.util.Date getGmtCreate(){
+		return this.gmtCreate;
+	}
 
-    public java.util.Date getGmtCreate(){
-        return this.gmtCreate;
-    }
+	public void setModifier(String modifier){
+		this.modifier = modifier;
+	}
 
-    public void setGmtModified(java.util.Date gmtModified){
-        this.gmtModified = gmtModified;
-    }
+	public String getModifier(){
+		return this.modifier;
+	}
 
-    public java.util.Date getGmtModified(){
-        return this.gmtModified;
-    }
+	public void setGmtModified(java.util.Date gmtModified){
+		this.gmtModified = gmtModified;
+	}
 
-    public void setModifier(String modifier){
-        this.modifier = modifier;
-    }
+	public java.util.Date getGmtModified(){
+		return this.gmtModified;
+	}
 
-    public String getModifier(){
-        return this.modifier;
-    }
+	public void setStatus(Integer status){
+		this.status = status;
+	}
 
-    public void setCreator(String creator){
-        this.creator = creator;
-    }
+	public Integer getStatus(){
+		return this.status;
+	}
 
-    public String getCreator(){
-        return this.creator;
-    }
+	public void setOperStatus(Integer operStatus){
+		this.operStatus = operStatus;
+	}
 
-    public void setVersion(String version){
-        this.version = version;
-    }
+	public Integer getOperStatus(){
+		return this.operStatus;
+	}
 
-    public String getVersion(){
-        return this.version;
-    }
+	public void setIsDeleted(Integer isDeleted){
+		this.isDeleted = isDeleted;
+	}
+
+	public Integer getIsDeleted(){
+		return this.isDeleted;
+	}
+
+	public void setVersion(Long version){
+		this.version = version;
+	}
+
+	public Long getVersion(){
+		return this.version;
+	}
 }

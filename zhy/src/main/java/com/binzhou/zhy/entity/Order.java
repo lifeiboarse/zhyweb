@@ -20,19 +20,19 @@ public class Order implements Serializable {
 	private Long shopId;
 
 	/**订单状态 (order_status,未付款,已付款,已发货,已签收,退货申请,退货中,已退货,取消交易)**/
-	private String orderStatus;
+	private Integer orderStatus;
 
 	/**商品数量 (product_count, 商品项目数量，不是商品**/
-	private String productCount;
+	private Integer productCount;
 
 	/**商品总价 (product_amount_total)**/
-	private String productAmountTotal;
+	private java.math.BigDecimal productTotalPrice;
 
 	/**订单金额 (order_amount_total，实际付款金额)**/
-	private String orderAmountTotal;
+	private java.math.BigDecimal orderTotalPrice;
 
 	/**运费金额 (logistics_fee)**/
-	private String logisticsFee;
+	private java.math.BigDecimal logisticsFee;
 
 	/**是否开箱验货 (is_unpacking_inspection)**/
 	private String isUnpackingInspection;
@@ -45,6 +45,9 @@ public class Order implements Serializable {
 
 	/**收货地址编号 (address_id, 收货地址表自动编号)**/
 	private Long addressId;
+
+	/**客户编号 (user_id，用户表自动编号)**/
+	private Long userId;
 
 	/**订单物流编号 (orderlogistics_id, 订单物流表自动编号)**/
 	private Long orderlogisticsId;
@@ -64,9 +67,6 @@ public class Order implements Serializable {
 	/**发货时间**/
 	private java.util.Date deliveryTime;
 
-	/**客户编号 (user_id，用户表自动编号)**/
-	private Long userId;
-
 	/**客户备注**/
 	private String customerRemark;
 
@@ -76,26 +76,29 @@ public class Order implements Serializable {
 	/**订单结算时间 (order_settlement_time)**/
 	private java.util.Date orderSettlementTime;
 
-	/**是否删除(0、正常，-1删除)**/
-	private String isDeleted;
+	/**创建者**/
+	private String creator;
 
-	/****/
-	private String operStatus;
-
-	/****/
-	private String status;
-
-	/****/
+	/**创建时间**/
 	private java.util.Date gmtCreate;
 
-	/****/
-	private java.util.Date gmtModified;
-
-	/****/
+	/**修改者**/
 	private String modifier;
 
-	/****/
-	private String version;
+	/**修改时间**/
+	private java.util.Date gmtModified;
+
+	/**状态，0正常，1审核中，2审核不通过**/
+	private Integer status;
+
+	/**0:生效，-1:待生效**/
+	private Integer operStatus;
+
+	/**是否删除(0、正常，-1删除)**/
+	private Integer isDeleted;
+
+	/**版本号**/
+	private Long version;
 
 
 
@@ -123,43 +126,43 @@ public class Order implements Serializable {
 		return this.shopId;
 	}
 
-	public void setOrderStatus(String orderStatus){
+	public void setOrderStatus(Integer orderStatus){
 		this.orderStatus = orderStatus;
 	}
 
-	public String getOrderStatus(){
+	public Integer getOrderStatus(){
 		return this.orderStatus;
 	}
 
-	public void setProductCount(String productCount){
+	public void setProductCount(Integer productCount){
 		this.productCount = productCount;
 	}
 
-	public String getProductCount(){
+	public Integer getProductCount(){
 		return this.productCount;
 	}
 
-	public void setProductAmountTotal(String productAmountTotal){
-		this.productAmountTotal = productAmountTotal;
+	public void setProductTotalPrice(java.math.BigDecimal productTotalPrice){
+		this.productTotalPrice = productTotalPrice;
 	}
 
-	public String getProductAmountTotal(){
-		return this.productAmountTotal;
+	public java.math.BigDecimal getProductTotalPrice(){
+		return this.productTotalPrice;
 	}
 
-	public void setOrderAmountTotal(String orderAmountTotal){
-		this.orderAmountTotal = orderAmountTotal;
+	public void setOrderTotalPrice(java.math.BigDecimal orderTotalPrice){
+		this.orderTotalPrice = orderTotalPrice;
 	}
 
-	public String getOrderAmountTotal(){
-		return this.orderAmountTotal;
+	public java.math.BigDecimal getOrderTotalPrice(){
+		return this.orderTotalPrice;
 	}
 
-	public void setLogisticsFee(String logisticsFee){
+	public void setLogisticsFee(java.math.BigDecimal logisticsFee){
 		this.logisticsFee = logisticsFee;
 	}
 
-	public String getLogisticsFee(){
+	public java.math.BigDecimal getLogisticsFee(){
 		return this.logisticsFee;
 	}
 
@@ -193,6 +196,14 @@ public class Order implements Serializable {
 
 	public Long getAddressId(){
 		return this.addressId;
+	}
+
+	public void setUserId(Long userId){
+		this.userId = userId;
+	}
+
+	public Long getUserId(){
+		return this.userId;
 	}
 
 	public void setOrderlogisticsId(Long orderlogisticsId){
@@ -243,14 +254,6 @@ public class Order implements Serializable {
 		return this.deliveryTime;
 	}
 
-	public void setUserId(Long userId){
-		this.userId = userId;
-	}
-
-	public Long getUserId(){
-		return this.userId;
-	}
-
 	public void setCustomerRemark(String customerRemark){
 		this.customerRemark = customerRemark;
 	}
@@ -275,28 +278,12 @@ public class Order implements Serializable {
 		return this.orderSettlementTime;
 	}
 
-	public void setIsDeleted(String isDeleted){
-		this.isDeleted = isDeleted;
+	public void setCreator(String creator){
+		this.creator = creator;
 	}
 
-	public String getIsDeleted(){
-		return this.isDeleted;
-	}
-
-	public void setOperStatus(String operStatus){
-		this.operStatus = operStatus;
-	}
-
-	public String getOperStatus(){
-		return this.operStatus;
-	}
-
-	public void setStatus(String status){
-		this.status = status;
-	}
-
-	public String getStatus(){
-		return this.status;
+	public String getCreator(){
+		return this.creator;
 	}
 
 	public void setGmtCreate(java.util.Date gmtCreate){
@@ -307,14 +294,6 @@ public class Order implements Serializable {
 		return this.gmtCreate;
 	}
 
-	public void setGmtModified(java.util.Date gmtModified){
-		this.gmtModified = gmtModified;
-	}
-
-	public java.util.Date getGmtModified(){
-		return this.gmtModified;
-	}
-
 	public void setModifier(String modifier){
 		this.modifier = modifier;
 	}
@@ -323,11 +302,43 @@ public class Order implements Serializable {
 		return this.modifier;
 	}
 
-	public void setVersion(String version){
+	public void setGmtModified(java.util.Date gmtModified){
+		this.gmtModified = gmtModified;
+	}
+
+	public java.util.Date getGmtModified(){
+		return this.gmtModified;
+	}
+
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+
+	public Integer getStatus(){
+		return this.status;
+	}
+
+	public void setOperStatus(Integer operStatus){
+		this.operStatus = operStatus;
+	}
+
+	public Integer getOperStatus(){
+		return this.operStatus;
+	}
+
+	public void setIsDeleted(Integer isDeleted){
+		this.isDeleted = isDeleted;
+	}
+
+	public Integer getIsDeleted(){
+		return this.isDeleted;
+	}
+
+	public void setVersion(Long version){
 		this.version = version;
 	}
 
-	public String getVersion(){
+	public Long getVersion(){
 		return this.version;
 	}
 

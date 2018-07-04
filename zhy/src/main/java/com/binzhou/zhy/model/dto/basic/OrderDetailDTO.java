@@ -14,7 +14,7 @@ public class OrderDetailDTO implements Serializable {
 	private Long id;
 
 	/**订单编号**/
-	private Long orderId;
+	private Long orderNo;
 
 	/**商品编号**/
 	private Long productId;
@@ -24,6 +24,9 @@ public class OrderDetailDTO implements Serializable {
 
 	/**商品价格 (product_price, 商品可能删除,所以这里要记录)**/
 	private java.math.BigDecimal productPrice;
+
+	/**购买数量 (number)**/
+	private Integer productNumber;
 
 	/**商品型号 (product_marque，前台展示给客户)**/
 	private String productMarque;
@@ -43,9 +46,6 @@ public class OrderDetailDTO implements Serializable {
 	/**折扣金额 (discount_amount)**/
 	private String discountAmount;
 
-	/**购买数量 (number)**/
-	private Integer number;
-
 	/**小计金额 (subtotal)**/
 	private String subtotal;
 
@@ -54,6 +54,30 @@ public class OrderDetailDTO implements Serializable {
 
 	/**客户商品备注 (remark)**/
 	private String remark;
+
+	/**创建者**/
+	private String creator;
+
+	/**创建时间**/
+	private java.util.Date gmtCreate;
+
+	/**修改人**/
+	private String modifier;
+
+	/**修改时间**/
+	private java.util.Date gmtModified;
+
+	/**状态，0正常，1审核中，2审核不通过**/
+	private Integer status;
+
+	/**0:生效，-1:待生效**/
+	private Integer operStatus;
+
+	/**是否删除(0、正常，-1删除)**/
+	private Integer isDeleted;
+
+	/**版本号**/
+	private Long version;
 
 
 
@@ -65,12 +89,12 @@ public class OrderDetailDTO implements Serializable {
 		return this.id;
 	}
 
-	public void setOrderId(Long orderId){
-		this.orderId = orderId;
+	public void setOrderNo(Long orderNo){
+		this.orderNo = orderNo;
 	}
 
-	public Long getOrderId(){
-		return this.orderId;
+	public Long getOrderNo(){
+		return this.orderNo;
 	}
 
 	public void setProductId(Long productId){
@@ -95,6 +119,14 @@ public class OrderDetailDTO implements Serializable {
 
 	public java.math.BigDecimal getProductPrice(){
 		return this.productPrice;
+	}
+
+	public void setProductNumber(Integer productNumber){
+		this.productNumber = productNumber;
+	}
+
+	public Integer getProductNumber(){
+		return this.productNumber;
 	}
 
 	public void setProductMarque(String productMarque){
@@ -145,14 +177,6 @@ public class OrderDetailDTO implements Serializable {
 		return this.discountAmount;
 	}
 
-	public void setNumber(Integer number){
-		this.number = number;
-	}
-
-	public Integer getNumber(){
-		return this.number;
-	}
-
 	public void setSubtotal(String subtotal){
 		this.subtotal = subtotal;
 	}
@@ -177,4 +201,67 @@ public class OrderDetailDTO implements Serializable {
 		return this.remark;
 	}
 
+	public void setCreator(String creator){
+		this.creator = creator;
+	}
+
+	public String getCreator(){
+		return this.creator;
+	}
+
+	public void setGmtCreate(java.util.Date gmtCreate){
+		this.gmtCreate = gmtCreate;
+	}
+
+	public java.util.Date getGmtCreate(){
+		return this.gmtCreate;
+	}
+
+	public void setModifier(String modifier){
+		this.modifier = modifier;
+	}
+
+	public String getModifier(){
+		return this.modifier;
+	}
+
+	public void setGmtModified(java.util.Date gmtModified){
+		this.gmtModified = gmtModified;
+	}
+
+	public java.util.Date getGmtModified(){
+		return this.gmtModified;
+	}
+
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+
+	public Integer getStatus(){
+		return this.status;
+	}
+
+	public void setOperStatus(Integer operStatus){
+		this.operStatus = operStatus;
+	}
+
+	public Integer getOperStatus(){
+		return this.operStatus;
+	}
+
+	public void setIsDeleted(Integer isDeleted){
+		this.isDeleted = isDeleted;
+	}
+
+	public Integer getIsDeleted(){
+		return this.isDeleted;
+	}
+
+	public void setVersion(Long version){
+		this.version = version;
+	}
+
+	public Long getVersion(){
+		return this.version;
+	}
 }

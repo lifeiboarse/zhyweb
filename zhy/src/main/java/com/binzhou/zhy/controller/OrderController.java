@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -24,10 +26,17 @@ public class OrderController {
         return result;
     }
 
-    @RequestMapping(value = "/placeOrder", method = {RequestMethod.GET})
+    @RequestMapping(value = "/placeOrder", produces = "application/json;charset=utf-8", method = {RequestMethod.GET})
     @ResponseBody
     public Result<OrderPageDTO> placeOrder(OrderDTO orderDTO) {
         Result<OrderPageDTO> orderPageDTOResult = orderService.placeOrder(orderDTO);
+        return orderPageDTOResult;
+    }
+
+    @RequestMapping(value = "/generateOrder", produces = "application/json;charset=utf-8", method = {RequestMethod.POST})
+    @ResponseBody
+    public Result<OrderPageDTO> selectListByOption(@RequestBody List<Long> carts) {
+        Result<OrderPageDTO> orderPageDTOResult = orderService.generateOrder(carts);
         return orderPageDTOResult;
     }
 

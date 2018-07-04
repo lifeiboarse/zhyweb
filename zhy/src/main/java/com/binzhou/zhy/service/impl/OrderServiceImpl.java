@@ -1,18 +1,18 @@
 package com.binzhou.zhy.service.impl;
 
 import com.binzhou.zhy.common.util.ObjectConvertUtil;
-import com.binzhou.zhy.dao.GoodsDao;
+import com.binzhou.zhy.dao.ProductDao;
 import com.binzhou.zhy.dao.OrderDao;
 import com.binzhou.zhy.dao.OrderDetailDao;
 import com.binzhou.zhy.dao.ShoppingCartDao;
-import com.binzhou.zhy.entity.Goods;
 import com.binzhou.zhy.entity.Order;
 import com.binzhou.zhy.entity.OrderDetail;
+import com.binzhou.zhy.entity.Product;
 import com.binzhou.zhy.entity.ShoppingCart;
 import com.binzhou.zhy.exception.ErrorCodeEnum;
-import com.binzhou.zhy.model.dto.basic.GoodsDTO;
 import com.binzhou.zhy.model.dto.basic.OrderDTO;
 import com.binzhou.zhy.model.dto.basic.OrderDetailDTO;
+import com.binzhou.zhy.model.dto.basic.ProductDTO;
 import com.binzhou.zhy.model.dto.page.OrderPageDTO;
 import com.binzhou.zhy.model.result.Result;
 import com.binzhou.zhy.service.IOrderService;
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements IOrderService {
     OrderDetailDao orderDetailDao;
 
     @Autowired
-    GoodsDao goodsDao;
+    ProductDao productDao;
 
     @Autowired
     ShoppingCartDao shoppingCartDao;
@@ -54,6 +54,7 @@ public class OrderServiceImpl implements IOrderService {
         return result;
     }
 
+    @Override
     public Result<OrderPageDTO> selectListByOption(OrderDTO dto) {
 
         Result<OrderPageDTO> result = new Result<OrderPageDTO>();
@@ -68,12 +69,11 @@ public class OrderServiceImpl implements IOrderService {
             OrderDTO orderDTO = ObjectConvertUtil.convertOrderToOrderDTO(order);
 
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setOrderId(orderDTO.getId());
+            orderDetail.setOrderNo(orderDTO.getOrderNo());
             List<OrderDetail> orderDetails = orderDetailDao.selectListByOption(orderDetail);
-            orderDTO.setOrderProductList(orderDetails);
+            orderDTO.setOrderDetailList(orderDetails);
             orderList.add(orderDTO);
         }
-
 
         orderPage.setOrderList(orderList);
         result.setData(orderPage);
@@ -93,25 +93,64 @@ public class OrderServiceImpl implements IOrderService {
         OrderDTO orderDTO = new OrderDTO();
         BigDecimal productTotal = BigDecimal.valueOf(0);
         BigDecimal orderTotal = BigDecimal.valueOf(0);
+
         List<ShoppingCart> shoppingCarts = shoppingCartDao.selectListByOption(record);
         for (int i = 0; i < shoppingCarts.size(); i++) {
             ShoppingCart cart = shoppingCarts.get(i);
-            productTotal = productTotal.add(cart.getPrice());
-            productIds.add(cart.getGoodsId());
+            Product product = productDao.selectByPrimaryKey(cart.getProductId());
+            productTotal = productTotal.add(product.getPrice().multiply(BigDecimal.valueOf(cart.getProductCount())));
+            productIds.add(cart.getProductId());
         }
-        orderDTO.setProductAmountTotal(String.valueOf(productTotal));
-        orderDTO.setOrderAmountTotal(String.valueOf(productTotal));
 
-        List<GoodsDTO> cartProductList = new ArrayList<GoodsDTO>();
+        orderDTO.setProductTotalPrice(productTotal);
+        orderDTO.setOrderTotalPrice(productTotal);
+
+        List<ProductDTO> cartProductList = new ArrayList<ProductDTO>();
 
         for (Long productId : productIds) {
-            Goods goods = goodsDao.selectByPrimaryKey(productId);
-            GoodsDTO goodsDTO = ObjectConvertUtil.convertGoodsToGoodsDTO(goods);
+            Product product = productDao.selectByPrimaryKey(productId);
+            ProductDTO goodsDTO = ObjectConvertUtil.convertProductToProductDTO(product);
             //购物车数据构建到订单列表中
             cartProductList.add(goodsDTO);
         }
+
+        orderDTO.setCartProductList(cartProductList);
         orderPage.setOrder(orderDTO);
-        orderPage.setCartProductList(cartProductList);
+        result.setData(orderPage);
+        return result;
+    }
+
+
+    public Result<OrderPageDTO> generateOrder(List<Long> carts) {
+        Result<OrderPageDTO> result = new Result<OrderPageDTO>();
+        OrderPageDTO orderPage = new OrderPageDTO();
+        Set<Long> productIds = new HashSet<Long>();
+
+        OrderDTO orderDTO = new OrderDTO();
+        BigDecimal productTotal = BigDecimal.valueOf(0);
+        BigDecimal orderTotal = BigDecimal.valueOf(0);
+
+        List<ShoppingCart> shoppingCarts = shoppingCartDao.selectListByIds(carts);
+        for (int i = 0; i < shoppingCarts.size(); i++) {
+            ShoppingCart cart = shoppingCarts.get(i);
+            Product product = productDao.selectByPrimaryKey(cart.getProductId());
+            productTotal = productTotal.add(product.getPrice().multiply(BigDecimal.valueOf(cart.getProductCount())));
+            productIds.add(cart.getProductId());
+        }
+        orderDTO.setProductTotalPrice(productTotal);
+        orderDTO.setOrderTotalPrice(productTotal);
+
+        List<ProductDTO> cartProductList = new ArrayList<ProductDTO>();
+
+        for (Long productId : productIds) {
+            Product product = productDao.selectByPrimaryKey(productId);
+            ProductDTO goodsDTO = ObjectConvertUtil.convertProductToProductDTO(product);
+            //购物车数据构建到订单列表中
+            cartProductList.add(goodsDTO);
+        }
+
+        orderDTO.setCartProductList(cartProductList);
+        orderPage.setOrder(orderDTO);
         result.setData(orderPage);
         return result;
     }
@@ -158,26 +197,28 @@ public class OrderServiceImpl implements IOrderService {
             Order order = ObjectConvertUtil.convertOrderDTOtoOrder(dto);
             int insert = orderDao.insertSelective(order);
 
-            Set<Long> productIds = new HashSet<Long>();
+            //保存购物车修改状态
+            Set<Long> cartIds = new HashSet<Long>();
 
             ShoppingCart record = new ShoppingCart();
             record.setUserId(dto.getUserId());
             List<ShoppingCart> shoppingCarts = shoppingCartDao.selectListByOption(record);
             for (int i = 0; i < shoppingCarts.size(); i++) {
                 ShoppingCart cart = shoppingCarts.get(i);
-                productIds.add(cart.getGoodsId());
-            }
-
-            for (Long productId : productIds) {
-                Goods goods = goodsDao.selectByPrimaryKey(productId);
-
+                cartIds.add(cart.getId());
+                Product product = productDao.selectByPrimaryKey(cart.getProductId());
                 //购物车数据插入到订单详情表中
                 OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setOrderId(Long.valueOf(insert));
-                orderDetail.setProductId(goods.getId());
-                orderDetail.setProductName(goods.getName());
-                orderDetail.setProductPrice(goods.getPrice());
+                orderDetail.setOrderNo(Long.valueOf(insert));
+                orderDetail.setProductId(product.getId());
+                orderDetail.setProductName(product.getName());
+                orderDetail.setProductPrice(product.getPrice());
+                orderDetail.setProductNumber(cart.getProductCount());
                 orderDetailDao.insertSelective(orderDetail);
+            }
+            //清空购物车
+            for (Long id : cartIds) {
+
             }
 
             result.setData(insert);

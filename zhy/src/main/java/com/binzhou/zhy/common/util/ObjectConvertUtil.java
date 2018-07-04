@@ -1,10 +1,10 @@
 package com.binzhou.zhy.common.util;
 
-import com.binzhou.zhy.entity.Goods;
 import com.binzhou.zhy.entity.Order;
+import com.binzhou.zhy.entity.Product;
 import com.binzhou.zhy.entity.ShoppingCart;
-import com.binzhou.zhy.model.dto.basic.GoodsDTO;
 import com.binzhou.zhy.model.dto.basic.OrderDTO;
+import com.binzhou.zhy.model.dto.basic.ProductDTO;
 import com.binzhou.zhy.model.dto.basic.ShoppingCartDTO;
 
 public class ObjectConvertUtil {
@@ -18,8 +18,8 @@ public class ObjectConvertUtil {
         dto.setShopId(order.getShopId());
         dto.setOrderStatus(order.getOrderStatus());
         dto.setProductCount(order.getProductCount());
-        dto.setProductAmountTotal(order.getProductAmountTotal());
-        dto.setOrderAmountTotal(order.getOrderAmountTotal());
+        dto.setProductTotalPrice(order.getProductTotalPrice());
+        dto.setOrderTotalPrice(order.getOrderTotalPrice());
         dto.setLogisticsFee(order.getLogisticsFee());
         dto.setIsUnpackingInspection(order.getIsUnpackingInspection());
         dto.setOpenInvoice(order.getOpenInvoice());
@@ -48,8 +48,8 @@ public class ObjectConvertUtil {
         order.setShopId(dto.getShopId());
         order.setOrderStatus(dto.getOrderStatus());
         order.setProductCount(dto.getProductCount());
-        order.setProductAmountTotal(dto.getProductAmountTotal());
-        order.setOrderAmountTotal(dto.getOrderAmountTotal());
+        order.setProductTotalPrice(dto.getProductTotalPrice());
+        order.setOrderTotalPrice(dto.getOrderTotalPrice());
         order.setLogisticsFee(dto.getLogisticsFee());
         order.setIsUnpackingInspection(dto.getIsUnpackingInspection());
         order.setOpenInvoice(dto.getOpenInvoice());
@@ -68,11 +68,11 @@ public class ObjectConvertUtil {
         return order;
     }
 
-    public static GoodsDTO convertGoodsToGoodsDTO(Goods goodsDO) {
+    public static ProductDTO convertProductToProductDTO(Product goodsDO) {
         if (null == goodsDO) {
             return null;
         }
-        GoodsDTO dto = new GoodsDTO();
+        ProductDTO dto = new ProductDTO();
         dto.setId(goodsDO.getId());
         dto.setName(goodsDO.getName());
         dto.setCateId(goodsDO.getCateId());
@@ -85,11 +85,11 @@ public class ObjectConvertUtil {
         return dto;
     }
 
-    public static Goods convertGoodsDTOtoGoods(GoodsDTO goodsDO) {
+    public static Product convertProductDTOToProduct(ProductDTO goodsDO) {
         if (null == goodsDO) {
             return null;
         }
-        Goods doEntity = new Goods();
+        Product doEntity = new Product();
         doEntity.setId(goodsDO.getId());
         doEntity.setName(goodsDO.getName());
         doEntity.setCateId(goodsDO.getCateId());
@@ -111,11 +111,11 @@ public class ObjectConvertUtil {
         dto.setId(cart.getId());
         dto.setUserId(cart.getUserId());
         dto.setShopId(cart.getShopId());
-        dto.setCount(cart.getCount());
+        dto.setProductCount(cart.getProductCount());
         dto.setSpecId(cart.getSpecId());
-        dto.setPrice(cart.getPrice());
+        dto.setProductPrice(cart.getProductPrice());
         dto.setType(cart.getType());
-        dto.setGoodsId(cart.getGoodsId());
+        dto.setProductId(cart.getProductId());
         return dto;
     }
 

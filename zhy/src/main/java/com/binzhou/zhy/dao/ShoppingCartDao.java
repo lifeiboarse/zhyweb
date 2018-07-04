@@ -3,7 +3,6 @@ package com.binzhou.zhy.dao;
 import com.binzhou.zhy.common.util.ObjectConvertUtil;
 import com.binzhou.zhy.entity.ShoppingCart;
 import com.binzhou.zhy.mapper.ShoppingCartMapper;
-import com.binzhou.zhy.model.dto.basic.GoodsDTO;
 import com.binzhou.zhy.model.dto.basic.ShoppingCartDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +30,11 @@ public class ShoppingCartDao {
     public List<ShoppingCart> selectListByOption(ShoppingCart record) {
         List<ShoppingCart> cartList = shoppingCartMapper.selectListByOption(record);
         return cartList;
+    }
+
+    public List<ShoppingCart>  selectListByIds(List<Long> idList){
+        List<ShoppingCart> shoppingCarts = shoppingCartMapper.selectListByIds(idList);
+        return shoppingCarts;
     }
 
     public int insert(ShoppingCart record) {

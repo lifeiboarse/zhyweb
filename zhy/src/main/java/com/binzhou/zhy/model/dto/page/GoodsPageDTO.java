@@ -1,6 +1,6 @@
 package com.binzhou.zhy.model.dto.page;
 
-import com.binzhou.zhy.model.dto.basic.GoodsDTO;
+import com.binzhou.zhy.model.dto.basic.ProductDTO;
 
 import java.util.List;
 
@@ -10,22 +10,14 @@ import java.util.List;
  **/
 
 public class GoodsPageDTO {
-    private Long googsId;
-    private List<GoodsDTO> goodsList;
 
-    public Long getGoogsId() {
-        return googsId;
+    private List<ProductDTO> productList;
+
+    public List<ProductDTO> getProductList() {
+        return productList;
     }
 
-    public void setGoogsId(Long googsId) {
-        this.googsId = googsId;
-    }
-
-    public List<GoodsDTO> getGoodsList() {
-        return goodsList;
-    }
-
-    public void setGoodsList(List<GoodsDTO> goodsList) {
-        this.goodsList = goodsList;
+    public void setProductList(List<ProductDTO> productList) {
+        this.productList = productList;
     }
 }
