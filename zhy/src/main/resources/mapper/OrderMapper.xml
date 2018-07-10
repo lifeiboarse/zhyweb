@@ -65,12 +65,22 @@
 		<result property="isDeleted" column="is_deleted" />
 		<!--版本号-->
 		<result property="version" column="version" />
+		<!---->
+		<result property="remark" column="remark" />
+		<!---->
+		<result property="calculate" column="calculate" />
+		<!---->
+		<result property="goodsJsonStr" column="goodsJsonStr" />
+		<!---->
+		<result property="kjid" column="kjid" />
+		<!---->
+		<result property="couponId" column="couponId" />
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id,	order_no,	shop_id,	order_status,	product_count,	product_total_price,	order_total_price,	logistics_fee,	is_unpacking_inspection,	open_invoice,	invoice_id,	address_id,	user_id,	orderlogistics_id,	pay_channel,	out_trade_no,	created_time,	pay_time,	delivery_time,	customer_remark,	order_settlement_status,	order_settlement_time,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
+		 id,	order_no,	shop_id,	order_status,	product_count,	product_total_price,	order_total_price,	logistics_fee,	is_unpacking_inspection,	open_invoice,	invoice_id,	address_id,	user_id,	orderlogistics_id,	pay_channel,	out_trade_no,	created_time,	pay_time,	delivery_time,	customer_remark,	order_settlement_status,	order_settlement_time,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version,	remark,	calculate,	goodsJsonStr,	kjid,	couponId
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -98,13 +108,13 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.Order">
 		 INSERT INTO zhy_order
- 		(id,order_no,shop_id,order_status,product_count,product_total_price,order_total_price,logistics_fee,is_unpacking_inspection,open_invoice,invoice_id,address_id,user_id,orderlogistics_id,pay_channel,out_trade_no,created_time,pay_time,delivery_time,customer_remark,order_settlement_status,order_settlement_time,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
+ 		(id,order_no,shop_id,order_status,product_count,product_total_price,order_total_price,logistics_fee,is_unpacking_inspection,open_invoice,invoice_id,address_id,user_id,orderlogistics_id,pay_channel,out_trade_no,created_time,pay_time,delivery_time,customer_remark,order_settlement_status,order_settlement_time,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version,remark,calculate,goodsJsonStr,kjid,couponId) 
 		 VALUES 
- 		(#{id},#{orderNo},#{shopId},#{orderStatus},#{productCount},#{productTotalPrice},#{orderTotalPrice},#{logisticsFee},#{isUnpackingInspection},#{openInvoice},#{invoiceId},#{addressId},#{userId},#{orderlogisticsId},#{payChannel},#{outTradeNo},#{createdTime},#{payTime},#{deliveryTime},#{customerRemark},#{orderSettlementStatus},#{orderSettlementTime},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
+ 		(#{id},#{orderNo},#{shopId},#{orderStatus},#{productCount},#{productTotalPrice},#{orderTotalPrice},#{logisticsFee},#{isUnpackingInspection},#{openInvoice},#{invoiceId},#{addressId},#{userId},#{orderlogisticsId},#{payChannel},#{outTradeNo},#{createdTime},#{payTime},#{deliveryTime},#{customerRemark},#{orderSettlementStatus},#{orderSettlementTime},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version},#{remark},#{calculate},#{goodsJsonStr},#{kjid},#{couponId}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.Order">
+	<insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.binzhou.zhy.entity.Order">
 		 INSERT INTO zhy_order
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
@@ -196,6 +206,21 @@
 			</if>
 			<if test="version != null">
 				 version,
+			</if>
+			<if test="remark != null">
+				 remark,
+			</if>
+			<if test="calculate != null">
+				 calculate,
+			</if>
+			<if test="goodsJsonStr != null">
+				 goodsJsonStr,
+			</if>
+			<if test="kjid != null">
+				 kjid,
+			</if>
+			<if test="couponId != null">
+				 couponId,
 			</if>
 
 		 </trim>
@@ -289,6 +314,21 @@
 			</if>
 			<if test="version!=null">
 				 #{version},
+			</if>
+			<if test="remark!=null">
+				 #{remark},
+			</if>
+			<if test="calculate!=null">
+				 #{calculate},
+			</if>
+			<if test="goodsJsonStr!=null">
+				 #{goodsJsonStr},
+			</if>
+			<if test="kjid!=null">
+				 #{kjid},
+			</if>
+			<if test="couponId!=null">
+				 #{couponId},
 			</if>
 		 </trim>
 	</insert>
@@ -384,6 +424,21 @@
 			<if test="version != null">
 				 version = #{version},
 			</if>
+			<if test="remark != null">
+				 remark = #{remark},
+			</if>
+			<if test="calculate != null">
+				 calculate = #{calculate},
+			</if>
+			<if test="goodsJsonStr != null">
+				 goodsJsonStr = #{goodsJsonStr},
+			</if>
+			<if test="kjid != null">
+				 kjid = #{kjid},
+			</if>
+			<if test="couponId != null">
+				 couponId = #{couponId},
+			</if>
 
  		 </set>
 		 WHERE id = #{id}
@@ -421,8 +476,20 @@
 			 status = #{status},
 			 oper_status = #{operStatus},
 			 is_deleted = #{isDeleted},
-			 version = #{version}
+			 version = #{version},
+			 remark = #{remark},
+			 calculate = #{calculate},
+			 goodsJsonStr = #{goodsJsonStr},
+			 kjid = #{kjid},
+			 couponId = #{couponId}
 		 WHERE id = #{id}
 	</update>
 
+	<!-- 修 改-->
+	<update id="delivery" parameterType="java.lang.Long">
+		 UPDATE zhy_order
+		 SET
+			 status = 3
+		 WHERE id = #{id}
+	</update>
 </mapper>

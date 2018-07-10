@@ -2,7 +2,7 @@ package com.binzhou.zhy.entity;
 import java.io.Serializable;
 
 
-/**id
+/**
  * 
  * 
  * 

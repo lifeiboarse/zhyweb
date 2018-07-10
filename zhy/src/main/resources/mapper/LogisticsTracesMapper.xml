@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.binzhou.zhy.mapper.LogisticsTracesMapper">
+
+	<!--实体映射-->
+	<resultMap id="logisticsTracesResultMap" type="com.binzhou.zhy.entity.LogisticsTraces">
+		<!---->
+		<id property="id" column="id" />
+		<!---->
+		<result property="orderNo" column="order_no" />
+		<!---->
+		<result property="acceptTime" column="accept_time" />
+		<!---->
+		<result property="acceptStation" column="accept_station" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	order_no,	accept_time,	accept_station
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.LogisticsTraces" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_logistics_traces
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="logisticsTracesResultMap" parameterType="com.binzhou.zhy.entity.LogisticsTraces">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_logistics_traces
+		 WHERE order_no = #{orderNo}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		 DELETE FROM zhy_logistics_traces
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.LogisticsTraces">
+		 INSERT INTO zhy_logistics_traces
+ 		(id,order_no,accept_time,accept_station) 
+		 VALUES 
+ 		(#{id},#{orderNo},#{acceptTime},#{acceptStation}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.LogisticsTraces">
+		 INSERT INTO zhy_logistics_traces
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="orderNo != null">
+				 order_no,
+			</if>
+			<if test="acceptTime != null">
+				 accept_time,
+			</if>
+			<if test="acceptStation != null">
+				 accept_station,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="orderNo!=null">
+				 #{orderNo},
+			</if>
+			<if test="acceptTime!=null">
+				 #{acceptTime},
+			</if>
+			<if test="acceptStation!=null">
+				 #{acceptStation},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.LogisticsTraces">
+		 UPDATE zhy_logistics_traces
+ 		 <set> 
+			<if test="orderNo != null">
+				 order_no = #{orderNo},
+			</if>
+			<if test="acceptTime != null">
+				 accept_time = #{acceptTime},
+			</if>
+			<if test="acceptStation != null">
+				 accept_station = #{acceptStation},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.LogisticsTraces">
+		 UPDATE zhy_logistics_traces
+		 SET 
+			 order_no = #{orderNo},
+			 accept_time = #{acceptTime},
+			 accept_station = #{acceptStation}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

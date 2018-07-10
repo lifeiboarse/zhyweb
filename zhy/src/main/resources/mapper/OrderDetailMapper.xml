@@ -33,6 +33,14 @@
 		<result property="subtotal" column="subtotal" />
 		<!--商品是否有效 (is_product_exists)-->
 		<result property="isProductExists" column="is_product_exists" />
+		<!---->
+		<result property="number" column="number" />
+		<!---->
+		<result property="logisticsType" column="logisticsType" />
+		<!---->
+		<result property="goodsId" column="goodsId" />
+		<!---->
+		<result property="propertyChildIds" column="propertyChildIds" />
 		<!--客户商品备注 (remark)-->
 		<result property="remark" column="remark" />
 		<!--创建者-->
@@ -56,7 +64,7 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id,	order_no,	product_id,	product_name,	product_price,	product_number,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	subtotal,	is_product_exists,	remark,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
+		 id,	order_no,	product_id,	product_name,	product_price,	product_number,	product_marque,	product_store_barcode,	product_mode_desc,	product_mode_params,	discount_rate,	discount_amount,	subtotal,	is_product_exists,	number,	logisticsType,	goodsId,	propertyChildIds,	remark,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -84,9 +92,9 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.OrderDetail">
 		 INSERT INTO zhy_order_detail
- 		(id,order_no,product_id,product_name,product_price,product_number,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,subtotal,is_product_exists,remark,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
+ 		(id,order_no,product_id,product_name,product_price,product_number,product_marque,product_store_barcode,product_mode_desc,product_mode_params,discount_rate,discount_amount,subtotal,is_product_exists,number,logisticsType,goodsId,propertyChildIds,remark,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
 		 VALUES 
- 		(#{id},#{orderNo},#{productId},#{productName},#{productPrice},#{productNumber},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{subtotal},#{isProductExists},#{remark},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
+ 		(#{id},#{orderNo},#{productId},#{productName},#{productPrice},#{productNumber},#{productMarque},#{productStoreBarcode},#{productModeDesc},#{productModeParams},#{discountRate},#{discountAmount},#{subtotal},#{isProductExists},#{number},#{logisticsType},#{goodsId},#{propertyChildIds},#{remark},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
@@ -134,6 +142,18 @@
 			</if>
 			<if test="isProductExists != null">
 				 is_product_exists,
+			</if>
+			<if test="number != null">
+				 number,
+			</if>
+			<if test="logisticsType != null">
+				 logisticsType,
+			</if>
+			<if test="goodsId != null">
+				 goodsId,
+			</if>
+			<if test="propertyChildIds != null">
+				 propertyChildIds,
 			</if>
 			<if test="remark != null">
 				 remark,
@@ -206,6 +226,18 @@
 			</if>
 			<if test="isProductExists!=null">
 				 #{isProductExists},
+			</if>
+			<if test="number!=null">
+				 #{number},
+			</if>
+			<if test="logisticsType!=null">
+				 #{logisticsType},
+			</if>
+			<if test="goodsId!=null">
+				 #{goodsId},
+			</if>
+			<if test="propertyChildIds!=null">
+				 #{propertyChildIds},
 			</if>
 			<if test="remark!=null">
 				 #{remark},
@@ -280,6 +312,18 @@
 			<if test="isProductExists != null">
 				 is_product_exists = #{isProductExists},
 			</if>
+			<if test="number != null">
+				 number = #{number},
+			</if>
+			<if test="logisticsType != null">
+				 logisticsType = #{logisticsType},
+			</if>
+			<if test="goodsId != null">
+				 goodsId = #{goodsId},
+			</if>
+			<if test="propertyChildIds != null">
+				 propertyChildIds = #{propertyChildIds},
+			</if>
 			<if test="remark != null">
 				 remark = #{remark},
 			</if>
@@ -329,6 +373,10 @@
 			 discount_amount = #{discountAmount},
 			 subtotal = #{subtotal},
 			 is_product_exists = #{isProductExists},
+			 number = #{number},
+			 logisticsType = #{logisticsType},
+			 goodsId = #{goodsId},
+			 propertyChildIds = #{propertyChildIds},
 			 remark = #{remark},
 			 creator = #{creator},
 			 gmt_create = #{gmtCreate},

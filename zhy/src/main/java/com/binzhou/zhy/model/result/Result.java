@@ -7,6 +7,7 @@ public class Result<T> extends BaseResultDO {
     private T data;
     private int totalNum;
     private int result = 1;
+    private int code=0;
     private HttpStatus status;
 
     public T getData() {
@@ -39,5 +40,13 @@ public class Result<T> extends BaseResultDO {
 
     public void setStatus(HttpStatus status) {
         this.status = status;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }

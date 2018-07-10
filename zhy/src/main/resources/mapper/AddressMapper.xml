@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.binzhou.zhy.mapper.AddressMapper">
+
+	<!--实体映射-->
+	<resultMap id="addressResultMap" type="com.binzhou.zhy.entity.Address">
+		<!--自动编号 (address_id)-->
+		<id property="id" column="id" />
+		<!--用户编号 (user_id, 用户表自动编号)-->
+		<result property="userId" column="user_id" />
+		<!---->
+		<result property="provinceId" column="provinceId" />
+		<!---->
+		<result property="cityId" column="cityId" />
+		<!---->
+		<result property="districtId" column="districtId" />
+		<!---->
+		<result property="linkMan" column="linkMan" />
+		<!---->
+		<result property="address" column="address" />
+		<!---->
+		<result property="mobile" column="mobile" />
+		<!---->
+		<result property="code" column="code" />
+		<!---->
+		<result property="isDefault" column="isDefault" />
+		<!--收件人姓名 (realname)-->
+		<result property="name" column="name" />
+		<!--联系电话 (telphone)-->
+		<result property="tel" column="tel" />
+		<!--备用联系电话 (telphone2)-->
+		<result property="tel2" column="tel2" />
+		<!-- 国家 (country)-->
+		<result property="country" column="country" />
+		<!--省份 (province)-->
+		<result property="province" column="province" />
+		<!--城市 (city)-->
+		<result property="city" column="city" />
+		<!--地区 (area)-->
+		<result property="area" column="area" />
+		<!--街道/详细收货地址 (street)-->
+		<result property="street" column="street" />
+		<!--门牌号，详细地址-->
+		<result property="door" column="door" />
+		<!--详细地址-->
+		<result property="addre" column="addre" />
+		<!---->
+		<result property="image1" column="image1" />
+		<!---->
+		<result property="image2" column="image2" />
+		<!--邮政编码 (zip)-->
+		<result property="zip" column="zip" />
+		<!--是否默认收货地址 (is_default_address)-->
+		<result property="isDefaultAddress" column="is_default_address" />
+		<!--创建时间 (created_time)-->
+		<result property="gmtCreate" column="gmt_create" />
+		<!---->
+		<result property="gmtModified" column="gmt_modified" />
+		<!---->
+		<result property="creator" column="creator" />
+		<!---->
+		<result property="modifier" column="modifier" />
+		<!---->
+		<result property="version" column="version" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	user_id,	provinceId,	cityId,	districtId,	linkMan,	address,	mobile,	code,	isDefault,	name,	tel,	tel2,	country,	province,	city,	area,	street,	door,	addre,	image1,	image2,	zip,	is_default_address,	gmt_create,	gmt_modified,	creator,	modifier,	version
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.Address" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_address
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="addressResultMap" parameterType="com.binzhou.zhy.entity.Address">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_address
+		 
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		 DELETE FROM zhy_address
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.Address">
+		 INSERT INTO zhy_address
+ 		(id,user_id,provinceId,cityId,districtId,linkMan,address,mobile,code,isDefault,name,tel,tel2,country,province,city,area,street,door,addre,image1,image2,zip,is_default_address,gmt_create,gmt_modified,creator,modifier,version) 
+		 VALUES 
+ 		(#{id},#{userId},#{provinceId},#{cityId},#{districtId},#{linkMan},#{address},#{mobile},#{code},#{isDefault},#{name},#{tel},#{tel2},#{country},#{province},#{city},#{area},#{street},#{door},#{addre},#{image1},#{image2},#{zip},#{isDefaultAddress},#{gmtCreate},#{gmtModified},#{creator},#{modifier},#{version}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.Address">
+		 INSERT INTO zhy_address
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="userId != null">
+				 user_id,
+			</if>
+			<if test="provinceId != null">
+				 provinceId,
+			</if>
+			<if test="cityId != null">
+				 cityId,
+			</if>
+			<if test="districtId != null">
+				 districtId,
+			</if>
+			<if test="linkMan != null">
+				 linkMan,
+			</if>
+			<if test="address != null">
+				 address,
+			</if>
+			<if test="mobile != null">
+				 mobile,
+			</if>
+			<if test="code != null">
+				 code,
+			</if>
+			<if test="isDefault != null">
+				 isDefault,
+			</if>
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="tel != null">
+				 tel,
+			</if>
+			<if test="tel2 != null">
+				 tel2,
+			</if>
+			<if test="country != null">
+				 country,
+			</if>
+			<if test="province != null">
+				 province,
+			</if>
+			<if test="city != null">
+				 city,
+			</if>
+			<if test="area != null">
+				 area,
+			</if>
+			<if test="street != null">
+				 street,
+			</if>
+			<if test="door != null">
+				 door,
+			</if>
+			<if test="addre != null">
+				 addre,
+			</if>
+			<if test="image1 != null">
+				 image1,
+			</if>
+			<if test="image2 != null">
+				 image2,
+			</if>
+			<if test="zip != null">
+				 zip,
+			</if>
+			<if test="isDefaultAddress != null">
+				 is_default_address,
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create,
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified,
+			</if>
+			<if test="creator != null">
+				 creator,
+			</if>
+			<if test="modifier != null">
+				 modifier,
+			</if>
+			<if test="version != null">
+				 version,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+			<if test="provinceId!=null">
+				 #{provinceId},
+			</if>
+			<if test="cityId!=null">
+				 #{cityId},
+			</if>
+			<if test="districtId!=null">
+				 #{districtId},
+			</if>
+			<if test="linkMan!=null">
+				 #{linkMan},
+			</if>
+			<if test="address!=null">
+				 #{address},
+			</if>
+			<if test="mobile!=null">
+				 #{mobile},
+			</if>
+			<if test="code!=null">
+				 #{code},
+			</if>
+			<if test="isDefault!=null">
+				 #{isDefault},
+			</if>
+			<if test="name!=null">
+				 #{name},
+			</if>
+			<if test="tel!=null">
+				 #{tel},
+			</if>
+			<if test="tel2!=null">
+				 #{tel2},
+			</if>
+			<if test="country!=null">
+				 #{country},
+			</if>
+			<if test="province!=null">
+				 #{province},
+			</if>
+			<if test="city!=null">
+				 #{city},
+			</if>
+			<if test="area!=null">
+				 #{area},
+			</if>
+			<if test="street!=null">
+				 #{street},
+			</if>
+			<if test="door!=null">
+				 #{door},
+			</if>
+			<if test="addre!=null">
+				 #{addre},
+			</if>
+			<if test="image1!=null">
+				 #{image1},
+			</if>
+			<if test="image2!=null">
+				 #{image2},
+			</if>
+			<if test="zip!=null">
+				 #{zip},
+			</if>
+			<if test="isDefaultAddress!=null">
+				 #{isDefaultAddress},
+			</if>
+			<if test="gmtCreate!=null">
+				 #{gmtCreate},
+			</if>
+			<if test="gmtModified!=null">
+				 #{gmtModified},
+			</if>
+			<if test="creator!=null">
+				 #{creator},
+			</if>
+			<if test="modifier!=null">
+				 #{modifier},
+			</if>
+			<if test="version!=null">
+				 #{version},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.Address">
+		 UPDATE zhy_address
+ 		 <set> 
+			<if test="userId != null">
+				 user_id = #{userId},
+			</if>
+			<if test="provinceId != null">
+				 provinceId = #{provinceId},
+			</if>
+			<if test="cityId != null">
+				 cityId = #{cityId},
+			</if>
+			<if test="districtId != null">
+				 districtId = #{districtId},
+			</if>
+			<if test="linkMan != null">
+				 linkMan = #{linkMan},
+			</if>
+			<if test="address != null">
+				 address = #{address},
+			</if>
+			<if test="mobile != null">
+				 mobile = #{mobile},
+			</if>
+			<if test="code != null">
+				 code = #{code},
+			</if>
+			<if test="isDefault != null">
+				 isDefault = #{isDefault},
+			</if>
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="tel != null">
+				 tel = #{tel},
+			</if>
+			<if test="tel2 != null">
+				 tel2 = #{tel2},
+			</if>
+			<if test="country != null">
+				 country = #{country},
+			</if>
+			<if test="province != null">
+				 province = #{province},
+			</if>
+			<if test="city != null">
+				 city = #{city},
+			</if>
+			<if test="area != null">
+				 area = #{area},
+			</if>
+			<if test="street != null">
+				 street = #{street},
+			</if>
+			<if test="door != null">
+				 door = #{door},
+			</if>
+			<if test="addre != null">
+				 addre = #{addre},
+			</if>
+			<if test="image1 != null">
+				 image1 = #{image1},
+			</if>
+			<if test="image2 != null">
+				 image2 = #{image2},
+			</if>
+			<if test="zip != null">
+				 zip = #{zip},
+			</if>
+			<if test="isDefaultAddress != null">
+				 is_default_address = #{isDefaultAddress},
+			</if>
+			<if test="gmtCreate != null">
+				 gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null">
+				 gmt_modified = #{gmtModified},
+			</if>
+			<if test="creator != null">
+				 creator = #{creator},
+			</if>
+			<if test="modifier != null">
+				 modifier = #{modifier},
+			</if>
+			<if test="version != null">
+				 version = #{version},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.Address">
+		 UPDATE zhy_address
+		 SET 
+			 user_id = #{userId},
+			 provinceId = #{provinceId},
+			 cityId = #{cityId},
+			 districtId = #{districtId},
+			 linkMan = #{linkMan},
+			 address = #{address},
+			 mobile = #{mobile},
+			 code = #{code},
+			 isDefault = #{isDefault},
+			 name = #{name},
+			 tel = #{tel},
+			 tel2 = #{tel2},
+			 country = #{country},
+			 province = #{province},
+			 city = #{city},
+			 area = #{area},
+			 street = #{street},
+			 door = #{door},
+			 addre = #{addre},
+			 image1 = #{image1},
+			 image2 = #{image2},
+			 zip = #{zip},
+			 is_default_address = #{isDefaultAddress},
+			 gmt_create = #{gmtCreate},
+			 gmt_modified = #{gmtModified},
+			 creator = #{creator},
+			 modifier = #{modifier},
+			 version = #{version}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

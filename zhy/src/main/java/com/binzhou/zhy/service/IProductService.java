@@ -1,6 +1,7 @@
 package com.binzhou.zhy.service;
 
 import com.binzhou.zhy.model.dto.basic.ProductDTO;
+import com.binzhou.zhy.model.dto.page.ProductPageDTO;
 import com.binzhou.zhy.model.result.Result;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public interface IProductService {
     
-    public Result<ProductDTO> selectByPrimaryKey(Long id);
+    public Result<ProductPageDTO> selectByPrimaryKey(Long id);
 
     public Result<List<ProductDTO>> selectListByOption(ProductDTO record);
 

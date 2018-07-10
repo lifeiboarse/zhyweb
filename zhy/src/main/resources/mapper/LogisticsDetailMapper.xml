@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.binzhou.zhy.mapper.LogisticsDetailMapper">
+
+	<!--实体映射-->
+	<resultMap id="logisticsDetailResultMap" type="com.binzhou.zhy.entity.LogisticsDetail">
+		<!---->
+		<id property="id" column="id" />
+		<!---->
+		<result property="logisticsId" column="logistics_id" />
+		<!---->
+		<result property="firstAmount" column="firstAmount" />
+		<!---->
+		<result property="firstNumber" column="firstNumber" />
+		<!---->
+		<result property="addAmount" column="addAmount" />
+		<!---->
+		<result property="addNumber" column="addNumber" />
+		<!---->
+		<result property="type" column="type" />
+		<!---->
+		<result property="userId" column="userId" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	logistics_id,	firstAmount,	firstNumber,	addAmount,	addNumber,	type,	userId
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.LogisticsDetail" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_logistics_detail
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="logisticsDetailResultMap" parameterType="com.binzhou.zhy.entity.LogisticsDetail">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_logistics_detail
+
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		 DELETE FROM zhy_logistics_detail
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.LogisticsDetail">
+		 INSERT INTO zhy_logistics_detail
+ 		(id,logistics_id,firstAmount,firstNumber,addAmount,addNumber,type,userId) 
+		 VALUES 
+ 		(#{id},#{logisticsId},#{firstAmount},#{firstNumber},#{addAmount},#{addNumber},#{type},#{userId}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.LogisticsDetail">
+		 INSERT INTO zhy_logistics_detail
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="logisticsId != null">
+				 logistics_id,
+			</if>
+			<if test="firstAmount != null">
+				 firstAmount,
+			</if>
+			<if test="firstNumber != null">
+				 firstNumber,
+			</if>
+			<if test="addAmount != null">
+				 addAmount,
+			</if>
+			<if test="addNumber != null">
+				 addNumber,
+			</if>
+			<if test="type != null">
+				 type,
+			</if>
+			<if test="userId != null">
+				 userId,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="logisticsId!=null">
+				 #{logisticsId},
+			</if>
+			<if test="firstAmount!=null">
+				 #{firstAmount},
+			</if>
+			<if test="firstNumber!=null">
+				 #{firstNumber},
+			</if>
+			<if test="addAmount!=null">
+				 #{addAmount},
+			</if>
+			<if test="addNumber!=null">
+				 #{addNumber},
+			</if>
+			<if test="type!=null">
+				 #{type},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.LogisticsDetail">
+		 UPDATE zhy_logistics_detail
+ 		 <set> 
+			<if test="logisticsId != null">
+				 logistics_id = #{logisticsId},
+			</if>
+			<if test="firstAmount != null">
+				 firstAmount = #{firstAmount},
+			</if>
+			<if test="firstNumber != null">
+				 firstNumber = #{firstNumber},
+			</if>
+			<if test="addAmount != null">
+				 addAmount = #{addAmount},
+			</if>
+			<if test="addNumber != null">
+				 addNumber = #{addNumber},
+			</if>
+			<if test="type != null">
+				 type = #{type},
+			</if>
+			<if test="userId != null">
+				 userId = #{userId},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.LogisticsDetail">
+		 UPDATE zhy_logistics_detail
+		 SET 
+			 logistics_id = #{logisticsId},
+			 firstAmount = #{firstAmount},
+			 firstNumber = #{firstNumber},
+			 addAmount = #{addAmount},
+			 addNumber = #{addNumber},
+			 type = #{type},
+			 userId = #{userId}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

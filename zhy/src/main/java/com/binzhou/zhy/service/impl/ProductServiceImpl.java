@@ -2,9 +2,14 @@ package com.binzhou.zhy.service.impl;
 
 import com.binzhou.zhy.common.util.ObjectConvertUtil;
 import com.binzhou.zhy.dao.CategoryDao;
+import com.binzhou.zhy.dao.LogisticsDao;
 import com.binzhou.zhy.dao.ProductDao;
+import com.binzhou.zhy.dao.ProductImageDao;
+import com.binzhou.zhy.entity.Logistics;
 import com.binzhou.zhy.entity.Product;
+import com.binzhou.zhy.entity.ProductImage;
 import com.binzhou.zhy.model.dto.basic.ProductDTO;
+import com.binzhou.zhy.model.dto.page.ProductPageDTO;
 import com.binzhou.zhy.model.result.Result;
 import com.binzhou.zhy.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +28,30 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     CategoryDao categoryDao;
 
+    @Autowired
+    ProductImageDao productImageDao;
+
+    @Autowired
+    LogisticsDao logisticsDao;
+
     @Override
-    public Result<ProductDTO> selectByPrimaryKey(Long id) {
-        Result<ProductDTO> result = new Result<ProductDTO>();
-        Product goodsDO = productDao.selectByPrimaryKey(id);
-        ProductDTO ProductDTO = ObjectConvertUtil.convertProductToProductDTO(goodsDO);
-        result.setData(ProductDTO);
+    public Result<ProductPageDTO> selectByPrimaryKey(Long id) {
+        Result<ProductPageDTO> result = new Result<ProductPageDTO>();
+        ProductPageDTO pageDTO=new ProductPageDTO();
+
+        Product product = productDao.selectByPrimaryKey(id);
+
+        ProductDTO productDTO = ObjectConvertUtil.convertProductToProductDTO(product);
+        pageDTO.setBasicInfo(productDTO);
+        pageDTO.setCategory(categoryDao.selectByPrimaryKey(product.getCategoryId()));
+        pageDTO.setContent("<p>好大</p>");
+        ProductImage image=new ProductImage();
+        image.setGoodsId(product.getId());
+        pageDTO.setPics(productImageDao.selectListByOption(image));
+        Logistics logistics = logisticsDao.selectByPrimaryKey(product.getLogisticsId());
+        pageDTO.setLogistics(logistics);
+
+        result.setData(pageDTO);
         return result;
     }
 

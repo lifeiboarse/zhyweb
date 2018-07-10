@@ -3,6 +3,7 @@ package com.binzhou.zhy.controller;
 
 import com.binzhou.zhy.common.util.JsonUtils;
 import com.binzhou.zhy.model.dto.basic.ProductDTO;
+import com.binzhou.zhy.model.dto.page.ProductPageDTO;
 import com.binzhou.zhy.model.result.Result;
 import com.binzhou.zhy.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ public class ProductController {
     @Autowired
     IProductService productService;
 
-    @RequestMapping(value = "/query",produces = "application/json;charset=utf-8",  method = {RequestMethod.GET})
+    @RequestMapping(value = "/detail",produces = "application/json;charset=utf-8",  method = {RequestMethod.GET})
     public String queryGoodsById(@RequestParam("id") Long id) {
-        Result<ProductDTO> orderResult = productService.selectByPrimaryKey(id);
+        Result<ProductPageDTO> orderResult = productService.selectByPrimaryKey(id);
         String result = JsonUtils.objectToJson(orderResult);
         return result;
     }

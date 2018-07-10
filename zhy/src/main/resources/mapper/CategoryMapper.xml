@@ -8,13 +8,25 @@
 		<!--分类自增ID-->
 		<id property="id" column="id" />
 		<!--分类名称-->
-		<result property="cateName" column="cate_name" />
+		<result property="name" column="name" />
+		<!---->
+		<result property="userId" column="userId" />
 		<!--分类父级ID-->
 		<result property="parentId" column="parent_id" />
 		<!--排序号-->
-		<result property="sortOrder" column="sort_order" />
+		<result property="sort" column="sort" />
+		<!---->
+		<result property="key" column="key" />
 		<!--是否显示（1显示，0不显示）-->
 		<result property="ifShow" column="if_show" />
+		<!---->
+		<result property="isUse" column="is_use" />
+		<!---->
+		<result property="type" column="type" />
+		<!---->
+		<result property="level" column="level" />
+		<!---->
+		<result property="icon" column="icon" />
 		<!--创建者-->
 		<result property="creator" column="creator" />
 		<!--创建时间-->
@@ -36,7 +48,7 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id,	cate_name,	parent_id,	sort_order,	if_show,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
+		 id,	`name`,	userId,	parent_id,	sort,	`key`,	if_show,is_use,type,	`level`,	icon,	creator,	gmt_create,	modifier,	gmt_modified,	`status`,	oper_status,	is_deleted,	version
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -52,7 +64,6 @@
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM zhy_category
-		 WHERE id = #{id}
 	</select>
 
 	<!--删除：根据主键ID删除-->
@@ -64,9 +75,9 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.Category">
 		 INSERT INTO zhy_category
- 		(id,cate_name,parent_id,sort_order,if_show,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
+ 		(id,name,userId,parent_id,sort,key,if_show,is_use,type,level,icon,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
 		 VALUES 
- 		(#{id},#{cateName},#{parentId},#{sortOrder},#{ifShow},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
+ 		(#{id},#{name},#{userId},#{parentId},#{sort},#{key},#{ifShow},#{isUse},#{type},#{level},#{icon},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
@@ -76,17 +87,35 @@
 			<if test="id != null">
 				 id,
 			</if>
-			<if test="cateName != null">
-				 cate_name,
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="userId != null">
+				 userId,
 			</if>
 			<if test="parentId != null">
 				 parent_id,
 			</if>
-			<if test="sortOrder != null">
-				 sort_order,
+			<if test="sort != null">
+				 sort,
+			</if>
+			<if test="key != null">
+				 key,
 			</if>
 			<if test="ifShow != null">
 				 if_show,
+			</if>
+			<if test="isUse != null">
+				 is_use,
+			</if>
+			<if test="type != null">
+				 type,
+			</if>
+			<if test="level != null">
+				 level,
+			</if>
+			<if test="icon != null">
+				 icon,
 			</if>
 			<if test="creator != null">
 				 creator,
@@ -118,17 +147,35 @@
 			<if test="id!=null">
 				 #{id},
 			</if>
-			<if test="cateName!=null">
-				 #{cateName},
+			<if test="name!=null">
+				 #{name},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
 			</if>
 			<if test="parentId!=null">
 				 #{parentId},
 			</if>
-			<if test="sortOrder!=null">
-				 #{sortOrder},
+			<if test="sort!=null">
+				 #{sort},
+			</if>
+			<if test="key!=null">
+				 #{key},
 			</if>
 			<if test="ifShow!=null">
 				 #{ifShow},
+			</if>
+			<if test="isUse!=null">
+				 #{isUse},
+			</if>
+			<if test="type!=null">
+				 #{type},
+			</if>
+			<if test="level!=null">
+				 #{level},
+			</if>
+			<if test="icon!=null">
+				 #{icon},
 			</if>
 			<if test="creator!=null">
 				 #{creator},
@@ -161,17 +208,35 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.Category">
 		 UPDATE zhy_category
  		 <set> 
-			<if test="cateName != null">
-				 cate_name = #{cateName},
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="userId != null">
+				 userId = #{userId},
 			</if>
 			<if test="parentId != null">
 				 parent_id = #{parentId},
 			</if>
-			<if test="sortOrder != null">
-				 sort_order = #{sortOrder},
+			<if test="sort != null">
+				 sort = #{sort},
+			</if>
+			<if test="key != null">
+				 key = #{key},
 			</if>
 			<if test="ifShow != null">
 				 if_show = #{ifShow},
+			</if>
+			<if test="isUse != null">
+				 is_use = #{isUse},
+			</if>
+			<if test="type != null">
+				 type = #{type},
+			</if>
+			<if test="level != null">
+				 level = #{level},
+			</if>
+			<if test="icon != null">
+				 icon = #{icon},
 			</if>
 			<if test="creator != null">
 				 creator = #{creator},
@@ -206,10 +271,16 @@
 	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.Category">
 		 UPDATE zhy_category
 		 SET 
-			 cate_name = #{cateName},
+			 name = #{name},
+			 userId = #{userId},
 			 parent_id = #{parentId},
-			 sort_order = #{sortOrder},
+			 sort = #{sort},
+			 key = #{key},
 			 if_show = #{ifShow},
+			 is_use = #{isUse},
+			 type = #{type},
+			 level = #{level},
+			 icon = #{icon},
 			 creator = #{creator},
 			 gmt_create = #{gmtCreate},
 			 modifier = #{modifier},

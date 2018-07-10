@@ -52,6 +52,18 @@ public class OrderDetail implements Serializable {
 	/**商品是否有效 (is_product_exists)**/
 	private String isProductExists;
 
+	/****/
+	private String number;
+
+	/****/
+	private String logisticsType;
+
+	/****/
+	private Integer goodsId;
+
+	/****/
+	private String propertyChildIds;
+
 	/**客户商品备注 (remark)**/
 	private String remark;
 
@@ -191,6 +203,38 @@ public class OrderDetail implements Serializable {
 
 	public String getIsProductExists(){
 		return this.isProductExists;
+	}
+
+	public void setNumber(String number){
+		this.number = number;
+	}
+
+	public String getNumber(){
+		return this.number;
+	}
+
+	public void setLogisticsType(String logisticsType){
+		this.logisticsType = logisticsType;
+	}
+
+	public String getLogisticsType(){
+		return this.logisticsType;
+	}
+
+	public void setGoodsId(Integer goodsId){
+		this.goodsId = goodsId;
+	}
+
+	public Integer getGoodsId(){
+		return this.goodsId;
+	}
+
+	public void setPropertyChildIds(String propertyChildIds){
+		this.propertyChildIds = propertyChildIds;
+	}
+
+	public String getPropertyChildIds(){
+		return this.propertyChildIds;
 	}
 
 	public void setRemark(String remark){

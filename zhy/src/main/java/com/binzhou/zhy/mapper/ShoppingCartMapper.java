@@ -2,7 +2,6 @@ package com.binzhou.zhy.mapper;
 
 import com.binzhou.zhy.entity.ShoppingCart;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 /**

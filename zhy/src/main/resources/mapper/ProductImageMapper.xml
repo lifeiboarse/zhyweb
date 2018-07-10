@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.binzhou.zhy.mapper.ProductImageMapper">
+
+	<!--实体映射-->
+	<resultMap id="productImageResultMap" type="com.binzhou.zhy.entity.ProductImage">
+		<!--图片自增ID-->
+		<id property="id" column="id" />
+		<!---->
+		<result property="userId" column="userId" />
+		<!--商品ID-->
+		<result property="productId" column="product_id" />
+		<!--图片地址-->
+		<result property="imageUrl" column="image_url" />
+		<!--缩略图地址-->
+		<result property="thumbnail" column="thumbnail" />
+		<!--排序号-->
+		<result property="sortOrder" column="sort_order" />
+		<!--文件ID-->
+		<result property="fileId" column="file_id" />
+		<!---->
+		<result property="goodsId" column="goodsId" />
+		<!---->
+		<result property="pic" column="pic" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	userId,	product_id,	image_url,	thumbnail,	sort_order,	file_id,	goodsId,	pic
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.binzhou.zhy.entity.ProductImage" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_product_image
+		 WHERE id = #{id}
+	</select>
+
+	<!-- 查询（根据条件查询） -->
+	<select id="selectListByOption" resultMap="productImageResultMap" parameterType="com.binzhou.zhy.entity.ProductImage">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM zhy_product_image
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM zhy_product_image
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.binzhou.zhy.entity.ProductImage">
+		 INSERT INTO zhy_product_image
+ 		(id,userId,product_id,image_url,thumbnail,sort_order,file_id,goodsId,pic) 
+		 VALUES 
+ 		(#{id},#{userId},#{productId},#{imageUrl},#{thumbnail},#{sortOrder},#{fileId},#{goodsId},#{pic}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.binzhou.zhy.entity.ProductImage">
+		 INSERT INTO zhy_product_image
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="userId != null">
+				 userId,
+			</if>
+			<if test="productId != null">
+				 product_id,
+			</if>
+			<if test="imageUrl != null">
+				 image_url,
+			</if>
+			<if test="thumbnail != null">
+				 thumbnail,
+			</if>
+			<if test="sortOrder != null">
+				 sort_order,
+			</if>
+			<if test="fileId != null">
+				 file_id,
+			</if>
+			<if test="goodsId != null">
+				 goodsId,
+			</if>
+			<if test="pic != null">
+				 pic,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+			<if test="productId!=null">
+				 #{productId},
+			</if>
+			<if test="imageUrl!=null">
+				 #{imageUrl},
+			</if>
+			<if test="thumbnail!=null">
+				 #{thumbnail},
+			</if>
+			<if test="sortOrder!=null">
+				 #{sortOrder},
+			</if>
+			<if test="fileId!=null">
+				 #{fileId},
+			</if>
+			<if test="goodsId!=null">
+				 #{goodsId},
+			</if>
+			<if test="pic!=null">
+				 #{pic},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.binzhou.zhy.entity.ProductImage">
+		 UPDATE zhy_product_image
+ 		 <set> 
+			<if test="userId != null">
+				 userId = #{userId},
+			</if>
+			<if test="productId != null">
+				 product_id = #{productId},
+			</if>
+			<if test="imageUrl != null">
+				 image_url = #{imageUrl},
+			</if>
+			<if test="thumbnail != null">
+				 thumbnail = #{thumbnail},
+			</if>
+			<if test="sortOrder != null">
+				 sort_order = #{sortOrder},
+			</if>
+			<if test="fileId != null">
+				 file_id = #{fileId},
+			</if>
+			<if test="goodsId != null">
+				 goodsId = #{goodsId},
+			</if>
+			<if test="pic != null">
+				 pic = #{pic},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.binzhou.zhy.entity.ProductImage">
+		 UPDATE zhy_product_image
+		 SET 
+			 userId = #{userId},
+			 product_id = #{productId},
+			 image_url = #{imageUrl},
+			 thumbnail = #{thumbnail},
+			 sort_order = #{sortOrder},
+			 file_id = #{fileId},
+			 goodsId = #{goodsId},
+			 pic = #{pic}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

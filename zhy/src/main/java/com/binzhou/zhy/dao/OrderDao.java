@@ -41,6 +41,10 @@ public class OrderDao {
         return orderMapper.updateByPrimaryKey(record);
     }
 
+    public int  delivery( Long id){
+        return orderMapper.delivery(id);
+    }
+
     public int deleteByPrimaryKey(Long id) {
         return orderMapper.deleteByPrimaryKey(id);
     }

@@ -1,16 +1,16 @@
 package com.binzhou.zhy.mapper;
 
-import com.binzhou.zhy.entity.Order;
+import com.binzhou.zhy.entity.LogisticsTraces;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
  * 
- * OrderMapper数据库操作接口类
+ * LogisticsTracesMapper数据库操作接口类
  * 
  **/
 
-public interface OrderMapper{
+public interface LogisticsTracesMapper{
 
 
 	/**
@@ -18,14 +18,14 @@ public interface OrderMapper{
 	 * 查询（根据主键ID查询）
 	 * 
 	 **/
-	public Order  selectByPrimaryKey(@Param("id") Long id);
+	public LogisticsTraces  selectByPrimaryKey(@Param("id") Long id);
 
 	/**
 	 * 
 	 * 查询（根据条件查询）
 	 * 
 	 **/
-	public List<Order>  selectListByOption(Order record);
+	public List<LogisticsTraces>  selectListByOption(LogisticsTraces record);
 
 	/**
 	 * 
@@ -39,29 +39,27 @@ public interface OrderMapper{
 	 * 添加
 	 * 
 	 **/
-	int insert(Order record);
+	int insert(LogisticsTraces record);
 
 	/**
 	 * 
 	 * 添加 （匹配有值的字段）
 	 * 
 	 **/
-	int insertSelective(Order record);
+	int insertSelective(LogisticsTraces record);
 
 	/**
 	 * 
 	 * 修改 （匹配有值的字段）
 	 * 
 	 **/
-	int updateByPrimaryKeySelective(Order record);
+	int updateByPrimaryKeySelective(LogisticsTraces record);
 
 	/**
 	 * 
 	 * 修改（根据主键ID修改）
 	 * 
 	 **/
-	int updateByPrimaryKey(Order record);
+	int updateByPrimaryKey(LogisticsTraces record);
 
-
-	int  delivery(@Param("id") Long id);
 }

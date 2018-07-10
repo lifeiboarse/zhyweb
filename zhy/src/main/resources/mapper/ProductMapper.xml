@@ -10,7 +10,15 @@
 		<!--店铺ID-->
 		<result property="shopId" column="shop_id" />
 		<!--商品所属分类ID-->
-		<result property="cateId" column="cate_id" />
+		<result property="categoryId" column="category_id" />
+		<!---->
+		<result property="userId" column="user_id" />
+		<!---->
+		<result property="videoId" column="video_id" />
+		<!---->
+		<result property="views" column="views" />
+		<!---->
+		<result property="weight" column="weight" />
 		<!--商品名-->
 		<result property="name" column="name" />
 		<!--商品价格-->
@@ -27,6 +35,42 @@
 		<result property="brand" column="brand" />
 		<!--商品类型-->
 		<result property="type" column="type" />
+		<!---->
+		<result property="logisticsId" column="logistics_id" />
+		<!---->
+		<result property="numberOrders" column="number_orders" />
+		<!---->
+		<result property="numberGoodReputation" column="number_good_reputation" />
+		<!---->
+		<result property="numberFav" column="number_fav" />
+		<!---->
+		<result property="recommendStatusStr" column="recommend_status_str" />
+		<!---->
+		<result property="recommendStatus" column="recommend_status" />
+		<!---->
+		<result property="pingtuanPrice" column="pingtuan_price" />
+		<!---->
+		<result property="pingtuan" column="pingtuan" />
+		<!---->
+		<result property="stores" column="stores" />
+		<!---->
+		<result property="statusStr" column="status_str" />
+		<!---->
+		<result property="paixu" column="paixu" />
+		<!---->
+		<result property="pic" column="pic" />
+		<!---->
+		<result property="originalPrice" column="original_price" />
+		<!---->
+		<result property="minScore" column="min_score" />
+		<!---->
+		<result property="minPrice" column="minPrice" />
+		<!---->
+		<result property="commissionType" column="commission_type" />
+		<!---->
+		<result property="commission" column="commission" />
+		<!---->
+		<result property="characteristic" column="characteristic" />
 		<!--商品分类名-->
 		<result property="cateName" column="cate_name" />
 		<!--属性的数量数目-->
@@ -45,6 +89,8 @@
 		<result property="defaultSpec" column="default_spec" />
 		<!--是否推荐-->
 		<result property="recommended" column="recommended" />
+		<!---->
+		<result property="barCode" column="barCode" />
 		<!--该商品第一级分类ID-->
 		<result property="cateId1" column="cate_id_1" />
 		<!--该商品第二级分类ID-->
@@ -71,12 +117,16 @@
 		<result property="isDeleted" column="is_deleted" />
 		<!--版本号-->
 		<result property="version" column="version" />
+		<!---->
+		<result property="property" column="property" />
+		<!---->
+		<result property="number" column="number" />
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		 id,	shop_id,	cate_id,	name,	price,	count,	unit,	image,	description,	brand,	type,	cate_name,	spec_number,	spe_name_1,	spe_name_2,	if_show,	closed,	close_reason,	default_spec,	recommended,	cate_id_1,	cate_id_2,	cate_id_3,	cate_id_4,	tag,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version
+		 id,	shop_id,	category_id,	user_id,	video_id,	views,	weight,	name,	price,	count,	unit,	image,	description,	brand,	type,	logistics_id,	number_orders,	number_good_reputation,	number_fav,	recommend_status_str,	recommend_status,	pingtuan_price,	pingtuan,	stores,	status_str,	paixu,	pic,	original_price,	min_score,	minPrice,	commission_type,	commission,	characteristic,	cate_name,	spec_number,	spe_name_1,	spe_name_2,	if_show,	closed,	close_reason,	default_spec,	recommended,	barCode,	cate_id_1,	cate_id_2,	cate_id_3,	cate_id_4,	tag,	creator,	gmt_create,	modifier,	gmt_modified,	status,	oper_status,	is_deleted,	version,	property,	number
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -92,7 +142,6 @@
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM zhy_product
-
 	</select>
 
 	<!--删除：根据主键ID删除-->
@@ -104,9 +153,9 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.binzhou.zhy.entity.Product">
 		 INSERT INTO zhy_product
- 		(id,shop_id,cate_id,name,price,count,unit,image,description,brand,type,cate_name,spec_number,spe_name_1,spe_name_2,if_show,closed,close_reason,default_spec,recommended,cate_id_1,cate_id_2,cate_id_3,cate_id_4,tag,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version) 
+ 		(id,shop_id,category_id,user_id,video_id,views,weight,name,price,count,unit,image,description,brand,type,logistics_id,number_orders,number_good_reputation,number_fav,recommend_status_str,recommend_status,pingtuan_price,pingtuan,stores,status_str,paixu,pic,original_price,min_score,minPrice,commission_type,commission,characteristic,cate_name,spec_number,spe_name_1,spe_name_2,if_show,closed,close_reason,default_spec,recommended,barCode,cate_id_1,cate_id_2,cate_id_3,cate_id_4,tag,creator,gmt_create,modifier,gmt_modified,status,oper_status,is_deleted,version,property,number) 
 		 VALUES 
- 		(#{id},#{shopId},#{cateId},#{name},#{price},#{count},#{unit},#{image},#{description},#{brand},#{type},#{cateName},#{specNumber},#{speName1},#{speName2},#{ifShow},#{closed},#{closeReason},#{defaultSpec},#{recommended},#{cateId1},#{cateId2},#{cateId3},#{cateId4},#{tag},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version}) 
+ 		(#{id},#{shopId},#{categoryId},#{userId},#{videoId},#{views},#{weight},#{name},#{price},#{count},#{unit},#{image},#{description},#{brand},#{type},#{logisticsId},#{numberOrders},#{numberGoodReputation},#{numberFav},#{recommendStatusStr},#{recommendStatus},#{pingtuanPrice},#{pingtuan},#{stores},#{statusStr},#{paixu},#{pic},#{originalPrice},#{minScore},#{minPrice},#{commissionType},#{commission},#{characteristic},#{cateName},#{specNumber},#{speName1},#{speName2},#{ifShow},#{closed},#{closeReason},#{defaultSpec},#{recommended},#{barCode},#{cateId1},#{cateId2},#{cateId3},#{cateId4},#{tag},#{creator},#{gmtCreate},#{modifier},#{gmtModified},#{status},#{operStatus},#{isDeleted},#{version},#{property},#{number}) 
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
@@ -119,8 +168,20 @@
 			<if test="shopId != null">
 				 shop_id,
 			</if>
-			<if test="cateId != null">
-				 cate_id,
+			<if test="categoryId != null">
+				 category_id,
+			</if>
+			<if test="userId != null">
+				 user_id,
+			</if>
+			<if test="videoId != null">
+				 video_id,
+			</if>
+			<if test="views != null">
+				 views,
+			</if>
+			<if test="weight != null">
+				 weight,
 			</if>
 			<if test="name != null">
 				 name,
@@ -145,6 +206,60 @@
 			</if>
 			<if test="type != null">
 				 type,
+			</if>
+			<if test="logisticsId != null">
+				 logistics_id,
+			</if>
+			<if test="numberOrders != null">
+				 number_orders,
+			</if>
+			<if test="numberGoodReputation != null">
+				 number_good_reputation,
+			</if>
+			<if test="numberFav != null">
+				 number_fav,
+			</if>
+			<if test="recommendStatusStr != null">
+				 recommend_status_str,
+			</if>
+			<if test="recommendStatus != null">
+				 recommend_status,
+			</if>
+			<if test="pingtuanPrice != null">
+				 pingtuan_price,
+			</if>
+			<if test="pingtuan != null">
+				 pingtuan,
+			</if>
+			<if test="stores != null">
+				 stores,
+			</if>
+			<if test="statusStr != null">
+				 status_str,
+			</if>
+			<if test="paixu != null">
+				 paixu,
+			</if>
+			<if test="pic != null">
+				 pic,
+			</if>
+			<if test="originalPrice != null">
+				 original_price,
+			</if>
+			<if test="minScore != null">
+				 min_score,
+			</if>
+			<if test="minPrice != null">
+				 minPrice,
+			</if>
+			<if test="commissionType != null">
+				 commission_type,
+			</if>
+			<if test="commission != null">
+				 commission,
+			</if>
+			<if test="characteristic != null">
+				 characteristic,
 			</if>
 			<if test="cateName != null">
 				 cate_name,
@@ -172,6 +287,9 @@
 			</if>
 			<if test="recommended != null">
 				 recommended,
+			</if>
+			<if test="barCode != null">
+				 barCode,
 			</if>
 			<if test="cateId1 != null">
 				 cate_id_1,
@@ -212,6 +330,12 @@
 			<if test="version != null">
 				 version,
 			</if>
+			<if test="property != null">
+				 property,
+			</if>
+			<if test="number != null">
+				 number,
+			</if>
 
 		 </trim>
 		 <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -221,8 +345,20 @@
 			<if test="shopId!=null">
 				 #{shopId},
 			</if>
-			<if test="cateId!=null">
-				 #{cateId},
+			<if test="categoryId!=null">
+				 #{categoryId},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+			<if test="videoId!=null">
+				 #{videoId},
+			</if>
+			<if test="views!=null">
+				 #{views},
+			</if>
+			<if test="weight!=null">
+				 #{weight},
 			</if>
 			<if test="name!=null">
 				 #{name},
@@ -247,6 +383,60 @@
 			</if>
 			<if test="type!=null">
 				 #{type},
+			</if>
+			<if test="logisticsId!=null">
+				 #{logisticsId},
+			</if>
+			<if test="numberOrders!=null">
+				 #{numberOrders},
+			</if>
+			<if test="numberGoodReputation!=null">
+				 #{numberGoodReputation},
+			</if>
+			<if test="numberFav!=null">
+				 #{numberFav},
+			</if>
+			<if test="recommendStatusStr!=null">
+				 #{recommendStatusStr},
+			</if>
+			<if test="recommendStatus!=null">
+				 #{recommendStatus},
+			</if>
+			<if test="pingtuanPrice!=null">
+				 #{pingtuanPrice},
+			</if>
+			<if test="pingtuan!=null">
+				 #{pingtuan},
+			</if>
+			<if test="stores!=null">
+				 #{stores},
+			</if>
+			<if test="statusStr!=null">
+				 #{statusStr},
+			</if>
+			<if test="paixu!=null">
+				 #{paixu},
+			</if>
+			<if test="pic!=null">
+				 #{pic},
+			</if>
+			<if test="originalPrice!=null">
+				 #{originalPrice},
+			</if>
+			<if test="minScore!=null">
+				 #{minScore},
+			</if>
+			<if test="minPrice!=null">
+				 #{minPrice},
+			</if>
+			<if test="commissionType!=null">
+				 #{commissionType},
+			</if>
+			<if test="commission!=null">
+				 #{commission},
+			</if>
+			<if test="characteristic!=null">
+				 #{characteristic},
 			</if>
 			<if test="cateName!=null">
 				 #{cateName},
@@ -274,6 +464,9 @@
 			</if>
 			<if test="recommended!=null">
 				 #{recommended},
+			</if>
+			<if test="barCode!=null">
+				 #{barCode},
 			</if>
 			<if test="cateId1!=null">
 				 #{cateId1},
@@ -314,6 +507,12 @@
 			<if test="version!=null">
 				 #{version},
 			</if>
+			<if test="property!=null">
+				 #{property},
+			</if>
+			<if test="number!=null">
+				 #{number},
+			</if>
 		 </trim>
 	</insert>
 
@@ -324,8 +523,20 @@
 			<if test="shopId != null">
 				 shop_id = #{shopId},
 			</if>
-			<if test="cateId != null">
-				 cate_id = #{cateId},
+			<if test="categoryId != null">
+				 category_id = #{categoryId},
+			</if>
+			<if test="userId != null">
+				 user_id = #{userId},
+			</if>
+			<if test="videoId != null">
+				 video_id = #{videoId},
+			</if>
+			<if test="views != null">
+				 views = #{views},
+			</if>
+			<if test="weight != null">
+				 weight = #{weight},
 			</if>
 			<if test="name != null">
 				 name = #{name},
@@ -350,6 +561,60 @@
 			</if>
 			<if test="type != null">
 				 type = #{type},
+			</if>
+			<if test="logisticsId != null">
+				 logistics_id = #{logisticsId},
+			</if>
+			<if test="numberOrders != null">
+				 number_orders = #{numberOrders},
+			</if>
+			<if test="numberGoodReputation != null">
+				 number_good_reputation = #{numberGoodReputation},
+			</if>
+			<if test="numberFav != null">
+				 number_fav = #{numberFav},
+			</if>
+			<if test="recommendStatusStr != null">
+				 recommend_status_str = #{recommendStatusStr},
+			</if>
+			<if test="recommendStatus != null">
+				 recommend_status = #{recommendStatus},
+			</if>
+			<if test="pingtuanPrice != null">
+				 pingtuan_price = #{pingtuanPrice},
+			</if>
+			<if test="pingtuan != null">
+				 pingtuan = #{pingtuan},
+			</if>
+			<if test="stores != null">
+				 stores = #{stores},
+			</if>
+			<if test="statusStr != null">
+				 status_str = #{statusStr},
+			</if>
+			<if test="paixu != null">
+				 paixu = #{paixu},
+			</if>
+			<if test="pic != null">
+				 pic = #{pic},
+			</if>
+			<if test="originalPrice != null">
+				 original_price = #{originalPrice},
+			</if>
+			<if test="minScore != null">
+				 min_score = #{minScore},
+			</if>
+			<if test="minPrice != null">
+				 minPrice = #{minPrice},
+			</if>
+			<if test="commissionType != null">
+				 commission_type = #{commissionType},
+			</if>
+			<if test="commission != null">
+				 commission = #{commission},
+			</if>
+			<if test="characteristic != null">
+				 characteristic = #{characteristic},
 			</if>
 			<if test="cateName != null">
 				 cate_name = #{cateName},
@@ -377,6 +642,9 @@
 			</if>
 			<if test="recommended != null">
 				 recommended = #{recommended},
+			</if>
+			<if test="barCode != null">
+				 barCode = #{barCode},
 			</if>
 			<if test="cateId1 != null">
 				 cate_id_1 = #{cateId1},
@@ -417,6 +685,12 @@
 			<if test="version != null">
 				 version = #{version},
 			</if>
+			<if test="property != null">
+				 property = #{property},
+			</if>
+			<if test="number != null">
+				 number = #{number},
+			</if>
 
  		 </set>
 		 WHERE id = #{id}
@@ -427,7 +701,11 @@
 		 UPDATE zhy_product
 		 SET 
 			 shop_id = #{shopId},
-			 cate_id = #{cateId},
+			 category_id = #{categoryId},
+			 user_id = #{userId},
+			 video_id = #{videoId},
+			 views = #{views},
+			 weight = #{weight},
 			 name = #{name},
 			 price = #{price},
 			 count = #{count},
@@ -436,6 +714,24 @@
 			 description = #{description},
 			 brand = #{brand},
 			 type = #{type},
+			 logistics_id = #{logisticsId},
+			 number_orders = #{numberOrders},
+			 number_good_reputation = #{numberGoodReputation},
+			 number_fav = #{numberFav},
+			 recommend_status_str = #{recommendStatusStr},
+			 recommend_status = #{recommendStatus},
+			 pingtuan_price = #{pingtuanPrice},
+			 pingtuan = #{pingtuan},
+			 stores = #{stores},
+			 status_str = #{statusStr},
+			 paixu = #{paixu},
+			 pic = #{pic},
+			 original_price = #{originalPrice},
+			 min_score = #{minScore},
+			 minPrice = #{minPrice},
+			 commission_type = #{commissionType},
+			 commission = #{commission},
+			 characteristic = #{characteristic},
 			 cate_name = #{cateName},
 			 spec_number = #{specNumber},
 			 spe_name_1 = #{speName1},
@@ -445,6 +741,7 @@
 			 close_reason = #{closeReason},
 			 default_spec = #{defaultSpec},
 			 recommended = #{recommended},
+			 barCode = #{barCode},
 			 cate_id_1 = #{cateId1},
 			 cate_id_2 = #{cateId2},
 			 cate_id_3 = #{cateId3},
@@ -457,7 +754,9 @@
 			 status = #{status},
 			 oper_status = #{operStatus},
 			 is_deleted = #{isDeleted},
-			 version = #{version}
+			 version = #{version},
+			 property = #{property},
+			 number = #{number}
 		 WHERE id = #{id}
 	</update>
 

@@ -14,16 +14,34 @@ public class Category implements Serializable {
 	private Long id;
 
 	/**分类名称**/
-	private String cateName;
+	private String name;
+
+	/****/
+	private Long userId;
 
 	/**分类父级ID**/
 	private Integer parentId;
 
 	/**排序号**/
-	private Integer sortOrder;
+	private Integer sort;
+
+	/****/
+	private Integer key;
 
 	/**是否显示（1显示，0不显示）**/
 	private Integer ifShow;
+
+	/****/
+	private Boolean isUse;
+
+	/****/
+	private String type;
+
+	/****/
+	private Integer level;
+
+	/****/
+	private String icon;
 
 	/**创建者**/
 	private String creator;
@@ -59,12 +77,20 @@ public class Category implements Serializable {
 		return this.id;
 	}
 
-	public void setCateName(String cateName){
-		this.cateName = cateName;
+	public void setName(String name){
+		this.name = name;
 	}
 
-	public String getCateName(){
-		return this.cateName;
+	public String getName(){
+		return this.name;
+	}
+
+	public void setUserId(Long userId){
+		this.userId = userId;
+	}
+
+	public Long getUserId(){
+		return this.userId;
 	}
 
 	public void setParentId(Integer parentId){
@@ -75,12 +101,20 @@ public class Category implements Serializable {
 		return this.parentId;
 	}
 
-	public void setSortOrder(Integer sortOrder){
-		this.sortOrder = sortOrder;
+	public void setSort(Integer sort){
+		this.sort = sort;
 	}
 
-	public Integer getSortOrder(){
-		return this.sortOrder;
+	public Integer getSort(){
+		return this.sort;
+	}
+
+	public void setKey(Integer key){
+		this.key = key;
+	}
+
+	public Integer getKey(){
+		return this.key;
 	}
 
 	public void setIfShow(Integer ifShow){
@@ -89,6 +123,38 @@ public class Category implements Serializable {
 
 	public Integer getIfShow(){
 		return this.ifShow;
+	}
+
+	public void setIsUse(Boolean isUse){
+		this.isUse = isUse;
+	}
+
+	public Boolean getIsUse(){
+		return this.isUse;
+	}
+
+	public void setType(String type){
+		this.type = type;
+	}
+
+	public String getType(){
+		return this.type;
+	}
+
+	public void setLevel(Integer level){
+		this.level = level;
+	}
+
+	public Integer getLevel(){
+		return this.level;
+	}
+
+	public void setIcon(String icon){
+		this.icon = icon;
+	}
+
+	public String getIcon(){
+		return this.icon;
 	}
 
 	public void setCreator(String creator){

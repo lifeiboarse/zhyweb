@@ -101,6 +101,23 @@ public class OrderDTO extends BaseDO {
 	private List<ProductDTO> cartProductList;
 
 
+
+	private String goodsJsonStr;
+	/****/
+	private String remark;
+
+	/****/
+	private String calculate;
+
+
+
+	/****/
+	private String kjid;
+
+	/****/
+	private String couponId;
+	private String token;
+
 	public void setId(Long id){
 		this.id = id;
 	}
@@ -355,5 +372,53 @@ public class OrderDTO extends BaseDO {
 
 	public void setCartProductList(List<ProductDTO> cartProductList) {
 		this.cartProductList = cartProductList;
+	}
+	public void setRemark(String remark){
+		this.remark = remark;
+	}
+
+	public String getRemark(){
+		return this.remark;
+	}
+
+	public void setCalculate(String calculate){
+		this.calculate = calculate;
+	}
+
+	public String getCalculate(){
+		return this.calculate;
+	}
+
+
+	public void setKjid(String kjid){
+		this.kjid = kjid;
+	}
+
+	public String getKjid(){
+		return this.kjid;
+	}
+
+	public void setCouponId(String couponId){
+		this.couponId = couponId;
+	}
+
+	public String getCouponId(){
+		return this.couponId;
+	}
+
+	public String getGoodsJsonStr() {
+		return goodsJsonStr;
+	}
+
+	public void setGoodsJsonStr(String goodsJsonStr) {
+		this.goodsJsonStr = goodsJsonStr;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

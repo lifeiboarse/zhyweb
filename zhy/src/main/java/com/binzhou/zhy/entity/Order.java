@@ -100,6 +100,21 @@ public class Order implements Serializable {
 	/**版本号**/
 	private Long version;
 
+	/****/
+	private String remark;
+
+	/****/
+	private String calculate;
+
+	/****/
+	private String goodsJsonStr;
+
+	/****/
+	private String kjid;
+
+	/****/
+	private String couponId;
+
 
 
 	public void setId(Long id){
@@ -340,6 +355,46 @@ public class Order implements Serializable {
 
 	public Long getVersion(){
 		return this.version;
+	}
+
+	public void setRemark(String remark){
+		this.remark = remark;
+	}
+
+	public String getRemark(){
+		return this.remark;
+	}
+
+	public void setCalculate(String calculate){
+		this.calculate = calculate;
+	}
+
+	public String getCalculate(){
+		return this.calculate;
+	}
+
+	public void setGoodsJsonStr(String goodsJsonStr){
+		this.goodsJsonStr = goodsJsonStr;
+	}
+
+	public String getGoodsJsonStr(){
+		return this.goodsJsonStr;
+	}
+
+	public void setKjid(String kjid){
+		this.kjid = kjid;
+	}
+
+	public String getKjid(){
+		return this.kjid;
+	}
+
+	public void setCouponId(String couponId){
+		this.couponId = couponId;
+	}
+
+	public String getCouponId(){
+		return this.couponId;
 	}
 
 }
